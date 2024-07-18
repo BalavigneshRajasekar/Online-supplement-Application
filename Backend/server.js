@@ -8,15 +8,21 @@ const app = express();
 //Middleware Goes here
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./public"));
+app.set("view engine", "ejs");
 
 //imported Files
 const registerRouter = require("./routes/Authentication/register");
 const loginRouter = require("./routes/Authentication/login");
+const resetRouter = require("./routes/Authentication/resetCode");
+const resetPassword = require("./routes/Authentication/resetPassword");
 
 //Routes Goes here
 app.use("/api/register", registerRouter);
 app.use("/api/login", loginRouter);
+app.use("/api/reset", resetRouter);
+app.use("/api/resetPassword", resetPassword);
 
 //Server starts listening
 mongoose.connect(process.env.MONGODB).then(() => {
