@@ -10,7 +10,13 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
+//imported Files
+const registerRouter = require("./routes/Authentication/register");
+const loginRouter = require("./routes/Authentication/login");
+
 //Routes Goes here
+app.use("/api/register", registerRouter);
+app.use("/api/login", loginRouter);
 
 //Server starts listening
 mongoose.connect(process.env.MONGODB).then(() => {
