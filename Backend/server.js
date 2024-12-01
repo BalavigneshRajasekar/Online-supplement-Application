@@ -17,12 +17,14 @@ const registerRouter = require("./routes/Authentication/register");
 const loginRouter = require("./routes/Authentication/login");
 const resetRouter = require("./routes/Authentication/resetCode");
 const resetPassword = require("./routes/Authentication/resetPassword");
+const productRouter = require("./routes/Products/supplementRouter");
 
 //Routes Goes here
 app.use("/api/register", registerRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/reset", resetRouter);
 app.use("/api/resetPassword", resetPassword);
+app.use("/api/product", productRouter);
 
 //Server starts listening
 mongoose.connect(process.env.MONGODB).then(() => {
