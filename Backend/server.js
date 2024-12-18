@@ -18,6 +18,7 @@ const loginRouter = require("./routes/Authentication/login");
 const resetRouter = require("./routes/Authentication/resetCode");
 const resetPassword = require("./routes/Authentication/resetPassword");
 const supplementRouter = require("./routes/Products/supplementRouter");
+const productRouter = require("./routes/Products/productsRouter");
 
 //Routes Goes here
 app.use("/api/register", registerRouter);
@@ -25,6 +26,7 @@ app.use("/api/login", loginRouter);
 app.use("/api/reset", resetRouter);
 app.use("/api/resetPassword", resetPassword);
 app.use("/api/admin", supplementRouter);
+app.use("/api/p1", productRouter);
 
 //Server starts listening
 mongoose.connect(process.env.MONGODB).then(() => {
