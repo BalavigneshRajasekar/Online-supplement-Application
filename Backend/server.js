@@ -29,6 +29,7 @@ app.use("/api/admin", supplementRouter);
 app.use("/api/p1", productRouter);
 
 //Server starts listening
+
 mongoose.connect(process.env.MONGODB).then(() => {
   console.log("Connected to MongoDB"); // Connected to MongoDB
   app.listen("3000", () => {

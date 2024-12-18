@@ -17,8 +17,9 @@ loginRouter.post("/users", async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    const authToken = await jwt.sign(
+    const authToken = jwt.sign(
       {
+        id: userExists._id,
         email: userExists.email,
         name: userExists.username,
         role: userExists.role,

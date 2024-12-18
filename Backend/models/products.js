@@ -9,8 +9,6 @@ const productSchema = new mongoose.Schema({
   category: { type: String, required: true },
   supplementType: { type: String, required: true },
   expirationDate: { type: Date, default: null },
-
-  rating: { type: Number, default: 0 },
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
