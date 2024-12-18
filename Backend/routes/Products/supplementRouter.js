@@ -9,30 +9,6 @@ const upload = multer({ storage: memory });
 
 const supplementRouter = express.Router();
 
-// Sample route for retrieving all supplements
-
-supplementRouter.get("/products1", async (req, res) => {
-  try {
-    const supplements = await Products.find({});
-    res.json(supplements);
-  } catch (error) {
-    res.status(500).json({ message: "Server Error" });
-  }
-});
-
-// Sample route for retrieving a single supplement by ID
-supplementRouter.get("/products1/:id", async (req, res) => {
-  const id = req.params.id;
-  try {
-    const supplement = await Products.findById(id);
-    if (!supplement)
-      return res.status(404).json({ message: "Supplement not found" });
-    res.json(supplement);
-  } catch (e) {
-    res.status(500).json({ message: "server error", data: e.message });
-  }
-});
-
 // Sample route for adding a new supplement
 
 supplementRouter.post("/add", upload.array("image"), async (req, res) => {
