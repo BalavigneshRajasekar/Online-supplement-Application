@@ -79,7 +79,7 @@ supplementRouter.put("/update/:id", upload.array("image"), async (req, res) => {
     expirationDate,
   } = req.body;
 
-  const id = req.params;
+  const { id } = req.params;
 
   try {
     //Upload image to cloudinary
@@ -130,7 +130,7 @@ supplementRouter.put("/update/:id", upload.array("image"), async (req, res) => {
 // Sample route for deleting a supplement by ID
 
 supplementRouter.delete("/delete/:id", async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params.id;
 
   try {
     const deletedSupplement = await Products.findByIdAndDelete(id);
