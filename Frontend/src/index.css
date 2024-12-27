@@ -1,3 +1,11 @@
+h1 {
+  font-size: 48px !important;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  h1 {
+    @apply text-3xl lg:text-5xl;
+  }
+}

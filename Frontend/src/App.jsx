@@ -3,6 +3,8 @@ import { useState } from "react";
 import "./App.css";
 import ProductHandler from "./context/Products";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Login from "./Authentication/Login";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -12,11 +14,8 @@ function App() {
       <ProductHandler>
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/"
-              element={<h1 className="text-red-500">Supplement Application</h1>}
-            />
-            <Route path="dashboard" element={<h1>Dashboard</h1>} />
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/" element={<Home />} />
           </Routes>
         </BrowserRouter>
       </ProductHandler>
