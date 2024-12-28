@@ -10,7 +10,7 @@ function Offers() {
     { url: "banner3.jpg" },
   ];
   return (
-    <div>
+    <div className="m-4">
       <Slide autoplay>
         {image.map((fadeImage, index) => (
           <div key={index}>

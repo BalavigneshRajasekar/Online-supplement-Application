@@ -11,3 +11,7 @@ h1 {
     @apply text-3xl lg:text-5xl;
   }
 }
+
+body {
+  font-family: monospace;
+}

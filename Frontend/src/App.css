@@ -19,6 +19,12 @@
   transition: 0.5s ease-in-out;
 }
 
+/* card style */
+.cardStyle:hover {
+  transform: scale(0.8);
+  transition: 0.5s ease-in-out;
+}
+
 
 
 @media only screen and (max-width: 600px) {

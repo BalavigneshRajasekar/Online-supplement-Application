@@ -61,10 +61,10 @@ function AllProducts() {
         <div className="flex flex-wrap gap-4 justify-around m-4">
           {/* Products List */}
           {products.map((prod, index) => (
-            <Card key={index} className="max-w-sm">
+            <Card key={index} className="max-w-sm cardStyle">
               <img src={prod.image[0]} width={"200px"}></img>
               <a href="#">
-                <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-red-700">
                   {prod.name}
                 </h5>
               </a>
