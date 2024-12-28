@@ -1,11 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import Nav from "./Nav";
+import Offers from "./Offers";
+import AllProducts from "./AllProducts";
 
 function Home() {
   return (
     <div>
       <Nav></Nav>
+      <Offers></Offers>
+      <AllProducts></AllProducts>
     </div>
   );
 }
