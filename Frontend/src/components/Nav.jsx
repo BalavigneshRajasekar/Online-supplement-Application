@@ -17,7 +17,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";
 
-const pages = ["Protein", "MassGainer", "preworkout"];
+const pages = ["protein", "MassGainer", "Creatine"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function Nav() {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ function Nav() {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Box sx={{ display: { xs: "none", md: "block" } }}>
-              <img src="logo.png" style={{ width: "60px" }}></img>
+              <img src="/logo.png" style={{ width: "60px" }}></img>
             </Box>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

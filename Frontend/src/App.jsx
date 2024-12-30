@@ -9,6 +9,7 @@ import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
 import ForgotPassword from "./Authentication/ForgotPassword";
 import SeperateProducts from "./routes/SeperateProducts";
+import Nav from "./components/Nav";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -17,6 +18,7 @@ function App() {
     <>
       <ProductHandler>
         <BrowserRouter>
+          <Nav></Nav>
           <Routes>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>

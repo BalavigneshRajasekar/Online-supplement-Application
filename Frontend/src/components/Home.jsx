@@ -7,7 +7,6 @@ import AllProducts from "./AllProducts";
 function Home() {
   return (
     <div>
-      <Nav></Nav>
       <Offers></Offers>
       <AllProducts></AllProducts>
     </div>

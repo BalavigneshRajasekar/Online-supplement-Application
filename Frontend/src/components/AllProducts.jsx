@@ -2,7 +2,7 @@
 import { Button, Divider, Grid2 } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { Card } from "flowbite-react";
-import { Grid, Rate } from "antd";
+import { Rate } from "antd";
 import useConfig from "antd/es/config-provider/hooks/useConfig";
 import { Product } from "../context/Products";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ function AllProducts() {
             style={{ fontWeight: "800" }}
             className="imgBtnAction flex flex-col gap-3"
             onClick={() => {
-              navigateToProducts("Protein");
+              navigateToProducts("protein");
             }}
           >
             <img src="protein.jpg" style={{ width: "50%" }}></img>
@@ -59,11 +59,11 @@ function AllProducts() {
             style={{ fontWeight: "800" }}
             className="imgBtnAction flex flex-col gap-3"
             onClick={() => {
-              navigateToProducts("preworkout");
+              navigateToProducts("Creatine");
             }}
           >
             <img src="oncreatine.jpg" width={"50%"}></img>
-            <span>Pre Workout</span>
+            <span>Creatine</span>
           </Button>
         </Grid2>
         <Grid2 size={{ xs: 6, md: 3 }}>
