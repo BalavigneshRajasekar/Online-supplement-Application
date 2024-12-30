@@ -17,7 +17,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";
 
-const pages = ["Protein", "MassGainer", "PreWorkout"];
+const pages = ["Protein", "MassGainer", "preworkout"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function Nav() {
   const navigate = useNavigate();
@@ -37,6 +37,10 @@ function Nav() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const navigateToProducts = (name) => {
+    navigate(`/product/${name}`);
   };
   return (
     <div>
@@ -76,7 +80,14 @@ function Nav() {
               >
                 {pages.map((page) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography sx={{ textAlign: "center" }}>{page}</Typography>
+                    <Typography
+                      sx={{ textAlign: "center" }}
+                      onClick={() => {
+                        navigateToProducts(page);
+                      }}
+                    >
+                      {page}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -97,7 +108,7 @@ function Nav() {
                   <Button
                     className="h1"
                     key={page}
-                    onClick={handleCloseNavMenu}
+                    onClick={() => navigateToProducts(page)}
                     sx={{ my: 2, color: "white", display: "block" }}
                   >
                     {page}
