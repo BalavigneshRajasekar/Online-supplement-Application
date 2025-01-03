@@ -10,24 +10,38 @@ import Register from "./Authentication/Register";
 import ForgotPassword from "./Authentication/ForgotPassword";
 import SeperateProducts from "./routes/SeperateProducts";
 import Nav from "./components/Nav";
-
+import SingleViewProducts from "./routes/SingleViewProducts";
+import { Provider } from "react-redux";
+import store from "./store/store";
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <ProductHandler>
-        <BrowserRouter>
-          <Nav></Nav>
-          <Routes>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/register" element={<Register />}></Route>
-            <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
-            <Route path="/" element={<Home />} />
-            <Route path="/product/:name" element={<SeperateProducts />}></Route>
-          </Routes>
-        </BrowserRouter>
-      </ProductHandler>
+      <Provider store={store}>
+        <ProductHandler>
+          <BrowserRouter>
+            <Nav></Nav>
+            <Routes>
+              <Route path="/login" element={<Login />}></Route>
+              <Route path="/register" element={<Register />}></Route>
+              <Route
+                path="/forgotPassword"
+                element={<ForgotPassword />}
+              ></Route>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/product/:name"
+                element={<SeperateProducts />}
+              ></Route>
+              <Route
+                path="/products/:id"
+                element={<SingleViewProducts />}
+              ></Route>
+            </Routes>
+          </BrowserRouter>
+        </ProductHandler>
+      </Provider>
     </>
   );
 }

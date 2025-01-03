@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import { Button, FormControl } from "@mui/material";
+import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { HiArrowLeft } from "react-icons/hi";
-import { Card } from "flowbite-react";
+import { HiArrowLeft, HiHome } from "react-icons/hi";
+import { Card, Breadcrumb } from "flowbite-react";
 import { Rate } from "antd";
 import { Grid2 } from "@mui/material";
-import { Select, Space } from "antd";
+import { Select } from "antd";
+
 function SeperateProducts() {
   const [seperateProduct, setSeperateProduct] = useState([]);
   const [quantity, setQuantity] = useState("");
@@ -46,6 +47,14 @@ function SeperateProducts() {
           <HiArrowLeft className="mr-2 h-5 w-5" />
           Back
         </Button>
+        <Breadcrumb aria-label="Default breadcrumb example" className="mt-10">
+          <Breadcrumb.Item href="/" icon={HiHome}>
+            Home
+          </Breadcrumb.Item>
+
+          <Breadcrumb.Item>{params.name}</Breadcrumb.Item>
+        </Breadcrumb>
+
         {seperateProduct.length > 0 ? (
           <Grid2
             container

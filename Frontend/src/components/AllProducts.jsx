@@ -3,17 +3,21 @@ import { Button, Divider, Grid2 } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { Card } from "flowbite-react";
 import { Rate } from "antd";
-import useConfig from "antd/es/config-provider/hooks/useConfig";
 import { Product } from "../context/Products";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addCart } from "../store/slice";
 
 function AllProducts() {
   const { products } = useContext(Product);
+  const cart = useSelector((state) => state.products.cart);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(cart);
 
   useEffect(() => {
     console.log(products);
-  });
+  }, []);
 
   const navigateToProducts = (name) => {
     navigate(`/product/${name}`);
@@ -98,7 +102,7 @@ function AllProducts() {
             >
               <Card className="max-w-sm cardStyle">
                 <img src={prod.image[0]} width={"200px"}></img>
-                <a href="#">
+                <a href={`/products/${prod._id}`}>
                   <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-red-700">
                     {prod.name}
                   </h5>
@@ -113,7 +117,17 @@ function AllProducts() {
                     {`Rs : ${prod.price}`}
                   </span>
                   <a
-                    href="#"
+                    onClick={() =>
+                      dispatch(
+                        addCart({
+                          id: prod._id,
+                          name: prod.name,
+                          price: prod.price,
+                          img: prod.image[0],
+                          quantity: 1,
+                        })
+                      )
+                    }
                     className="rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
                   >
                     Add to cart
