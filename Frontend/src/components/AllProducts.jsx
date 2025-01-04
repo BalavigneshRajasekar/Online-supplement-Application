@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { Button, Divider, Grid2 } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Card } from "flowbite-react";
 import { Rate } from "antd";
 import { Product } from "../context/Products";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addCart } from "../store/slice";
+import { LiaRupeeSignSolid } from "react-icons/lia";
 
 function AllProducts() {
   const { products } = useContext(Product);
@@ -102,19 +103,26 @@ function AllProducts() {
             >
               <Card className="max-w-sm cardStyle">
                 <img src={prod.image[0]} width={"200px"}></img>
-                <a href={`/products/${prod._id}`}>
+                <a onClick={() => navigate(`/products/${prod._id}`)}>
                   <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-red-700">
                     {prod.name}
                   </h5>
                 </a>
-                <div>
-                  <Button>-</Button>0<Button>+</Button>
+                <div className="d-flex gap-3 mt-2">
+                  <Button variant="contained" sx={{ bgcolor: "orange" }}>
+                    -
+                  </Button>
+                  <span className="mt-2">{0}</span>
+                  <Button variant="contained" sx={{ bgcolor: "orange" }}>
+                    +
+                  </Button>
                 </div>
                 <Rate disabled value={"2"}></Rate>
 
                 <div className="flex items-center justify-between">
                   <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                    {`Rs : ${prod.price}`}
+                    <LiaRupeeSignSolid style={{ display: "inline-block" }} />{" "}
+                    {prod.price}
                   </span>
                   <a
                     onClick={() =>

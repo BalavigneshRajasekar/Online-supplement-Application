@@ -14,6 +14,8 @@ function SeperateProducts() {
   const [quantity, setQuantity] = useState("");
   const navigate = useNavigate();
   const params = useParams();
+
+  // Function goes here
   useEffect(() => {
     console.log(params.name);
 
@@ -35,6 +37,7 @@ function SeperateProducts() {
     console.log(event);
     setQuantity(event);
   };
+
   return (
     <>
       <div className="mt-10">
@@ -73,21 +76,19 @@ function SeperateProducts() {
               >
                 <Card className="max-w-sm cardStyle">
                   <img src={prod.image[0]} width={"200px"}></img>
-                  <a href="#">
+                  <a onClick={() => navigate(`/products/${prod._id}`)}>
                     <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-red-700">
                       {prod.name}
                     </h5>
                   </a>
-                  <div className="flex gap-3">
-                    <Select
-                      style={{ width: 120 }}
-                      onChange={handleChange}
-                      defaultValue={1}
-                      options={Array.from(
-                        { length: prod.quantity },
-                        (_, index) => index + 1
-                      ).map((quan, index1) => ({ value: quan }))}
-                    ></Select>
+                  <div className="d-flex gap-3 mt-2">
+                    <Button variant="contained" sx={{ bgcolor: "orange" }}>
+                      -
+                    </Button>
+                    <span className="mt-2">{0}</span>
+                    <Button variant="contained" sx={{ bgcolor: "orange" }}>
+                      +
+                    </Button>
                   </div>
                   <Rate disabled value={"2"}></Rate>
 

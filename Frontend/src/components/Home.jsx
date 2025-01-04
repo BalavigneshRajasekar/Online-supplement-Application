@@ -5,6 +5,7 @@ import Offers from "./Offers";
 import AllProducts from "./AllProducts";
 import Footer from "./Footer";
 import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
 
 function Home() {
   const product = useSelector((state) => state.products.products);

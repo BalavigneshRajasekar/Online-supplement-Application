@@ -9,12 +9,12 @@ export const Product = createContext();
 
 const ProductHandler = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [singleProduct, setSingleProduct] = useState([]);
+  const [singleProduct, setSingleProduct] = useState(null);
 
   useEffect(() => {
     getAllProducts();
   }, []);
-  
+
   const getAllProducts = async () => {
     try {
       const response = await axios.get(
@@ -26,11 +26,26 @@ const ProductHandler = ({ children }) => {
       console.error("Error fetching products:", e);
     }
   };
-
-  useEffect(() => {}, []);
-
+  const getSingleProductsById = async (id) => {
+    try {
+      const response = await axios.get(
+        `https://supplement-application.onrender.com/api/p1/products/${id}`
+      );
+      setSingleProduct(response.data);
+    } catch (e) {
+      console.log("Error fetching single products:", e);
+    }
+  };
   return (
-    <Product.Provider value={{ products, setProducts }}>
+    <Product.Provider
+      value={{
+        products,
+        setProducts,
+        singleProduct,
+        getSingleProductsById,
+        setSingleProduct,
+      }}
+    >
       {children}
     </Product.Provider>
   );
