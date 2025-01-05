@@ -1,17 +1,20 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
 import { Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { HiArrowLeft, HiHome } from "react-icons/hi";
 import { Card, Breadcrumb } from "flowbite-react";
-import { Rate } from "antd";
+import { message, Rate } from "antd";
 import { Grid2 } from "@mui/material";
-import { Select } from "antd";
+import { Product } from "../context/Products";
+import { useDispatch } from "react-redux";
+import { addCart } from "../store/slice";
 
 function SeperateProducts() {
+  const dispatch = useDispatch();
   const [seperateProduct, setSeperateProduct] = useState([]);
-  const [quantity, setQuantity] = useState("");
+  const { quantities, plusQuantity, minusQuantity } = useContext(Product);
   const navigate = useNavigate();
   const params = useParams();
 
@@ -33,11 +36,20 @@ function SeperateProducts() {
       console.error("Error fetching products:", e);
     }
   };
-  const handleChange = (event) => {
-    console.log(event);
-    setQuantity(event);
+  const addProductToCart = (prod) => {
+    if (localStorage.getItem("logToken")) {
+      dispatch(
+        addCart({
+          id: prod._id,
+          name: prod.name,
+          price: prod.price,
+          quantity: quantities[prod._id],
+        })
+      );
+    } else {
+      message.warning("Please Login to add product to cart");
+    }
   };
-
   return (
     <>
       <div className="mt-10">
@@ -82,11 +94,19 @@ function SeperateProducts() {
                     </h5>
                   </a>
                   <div className="d-flex gap-3 mt-2">
-                    <Button variant="contained" sx={{ bgcolor: "orange" }}>
+                    <Button
+                      variant="contained"
+                      sx={{ bgcolor: "orange" }}
+                      onClick={() => minusQuantity(prod)}
+                    >
                       -
                     </Button>
-                    <span className="mt-2">{0}</span>
-                    <Button variant="contained" sx={{ bgcolor: "orange" }}>
+                    <span className="mt-2">{quantities[prod._id]}</span>
+                    <Button
+                      variant="contained"
+                      sx={{ bgcolor: "orange" }}
+                      onClick={() => plusQuantity(prod)}
+                    >
                       +
                     </Button>
                   </div>
@@ -97,7 +117,7 @@ function SeperateProducts() {
                       {`Rs : ${prod.price}`}
                     </span>
                     <a
-                      href="#"
+                      onClick={() => addProductToCart(prod)}
                       className="rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
                     >
                       Add to cart

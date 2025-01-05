@@ -10,11 +10,19 @@ export const Product = createContext();
 const ProductHandler = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [singleProduct, setSingleProduct] = useState(null);
-
+  const [quantities, setQuantities] = useState();
   useEffect(() => {
     getAllProducts();
   }, []);
+  useEffect(() => {
+    console.log("before");
+    console.log(quantities);
 
+    if (products.length > 0) {
+      let one = products.reduce((acc, item) => ({ ...acc, [item._id]: 0 }), {});
+      setQuantities(one);
+    }
+  }, [products]);
   const getAllProducts = async () => {
     try {
       const response = await axios.get(
@@ -36,6 +44,19 @@ const ProductHandler = ({ children }) => {
       console.log("Error fetching single products:", e);
     }
   };
+
+  const plusQuantity = (prod) => {
+    if (quantities[prod._id] >= prod.quantity) {
+      alert("thats the quantity we have");
+    } else {
+      setQuantities((prev) => ({ ...prev, [prod._id]: prev[prod._id] + 1 }));
+    }
+  };
+  const minusQuantity = (prod) => {
+    if (quantities[prod._id] >= 1) {
+      setQuantities((prev) => ({ ...prev, [prod._id]: prev[prod._id] - 1 }));
+    }
+  };
   return (
     <Product.Provider
       value={{
@@ -44,6 +65,10 @@ const ProductHandler = ({ children }) => {
         singleProduct,
         getSingleProductsById,
         setSingleProduct,
+        quantities,
+        setQuantities,
+        plusQuantity,
+        minusQuantity,
       }}
     >
       {children}

@@ -14,8 +14,10 @@
   transition: 0.5s ease-in-out;
 }
 
-/* card style */
 
+a {
+  cursor: pointer;
+}
 
 
 @media only screen and (max-width: 600px) {}

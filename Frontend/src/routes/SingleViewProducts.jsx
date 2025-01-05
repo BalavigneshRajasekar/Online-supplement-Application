@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Box } from "@mui/material";
-import { Card, Rate, Collapse, Divider, List, Avatar, Form, Input } from "antd";
+import { Card, Rate, Collapse, Divider, List, Avatar, Form, Input, message } from "antd";
 import { Button } from "flowbite-react";
 import React, { useContext, useEffect } from "react";
 import { FaCartPlus } from "react-icons/fa6";
@@ -13,6 +13,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Product } from "../context/Products";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { Badge } from "flowbite-react";
+import { useDispatch } from "react-redux";
+import { addCart } from "../store/slice";
 const { TextArea } = Input;
 // FAQ Questions
 const items = [
@@ -39,11 +41,17 @@ const items = [
 function SingleViewProducts() {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
-  const { singleProduct, getSingleProductsById, setSingleProduct } =
-    useContext(Product);
+  const dispatch = useDispatch();
+  const {
+    singleProduct,
+    getSingleProductsById,
+    setSingleProduct,
+    quantities,
+    plusQuantity,
+    minusQuantity,
+  } = useContext(Product);
   const navigate = useNavigate();
 
-  const [quantity, setQuantity] = useState(1);
   useEffect(() => {
     console.log(loading);
     if (singleProduct) {
@@ -66,6 +74,20 @@ function SingleViewProducts() {
     console.log(value);
   };
 
+  const addProductToCart = (prod) => {
+    if (localStorage.getItem("logToken")) {
+      dispatch(
+        addCart({
+          id: prod._id,
+          name: prod.name,
+          price: prod.price,
+          quantity: quantities[prod._id],
+        })
+      );
+    } else {
+      message.warning("Please Login to add product to cart");
+    }
+  };
   return (
     <div>
       <Button color="dark" className="mt-4" onClick={() => navigate("/")}>
@@ -97,9 +119,19 @@ function SingleViewProducts() {
                 100
               </p>
               <div className="d-flex gap-3 mt-5">
-                <Button color="warning">-</Button>
-                <span className="mt-2">{quantity}</span>
-                <Button color="warning">+</Button>
+                <Button
+                  color="warning"
+                  onClick={() => minusQuantity(singleProduct)}
+                >
+                  -
+                </Button>
+                <span className="mt-2">{quantities[singleProduct._id]}</span>
+                <Button
+                  color="warning"
+                  onClick={() => plusQuantity(singleProduct)}
+                >
+                  +
+                </Button>
               </div>
               <div className="d-flex gap-16 mt-5">
                 <div>
@@ -116,7 +148,11 @@ function SingleViewProducts() {
                   <span style={{ fontSize: "20px" }}>4-5 Business days</span>
                 </div>
               </div>
-              <Button color="success" className="mt-5">
+              <Button
+                color="success"
+                className="mt-5"
+                onClick={() => addProductToCart(singleProduct)}
+              >
                 Add to cart <FaCartPlus className="ml-2 h-5 w-5" />
               </Button>
               <Collapse
@@ -152,7 +188,7 @@ function SingleViewProducts() {
                 />
               )}
             </Box>
-            {localStorage.getItem("userToken") ? (
+            {localStorage.getItem("logToken") ? (
               <Form onFinish={addReview}>
                 <Form.Item name="comment">
                   <TextArea placeholder="Add Review"></TextArea>

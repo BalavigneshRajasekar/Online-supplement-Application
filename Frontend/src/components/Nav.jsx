@@ -128,7 +128,7 @@ function Nav() {
                 </Badge>
               </IconButton>
 
-              {localStorage.getItem("user") ? (
+              {localStorage.getItem("logToken") ? (
                 <>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
