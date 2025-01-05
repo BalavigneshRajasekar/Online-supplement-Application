@@ -13,6 +13,7 @@ import Nav from "./components/Nav";
 import SingleViewProducts from "./routes/SingleViewProducts";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import { ToastContainer } from "react-toastify";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -42,6 +43,18 @@ function App() {
           </BrowserRouter>
         </ProductHandler>
       </Provider>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 }
