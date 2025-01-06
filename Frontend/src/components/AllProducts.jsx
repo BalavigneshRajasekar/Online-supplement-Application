@@ -28,10 +28,11 @@ function AllProducts() {
           name: prod.name,
           price: prod.price,
           quantity: quantities[prod._id],
+          image: prod.image[0],
         })
       );
     } else {
-      message.warning("Please Login to add product to cart")
+      message.warning("Please Login to add product to cart");
     }
   };
   return (

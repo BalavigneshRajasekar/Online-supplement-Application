@@ -101,7 +101,9 @@ function SeperateProducts() {
                     >
                       -
                     </Button>
-                    <span className="mt-2">{quantities[prod._id]}</span>
+                    <span className="mt-2">
+                      {quantities && quantities[prod._id]}
+                    </span>
                     <Button
                       variant="contained"
                       sx={{ bgcolor: "orange" }}

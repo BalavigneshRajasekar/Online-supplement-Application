@@ -11,6 +11,7 @@ const ProductHandler = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [singleProduct, setSingleProduct] = useState(null);
   const [quantities, setQuantities] = useState();
+  const [totalPrice, setTotalPrice] = useState();
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -69,6 +70,8 @@ const ProductHandler = ({ children }) => {
         setQuantities,
         plusQuantity,
         minusQuantity,
+        totalPrice,
+        setTotalPrice,
       }}
     >
       {children}

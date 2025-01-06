@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,11 +16,14 @@ import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import Cart from "./Cart";
 const pages = ["protein", "MassGainer", "Creatine"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function Nav() {
   const navigate = useNavigate();
+  const [toggle, setToggle] = useState(false);
+  const cart = useSelector((state) => state.products.cart);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -42,9 +45,18 @@ function Nav() {
   const navigateToProducts = (name) => {
     navigate(`/product/${name}`);
   };
+
+  const openCart = () => {
+    if (toggle) {
+      setToggle(false);
+    } else {
+      setToggle(true);
+    }
+  };
+
   return (
-    <div>
-      <AppBar position="static" sx={{ backgroundColor: "black" }}>
+    <div style={{ position: "relative" }}>
+      <AppBar position="fixed" sx={{ backgroundColor: "black" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Box sx={{ display: { xs: "none", md: "block" } }}>
@@ -122,8 +134,11 @@ function Nav() {
                 size="large"
                 aria-label="show 4 new mails"
                 color="inherit"
+                onClick={() => {
+                  openCart();
+                }}
               >
-                <Badge badgeContent={4} color="success">
+                <Badge badgeContent={cart.length} color="success">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
@@ -177,6 +192,7 @@ function Nav() {
           </Toolbar>
         </Container>
       </AppBar>
+      <Cart toggle={toggle}></Cart>
     </div>
   );
 }

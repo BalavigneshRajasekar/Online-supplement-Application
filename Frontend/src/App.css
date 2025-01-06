@@ -95,4 +95,40 @@ a {
   text-decoration: underline;
 }
 
-@media only screen and (max-width: 600px) {}
+
+
+/* cart screen styles */
+.transitions {
+  position: fixed;
+  transition: all 0.3s ease-in-out;
+  z-index: +1;
+  top: 70px;
+  left: 68vw;
+  transform: translateX(180%);
+
+
+}
+
+
+
+.toggle {
+  position: fixed;
+  transition: all 0.5s ease-in-out;
+  z-index: +1;
+  top: 70px;
+  right: 0;
+  transform: translateX(0%);
+}
+
+@media only screen and (max-width: 600px) {
+
+  /* Cart screen styles */
+  .transitions {
+    position: fixed;
+    transition: all 0.5s ease-in-out;
+    z-index: +1;
+    right: 0;
+    top: 100px;
+
+  }
+}

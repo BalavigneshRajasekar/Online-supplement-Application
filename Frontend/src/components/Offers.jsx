@@ -11,7 +11,7 @@ function Offers() {
   ];
   return (
     <div className="m-4">
-      <Slide autoplay>
+      <Slide autoplay arrows={false}>
         {image.map((fadeImage, index) => (
           <div key={index}>
             <img

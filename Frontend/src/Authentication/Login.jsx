@@ -125,6 +125,7 @@ function Login() {
           style={{ backgroundColor: "red", color: "white" }}
           iconPosition="start"
           icon={<ImConfused2 />}
+          onClick={() => navigate("/forgotPassword")}
         >
           Forgot Password
         </Button>
