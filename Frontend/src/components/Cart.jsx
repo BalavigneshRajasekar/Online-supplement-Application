@@ -3,14 +3,17 @@
 import { Box } from "@mui/material";
 import { Avatar, Button, Divider, List, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { useContext } from "react";
 import { Product } from "../context/Products";
+import { deleteCart } from "../store/slice";
 
 function Cart(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const cart = useSelector((state) => state.products.cart);
   const { totalPrice, setTotalPrice } = useContext(Product);
   const { toggle } = props;
@@ -46,7 +49,14 @@ function Cart(props) {
             dataSource={cart}
             renderItem={(item, index) => (
               <List.Item
-                actions={[<a key="list-loadmore-edit">Delete</a>]}
+                actions={[
+                  <a
+                    key="list-loadmore-edit"
+                    onClick={() => dispatch(deleteCart(item.id))}
+                  >
+                    Delete
+                  </a>,
+                ]}
                 key={index}
               >
                 <Skeleton avatar title={false} loading={item.loading} active>

@@ -15,9 +15,15 @@ const productSlice = createSlice({
         state.cart.push(action.payload);
       }
     },
+    deleteCart: (state, action) => {
+      console.log(action.payload);
+
+      let data = state.cart.filter((item) => item.id !== action.payload);
+      state.cart = data;
+    },
   },
 });
 
-export const { addCart, handleQuantity } = productSlice.actions;
+export const { addCart, handleQuantity, deleteCart } = productSlice.actions;
 
 export default productSlice.reducer;
