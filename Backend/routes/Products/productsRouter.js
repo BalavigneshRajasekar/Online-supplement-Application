@@ -54,6 +54,7 @@ productRouter.get("/products/type/:type", async (req, res) => {
 productRouter.post("/products/:id/review", loginAuth, async (req, res) => {
   const { id } = req.params;
   const { comment } = req.body;
+  console.log(id);
 
   try {
     // Create a new review
@@ -65,6 +66,7 @@ productRouter.post("/products/:id/review", loginAuth, async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
+    console.log(savedReview._id);
 
     product.reviews.push(savedReview._id);
     await product.save();
@@ -74,6 +76,7 @@ productRouter.post("/products/:id/review", loginAuth, async (req, res) => {
       .json({ message: "Review added to product", review: savedReview });
   } catch (err) {
     console.error(err);
+
     res.status(500).json({ message: "Server error" });
   }
 });

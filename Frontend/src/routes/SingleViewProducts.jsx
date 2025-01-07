@@ -12,7 +12,7 @@ import {
   message,
 } from "antd";
 import { Button } from "flowbite-react";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { FaCartPlus } from "react-icons/fa6";
 import { HiArrowLeft } from "react-icons/hi";
 import { FaTruck, FaTruckMonster } from "react-icons/fa";
@@ -52,6 +52,7 @@ const items = [
 
 function SingleViewProducts() {
   const { id } = useParams();
+  const formRef = useRef();
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const {
@@ -65,7 +66,6 @@ function SingleViewProducts() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(loading);
     if (singleProduct) {
       setLoading(false);
       console.log(singleProduct);
@@ -83,10 +83,11 @@ function SingleViewProducts() {
   }, []);
 
   const addReview = async (value) => {
-    const id = toast.loading("Review adding");
+    const load = toast.loading("Review adding");
+
     try {
       const response = await axios.post(
-        `https://supplement-application.onrender.com/api/p1/products/${id}/review`,
+        `http://localhost:3000/api/p1/products/${id}/review`,
         value,
         {
           headers: {
@@ -94,7 +95,9 @@ function SingleViewProducts() {
           },
         }
       );
-      toast.update(id, {
+      getSingleProductsById(id);
+      formRef.current.resetFields();
+      toast.update(load, {
         render: response.data.message,
         type: "success",
         isLoading: false,
@@ -104,7 +107,8 @@ function SingleViewProducts() {
         closeButton: true,
       });
     } catch (e) {
-      toast.update(id, {
+      setLoading(false);
+      toast.update(load, {
         render: e.response.data.message,
         type: "error",
         isLoading: false,
@@ -231,7 +235,7 @@ function SingleViewProducts() {
               )}
             </Box>
             {localStorage.getItem("logToken") ? (
-              <Form onFinish={addReview}>
+              <Form onFinish={addReview} ref={formRef}>
                 <Form.Item name="comment">
                   <TextArea placeholder="Add Review"></TextArea>
                 </Form.Item>
