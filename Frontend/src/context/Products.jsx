@@ -20,7 +20,7 @@ const ProductHandler = ({ children }) => {
     console.log(quantities);
 
     if (products.length > 0) {
-      let one = products.reduce((acc, item) => ({ ...acc, [item._id]: 0 }), {});
+      let one = products.reduce((acc, item) => ({ ...acc, [item._id]: 1 }), {});
       setQuantities(one);
     }
   }, [products]);

@@ -52,7 +52,7 @@ function SeperateProducts() {
   };
   return (
     <>
-      <div className="mt-10">
+      <div className="mt-20">
         <Button
           color="dark"
           onClick={() => {

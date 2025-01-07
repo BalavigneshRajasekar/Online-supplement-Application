@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Cart from "./Cart";
 const pages = ["protein", "MassGainer", "Creatine"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Logout"];
 function Nav() {
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
@@ -51,6 +51,18 @@ function Nav() {
       setToggle(false);
     } else {
       setToggle(true);
+    }
+  };
+
+  const handleSettings = (settings) => {
+    switch (settings) {
+      case "Profile":
+        break;
+      case "Logout":
+        console.log("logout");
+
+        localStorage.removeItem("logToken");
+        break;
     }
   };
 
@@ -172,7 +184,10 @@ function Nav() {
                   >
                     {settings.map((setting) => (
                       <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                        <Typography sx={{ textAlign: "center" }}>
+                        <Typography
+                          sx={{ textAlign: "center" }}
+                          onClick={() => handleSettings(setting)}
+                        >
                           {setting}
                         </Typography>
                       </MenuItem>
