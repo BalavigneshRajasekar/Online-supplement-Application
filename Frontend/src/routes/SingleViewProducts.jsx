@@ -1,6 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { Box } from "@mui/material";
-import { Card, Rate, Collapse, Divider, List, Avatar, Form, Input, message } from "antd";
+import {
+  Card,
+  Rate,
+  Collapse,
+  Divider,
+  List,
+  Avatar,
+  Form,
+  Input,
+  message,
+} from "antd";
 import { Button } from "flowbite-react";
 import React, { useContext, useEffect } from "react";
 import { FaCartPlus } from "react-icons/fa6";
@@ -15,6 +25,8 @@ import { LiaRupeeSignSolid } from "react-icons/lia";
 import { Badge } from "flowbite-react";
 import { useDispatch } from "react-redux";
 import { addCart } from "../store/slice";
+import { toast } from "react-toastify";
+import axios from "axios";
 const { TextArea } = Input;
 // FAQ Questions
 const items = [
@@ -70,8 +82,38 @@ function SingleViewProducts() {
     };
   }, []);
 
-  const addReview = (value) => {
-    console.log(value);
+  const addReview = async (value) => {
+    const id = toast.loading("Review adding");
+    try {
+      const response = await axios.post(
+        `https://supplement-application.onrender.com/api/p1/products/${id}/review`,
+        value,
+        {
+          headers: {
+            Authorization: localStorage.getItem("logToken"),
+          },
+        }
+      );
+      toast.update(id, {
+        render: response.data.message,
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+        progress: undefined,
+        draggable: true,
+        closeButton: true,
+      });
+    } catch (e) {
+      toast.update(id, {
+        render: e.response.data.message,
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+        progress: undefined,
+        draggable: true,
+        closeButton: true,
+      });
+    }
   };
 
   const addProductToCart = (prod) => {

@@ -53,11 +53,11 @@ productRouter.get("/products/type/:type", async (req, res) => {
 
 productRouter.post("/products/:id/review", loginAuth, async (req, res) => {
   const { id } = req.params;
-  const { rating, comment } = req.body;
+  const { comment } = req.body;
 
   try {
     // Create a new review
-    const newReview = new Review({ comment, rating, user: req.user.id });
+    const newReview = new Review({ comment, user: req.user.id });
     const savedReview = await newReview.save();
 
     // Add the review to the product
