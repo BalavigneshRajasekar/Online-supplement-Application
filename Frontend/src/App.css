@@ -3,17 +3,18 @@
   background-color: red;
   transition: 0.5s ease-in-out;
   transform: scale(0.8);
-
 }
 
 /* img button style */
-
+/* .imgHover:hover {
+  transform: scale(1.1);
+  transition: 0.5s ease-in-out;
+} */
 
 .imgBtnAction:hover {
   transform: scale(0.8);
   transition: 0.5s ease-in-out;
 }
-
 
 a {
   cursor: pointer;
@@ -43,9 +44,14 @@ a {
   box-sizing: border-box;
   width: 80px;
   height: 80px;
-  background: linear-gradient(180deg, rgba(248, 248, 248, 0) 50%, #F8F8F888 100%);
-  border: 1px solid #F7F7F8;
-  filter: drop-shadow(0px 0.5px 0.5px #EFEFEF) drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+  background: linear-gradient(
+    180deg,
+    rgba(248, 248, 248, 0) 50%,
+    #f8f8f888 100%
+  );
+  border: 1px solid #f7f7f8;
+  filter: drop-shadow(0px 0.5px 0.5px #efefef)
+    drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
   border-radius: 11px;
 }
 
@@ -69,7 +75,7 @@ a {
   max-width: 80%;
   text-align: center;
   line-height: 1.1rem;
-  color: #8B8E98
+  color: #8b8e98;
 }
 
 .separator {
@@ -78,7 +84,7 @@ a {
   align-items: center;
   justify-content: center;
   gap: 30px;
-  color: #8B8E98;
+  color: #8b8e98;
 }
 
 .separator .line {
@@ -91,7 +97,7 @@ a {
 
 .note {
   font-size: 0.75rem;
-  color: #8B8E98;
+  color: #8b8e98;
   text-decoration: underline;
 }
 
@@ -211,11 +217,7 @@ a {
   top: 70px;
   left: 68vw;
   transform: translateX(180%);
-
-
 }
-
-
 
 .toggle {
   position: fixed;
@@ -227,7 +229,6 @@ a {
 }
 
 @media only screen and (max-width: 600px) {
-
   /* Cart screen styles */
   .transitions {
     position: fixed;
@@ -235,6 +236,5 @@ a {
     z-index: +1;
     right: 0;
     top: 100px;
-
   }
 }

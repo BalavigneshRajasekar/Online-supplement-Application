@@ -10,6 +10,7 @@ export const Product = createContext();
 const ProductHandler = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [singleProduct, setSingleProduct] = useState(null);
+  const [toggle, setToggle] = useState(false);
   const [quantities, setQuantities] = useState();
   const [totalPrice, setTotalPrice] = useState();
   useEffect(() => {
@@ -72,6 +73,8 @@ const ProductHandler = ({ children }) => {
         minusQuantity,
         totalPrice,
         setTotalPrice,
+        toggle,
+        setToggle,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Box } from "@mui/material";
+import { Box, Chip } from "@mui/material";
 import {
   Card,
   Rate,
@@ -135,7 +135,7 @@ function SingleViewProducts() {
     }
   };
   return (
-    <div>
+    <div className="mt-20">
       <Button color="dark" className="mt-4" onClick={() => navigate("/")}>
         <HiArrowLeft className="mr-2 h-5 w-5" />
         Back
@@ -160,10 +160,18 @@ function SingleViewProducts() {
               <Rate count={5} disabled value={2} className="mt-3"></Rate>
               <span className="text-lg ml-3">{`(${singleProduct.reviews.length}reviews)`}</span>
               <h3 className="mt-3">{singleProduct.description}</h3>
-              <p>
-                Price: <LiaRupeeSignSolid style={{ display: "inline-block" }} />
-                100
-              </p>
+              <Chip
+                label={singleProduct.quantity > 0 ? "In-stock" : "Out of Stock"}
+                color={singleProduct.quantity > 0 ? "success" : "failure"}
+              ></Chip>
+              <h3 className="font-bold mt-9 inline-block m;-3">
+                <LiaRupeeSignSolid style={{ display: "inline-block" }} />
+                {singleProduct.price}
+              </h3>
+              <span className="inline-block ml-3 text-decoration-line-through text-red-700">
+                {singleProduct.price + 500}
+              </span>
+
               <div className="d-flex gap-3 mt-5">
                 <Button
                   color="warning"

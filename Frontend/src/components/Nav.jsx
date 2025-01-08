@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -18,11 +18,13 @@ import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Cart from "./Cart";
+import { Product } from "../context/Products";
 const pages = ["protein", "MassGainer", "Creatine"];
-const settings = ["Profile", "Logout"];
+const settings = ["Profile", "MyOrders", "Logout"];
 function Nav() {
   const navigate = useNavigate();
-  const [toggle, setToggle] = useState(false);
+  const navRef = useRef();
+  const { toggle, setToggle } = useContext(Product);
   const cart = useSelector((state) => state.products.cart);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -53,6 +55,17 @@ function Nav() {
       setToggle(true);
     }
   };
+  useEffect(() => {
+    const data = (e) => {
+      if (!navRef.current.contains(e.target)) {
+        setToggle(false);
+      }
+    };
+    document.addEventListener("mousedown", data);
+    return () => {
+      document.removeEventListener("mousedown", data);
+    };
+  }, [toggle]);
 
   const handleSettings = (settings) => {
     switch (settings) {
@@ -63,11 +76,13 @@ function Nav() {
 
         localStorage.removeItem("logToken");
         break;
+      case "MyOrders":
+        break;
     }
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative" }} ref={navRef}>
       <AppBar position="fixed" sx={{ backgroundColor: "black" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>

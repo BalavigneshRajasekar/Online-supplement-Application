@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import { Button } from "@mui/material";
+import { Button, Chip } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { HiArrowLeft, HiHome } from "react-icons/hi";
@@ -10,6 +10,7 @@ import { Grid2 } from "@mui/material";
 import { Product } from "../context/Products";
 import { useDispatch } from "react-redux";
 import { addCart } from "../store/slice";
+import { LiaRupeeSignSolid } from "react-icons/lia";
 
 function SeperateProducts() {
   const dispatch = useDispatch();
@@ -52,9 +53,11 @@ function SeperateProducts() {
   };
   return (
     <>
-      <div className="mt-20">
+      <div className="mt-20 p-1">
         <Button
-          color="dark"
+          color="inherit"
+          variant="contained"
+          className="bg-black text-white"
           onClick={() => {
             navigate("/");
           }}
@@ -93,6 +96,11 @@ function SeperateProducts() {
                       {prod.name}
                     </h5>
                   </a>
+                  <Chip
+                    label={prod.quantity > 0 ? "In-stock" : "Out of Stock"}
+                    color={prod.quantity > 0 ? "success" : "failure"}
+                    sx={{ width: "fit-content" }}
+                  ></Chip>
                   <div className="d-flex gap-3 mt-2">
                     <Button
                       variant="contained"
@@ -115,8 +123,12 @@ function SeperateProducts() {
                   <Rate disabled value={"2"}></Rate>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                      {`Rs : ${prod.price}`}
+                    <span className="text-lg font-bold text-gray-900 dark:text-white">
+                      <LiaRupeeSignSolid style={{ display: "inline-block" }} />{" "}
+                      {prod.price}
+                      <span className="ml-2 text-decoration-line-through text-red-700">
+                        {prod.price + 500}
+                      </span>
                     </span>
                     <a
                       onClick={() => addProductToCart(prod)}

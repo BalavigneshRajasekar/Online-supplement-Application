@@ -5,17 +5,17 @@ import "react-slideshow-image/dist/styles.css";
 
 function Offers() {
   const image = [
-    { url: "banner1.jpg" },
-    { url: "banner2.jpg" },
-    { url: "banner3.jpg" },
+    { url: "banner1.png" },
+    { url: "banner2.png" },
+    { url: "banner3.png" },
   ];
   return (
-    <div className="m-4">
+    <div className="m-4 ">
       <Slide autoplay arrows={false}>
         {image.map((fadeImage, index) => (
           <div key={index}>
             <img
-              style={{ width: "100%", height: "400px" }}
+              style={{ width: "100%", height: "400px", borderRadius: "30px" }}
               src={fadeImage.url}
             />
             <h2>{fadeImage.caption}</h2>

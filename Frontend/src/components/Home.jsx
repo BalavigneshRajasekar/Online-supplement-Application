@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import Nav from "./Nav";
+import React, { useContext } from "react";
 import Offers from "./Offers";
 import AllProducts from "./AllProducts";
-import Footer from "./Footer";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import Cart from "./Cart";
+import { Product } from "../context/Products";
+import FooterMenu from "./FooterMenu";
 
 function Home() {
+  const { setToggle } = useContext(Product);
   const product = useSelector((state) => state.products.products);
   console.log("home" + product);
 
@@ -16,7 +17,7 @@ function Home() {
     <div style={{ position: "relative" }} className="mt-5">
       <Offers></Offers>
       <AllProducts></AllProducts>
-      <Footer></Footer>
+      <FooterMenu></FooterMenu>
     </div>
   );
 }
