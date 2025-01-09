@@ -14,6 +14,7 @@ import SingleViewProducts from "./routes/SingleViewProducts";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { ToastContainer } from "react-toastify";
+import Checkout from "./components/Checkout";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -39,6 +40,7 @@ function App() {
                 path="/products/:id"
                 element={<SingleViewProducts />}
               ></Route>
+              <Route path="/Checkout" element={<Checkout />}></Route>
             </Routes>
           </BrowserRouter>
         </ProductHandler>

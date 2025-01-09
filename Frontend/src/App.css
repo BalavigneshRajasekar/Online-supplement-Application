@@ -228,6 +228,8 @@ a {
   transform: translateX(0%);
 }
 
+/* Footer style */
+
 @media only screen and (max-width: 600px) {
   /* Cart screen styles */
   .transitions {

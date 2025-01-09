@@ -11,12 +11,13 @@ import {
 
 function FooterMenu() {
   return (
-    <div>
+    <div className="mt-5">
       <Footer style={{ backgroundColor: "black" }}>
         <div className="w-full p-4">
           <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
             <div>
               <Footer.Brand
+                className=""
                 href="https://flowbite.com"
                 src="logo.png"
                 alt="Dark knight supplements"
@@ -24,11 +25,12 @@ function FooterMenu() {
               />
             </div>
             <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
-              <div>
-                <Footer.Title title="about" />
+              <div className="text">
+                <Footer.Title title="Quick Links" />
                 <Footer.LinkGroup col>
-                  <Footer.Link href="#"></Footer.Link>
-                  <Footer.Link href="#">Tailwind CSS</Footer.Link>
+                  <Footer.Link href="#">Proteins</Footer.Link>
+                  <Footer.Link href="#">Mass Gainers</Footer.Link>
+                  <Footer.Link href="#">Creatine</Footer.Link>
                 </Footer.LinkGroup>
               </div>
               <div>

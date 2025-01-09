@@ -93,7 +93,14 @@ function Cart(props) {
               Total :<LiaRupeeSignSolid style={{ display: "inline-block" }} />
               {totalPrice}
             </p>
-            <Button type="primary">Go to checkout</Button>
+            <Button
+              type="primary"
+              onClick={() => {
+                navigate("/Checkout");
+              }}
+            >
+              Go to checkout
+            </Button>
           </div>
         </>
       ) : (
