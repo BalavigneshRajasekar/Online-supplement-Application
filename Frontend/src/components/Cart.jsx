@@ -16,7 +16,7 @@ function Cart(props) {
 
   const cart = useSelector((state) => state.products.cart);
   const { totalPrice, setTotalPrice } = useContext(Product);
-  const { toggle } = props;
+  const { toggle, setToggle } = props;
 
   useEffect(() => {
     console.log("cart");
@@ -28,6 +28,11 @@ function Cart(props) {
     setTotalPrice(subTotal);
     console.log(subTotal);
   }, [cart]);
+
+  const goToCheckout = () => {
+    navigate("/checkout");
+    setToggle(false);
+  };
   return (
     <Box
       className={props.toggle ? "toggle" : "transitions"}
@@ -93,12 +98,7 @@ function Cart(props) {
               Total :<LiaRupeeSignSolid style={{ display: "inline-block" }} />
               {totalPrice}
             </p>
-            <Button
-              type="primary"
-              onClick={() => {
-                navigate("/Checkout");
-              }}
-            >
+            <Button type="primary" onClick={goToCheckout}>
               Go to checkout
             </Button>
           </div>

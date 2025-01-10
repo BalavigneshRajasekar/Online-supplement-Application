@@ -222,7 +222,7 @@ function Nav() {
           </Toolbar>
         </Container>
       </AppBar>
-      <Cart toggle={toggle}></Cart>
+      <Cart toggle={toggle} setToggle={setToggle}></Cart>
     </div>
   );
 }

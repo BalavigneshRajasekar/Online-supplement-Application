@@ -5,7 +5,7 @@ const productSlice = createSlice({
   name: "products",
   initialState: {
     cart: [],
-    deliveryDetails: {},
+    deliveryDetails: null,
   },
   reducers: {
     addCart: (state, action) => {
@@ -22,9 +22,16 @@ const productSlice = createSlice({
       let data = state.cart.filter((item) => item.id !== action.payload);
       state.cart = data;
     },
+
+    setDeliveryDetails: (state, action) => {
+      console.log(action.payload);
+
+      state.deliveryDetails = action.payload;
+    },
   },
 });
 
-export const { addCart, handleQuantity, deleteCart } = productSlice.actions;
+export const { addCart, handleQuantity, deleteCart, setDeliveryDetails } =
+  productSlice.actions;
 
 export default productSlice.reducer;
