@@ -2,7 +2,7 @@
 import { Box, Divider } from "@mui/material";
 import { Button, Form, Input, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, List, Skeleton } from "antd";
 import { LiaRupeeSignSolid } from "react-icons/lia";
@@ -10,10 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { Product } from "../context/Products";
 import { toast } from "react-toastify";
 import { setDeliveryDetails } from "../store/slice";
-const data = [
-  { value: "India", label: "India" },
-  { value: "united States", label: "United States" },
-];
+import axios from "axios";
+let countries = null;
 function Checkout() {
   const { cart, deliveryDetails } = useSelector((state) => state.products);
   const dispatch = useDispatch();
@@ -25,9 +23,31 @@ function Checkout() {
   };
   useEffect(() => {
     console.log(cart);
+    if (countries) {
+      return;
+    } else {
+      getCountries(); // Fetch countries for dropdown
+    }
     console.log(deliveryDetails);
   }, []);
 
+  const getCountries = async () => {
+    try {
+      const response = await axios.get("https://api.countrylayer.com/v2/all", {
+        params: {
+          access_key: "3e38f13227f37777c078d16d6f2c2236",
+        },
+      });
+
+      countries = response.data.map((key) => ({
+        label: key.name,
+        value: key.name,
+      }));
+      console.log(countries);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const processPayment = () => {
     // Payment gateway integration goes here
     if (deliveryDetails) {
@@ -91,9 +111,16 @@ function Checkout() {
             rules={[{ required: true, message: "Plz select country" }]}
           >
             <Select
-              options={data}
+              showSearch
+              style={{ outline: "none" }}
+              options={countries}
               size="large"
               defaultValue="Select Country"
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
             ></Select>
           </Form.Item>
           <Form.Item

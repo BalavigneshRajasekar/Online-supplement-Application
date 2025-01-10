@@ -9,9 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCart } from "../store/slice";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import ScrollAnimation from "react-animate-on-scroll";
+import Search from "antd/es/transfer/search";
 function AllProducts() {
-  const { products, quantities, plusQuantity, minusQuantity } =
-    useContext(Product);
+  const {
+    products,
+    quantities,
+    plusQuantity,
+    minusQuantity,
+    filterProducts,
+    setFilterProducts,
+  } = useContext(Product);
   const cart = useSelector((state) => state.products.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,7 +26,7 @@ function AllProducts() {
   const navigateToProducts = (name) => {
     navigate(`/product/${name}`);
   };
-  console.log(cart);
+
   const addProductToCart = (prod) => {
     if (localStorage.getItem("logToken")) {
       dispatch(
@@ -34,6 +41,14 @@ function AllProducts() {
     } else {
       message.warning("Please Login to add product to cart");
     }
+  };
+  const searchByName = (e) => {
+    setFilterProducts(
+      products.filter((product) =>
+        product.name.toLowerCase().includes(e.target.value)
+      )
+    );
+    console.log(filterProducts);
   };
   return (
     <>
@@ -100,7 +115,13 @@ function AllProducts() {
         </Grid2>
       </Grid2>
       <Divider style={{ fontSize: "30px" }}>All Products</Divider>
-
+      <Search
+        prefixCls="p-2 "
+        placeholder="Search Products"
+        onChange={(e) => {
+          searchByName(e);
+        }}
+      ></Search>
       {products.length > 0 ? (
         <Grid2
           container
@@ -112,7 +133,7 @@ function AllProducts() {
         >
           {/* Products List */}
 
-          {products.map((prod, index) => (
+          {filterProducts.map((prod, index) => (
             <Grid2
               key={index}
               size={{ xs: 12, md: 3 }}

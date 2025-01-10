@@ -9,12 +9,14 @@ export const Product = createContext();
 
 const ProductHandler = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [filterProducts, setFilterProducts] = useState([]);
   const [singleProduct, setSingleProduct] = useState(null);
   const [toggle, setToggle] = useState(false);
   const [quantities, setQuantities] = useState();
   const [totalPrice, setTotalPrice] = useState();
   useEffect(() => {
     getAllProducts();
+    console.log("this executed");
   }, []);
   useEffect(() => {
     console.log("before");
@@ -32,6 +34,7 @@ const ProductHandler = ({ children }) => {
       );
 
       setProducts(response.data);
+      setFilterProducts(response.data);
     } catch (e) {
       console.error("Error fetching products:", e);
     }
@@ -75,6 +78,8 @@ const ProductHandler = ({ children }) => {
         setTotalPrice,
         toggle,
         setToggle,
+        filterProducts,
+        setFilterProducts,
       }}
     >
       {children}

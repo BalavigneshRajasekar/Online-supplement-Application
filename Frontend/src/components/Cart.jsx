@@ -46,6 +46,7 @@ function Cart(props) {
         borderRadius: "10px",
       }}
     >
+      <Divider>{cart.length} Cart Items</Divider>
       {cart.length > 0 ? (
         <>
           <List
