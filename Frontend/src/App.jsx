@@ -16,8 +16,11 @@ import store from "./store/store";
 import { ToastContainer } from "react-toastify";
 import Checkout from "./components/Checkout";
 import axios from "axios";
+import Payment from "./components/Payment";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 function App() {
-  const [stripeAPI, setStripeAPI] = useState("");
+  const [stripeAPI, setStripeAPI] = useState(null);
 
   useEffect(() => {
     getStripeAPI();
@@ -28,7 +31,7 @@ function App() {
       const response = await axios.get(
         "https://supplement-application.onrender.com/api/v1/stripe/apiKey"
       );
-      console.log(response.data);
+      setStripeAPI(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -57,6 +60,16 @@ function App() {
                 element={<SingleViewProducts />}
               ></Route>
               <Route path="/Checkout" element={<Checkout />}></Route>
+              {stripeAPI && (
+                <Route
+                  path="/payment"
+                  element={
+                    <Elements stripe={loadStripe(stripeAPI)}>
+                      <Payment />
+                    </Elements>
+                  }
+                ></Route>
+              )}
             </Routes>
           </BrowserRouter>
         </ProductHandler>

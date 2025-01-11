@@ -5,6 +5,8 @@ const loginAuth = require("../../middlewares/loginAuth");
 const paymentRouter = express.Router();
 
 paymentRouter.post("/payment", loginAuth, async (req, res) => {
+  console.log(req.body);
+
   const { amount, shipping } = req.body;
   try {
     const paymentIntent = await stripe.paymentIntents.create({

@@ -26,23 +26,28 @@ function Checkout() {
     if (countries) {
       return;
     } else {
+      console.log("countries");
+
       getCountries(); // Fetch countries for dropdown
     }
-    console.log(deliveryDetails);
   }, []);
 
   const getCountries = async () => {
     try {
-      const response = await axios.get("https://api.countrylayer.com/v2/all", {
-        params: {
-          access_key: "3e38f13227f37777c078d16d6f2c2236",
-        },
-      });
+      const response = await axios.get(
+        "https://api.countrystatecity.in/v1/countries",
+        {
+          headers: {
+            "X-CSCAPI-KEY": "API_KEY",
+          },
+        }
+      );
 
       countries = response.data.map((key) => ({
         label: key.name,
         value: key.name,
       }));
+      localStorage.setItem("countries", JSON.stringify(countries));
       console.log(countries);
     } catch (e) {
       console.log(e);
@@ -51,7 +56,7 @@ function Checkout() {
   const processPayment = () => {
     // Payment gateway integration goes here
     if (deliveryDetails) {
-      toast.success("Payment successful");
+      navigate("/payment");
     } else {
       toast.warning("Please fill in the delivery details");
     }
@@ -106,7 +111,7 @@ function Checkout() {
             name="Country"
             rules={[{ required: true, message: "Plz select country" }]}
           >
-            <Select
+            {/* <Select
               showSearch
               options={countries}
               size="large"
@@ -116,13 +121,24 @@ function Checkout() {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-            ></Select>
+            ></Select> */}
+            <Input placeholder="Country" className="border"></Input>
           </Form.Item>
           <Form.Item
             name="Pincode"
             rules={[{ required: true, message: "Plz enter Pincode" }]}
           >
-            <Input placeholder="10001" type="number" className="border" />
+            <Input placeholder="Pin code" type="number" className="border" />
+          </Form.Item>
+          <Form.Item
+            name="Phone"
+            rules={[{ required: true, message: "Plz enter Phone number" }]}
+          >
+            <Input
+              placeholder="Phone Number"
+              type="number"
+              className="border"
+            />
           </Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
