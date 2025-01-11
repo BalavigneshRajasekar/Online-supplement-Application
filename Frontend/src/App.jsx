@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import ProductHandler from "./context/Products";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,8 +15,24 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { ToastContainer } from "react-toastify";
 import Checkout from "./components/Checkout";
+import axios from "axios";
 function App() {
-  const [count, setCount] = useState(0);
+  const [stripeAPI, setStripeAPI] = useState("");
+
+  useEffect(() => {
+    getStripeAPI();
+  }, []);
+
+  const getStripeAPI = async () => {
+    try {
+      const response = await axios.get(
+        "https://supplement-application.onrender.com/api/v1/stripe/apiKey"
+      );
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>

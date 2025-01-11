@@ -22,7 +22,7 @@ paymentRouter.post("/payment", loginAuth, async (req, res) => {
   }
 });
 
-paymentRouter.get("/stripe/apiKey", () => {
+paymentRouter.get("/stripe/apiKey", (req, res) => {
   res.status(200).send(process.env.STRIPE_API);
 });
 
