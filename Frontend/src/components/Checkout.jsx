@@ -74,7 +74,7 @@ function Checkout() {
             name="Name"
             rules={[{ required: true, message: "Plz enter name" }]}
           >
-            <Input className="border" placeholder="Enter Name" />
+            <Input className="border" placeholder="Name" />
           </Form.Item>
           <Form.Item
             name="Email"
@@ -82,29 +82,25 @@ function Checkout() {
               { required: true, message: "Plz enter Email", type: "email" },
             ]}
           >
-            <Input placeholder="john.doe@example.com" className="border" />
+            <Input placeholder="Email" className="border" />
           </Form.Item>
           <Form.Item
             name="Address"
             rules={[{ required: true, message: "Plz enter Address" }]}
           >
-            <TextArea
-              placeholder="123 Main St"
-              size="large"
-              className="border"
-            />
+            <TextArea placeholder="Address" size="large" className="border" />
           </Form.Item>
           <Form.Item
             name="City"
             rules={[{ required: true, message: "Plz enter City" }]}
           >
-            <Input placeholder="New York" className="border" />
+            <Input placeholder="City" className="border" />
           </Form.Item>
           <Form.Item
             name="State"
             rules={[{ required: true, message: "Plz enter State" }]}
           >
-            <Input placeholder="NY" className="border" />
+            <Input placeholder="State" className="border" />
           </Form.Item>
           <Form.Item
             name="Country"
@@ -112,7 +108,6 @@ function Checkout() {
           >
             <Select
               showSearch
-              style={{ outline: "none" }}
               options={countries}
               size="large"
               defaultValue="Select Country"
