@@ -4,6 +4,8 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setCart, setDeliveryDetails } from "../store/slice";
+import { toast } from "react-toastify";
+import { message } from "antd";
 
 export const Product = createContext();
 
@@ -83,6 +85,34 @@ const ProductHandler = ({ children }) => {
 
       dispatch(setDeliveryDetails(response.data.data));
     } catch (e) {
+      toast.error(e.response.data.message);
+    }
+  };
+  const addDeliveryDetails = async (values) => {
+    const loading = toast.loading("Updating delivery details...");
+    try {
+      const response = await axios.post(
+        "https://supplement-application.onrender.com/api/v1/Shipping/details",
+        values,
+        {
+          headers: {
+            Authorization: localStorage.getItem("logToken"),
+          },
+        }
+      );
+      console.log(response.data);
+
+      dispatch(setDeliveryDetails(response.data.data));
+      toast.update(loading, {
+        render: response.data.message,
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+        progress: undefined,
+        draggable: true,
+        closeButton: true,
+      });
+    } catch (e) {
       console.error("Error fetching delivery details:", e);
     }
   };
@@ -106,6 +136,7 @@ const ProductHandler = ({ children }) => {
         filterProducts,
         setFilterProducts,
         getDeliveryDetails,
+        addDeliveryDetails,
       }}
     >
       {children}
