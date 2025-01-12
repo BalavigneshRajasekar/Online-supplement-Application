@@ -11,6 +11,8 @@ const userSchema = new mongoose.Schema({
   state: { type: String, default: null },
   pinCode: { type: String, default: null },
   resetCode: { type: String, default: null },
+  shippingDetails: { type: Object, default: null },
+
   role: {
     type: String,
     enum: ["Admin", "User"],

@@ -19,8 +19,6 @@ function Cart(props) {
   const { toggle, setToggle } = props;
 
   useEffect(() => {
-    console.log("cart");
-
     const subTotal = cart.reduce(
       (acc, curr) => acc + curr.price * curr.quantity,
       0

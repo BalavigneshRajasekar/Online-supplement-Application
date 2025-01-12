@@ -2,6 +2,8 @@
 /* eslint-disable no-unused-vars */
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setCart } from "../store/slice";
 
 export const Product = createContext();
 
@@ -14,8 +16,12 @@ const ProductHandler = ({ children }) => {
   const [toggle, setToggle] = useState(false);
   const [quantities, setQuantities] = useState();
   const [totalPrice, setTotalPrice] = useState();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     getAllProducts();
+    const cartData = JSON.parse(localStorage.getItem("cart"));
+    dispatch(setCart(cartData));
     console.log("this executed");
   }, []);
   useEffect(() => {
@@ -62,6 +68,7 @@ const ProductHandler = ({ children }) => {
       setQuantities((prev) => ({ ...prev, [prod._id]: prev[prod._id] - 1 }));
     }
   };
+
   return (
     <Product.Provider
       value={{

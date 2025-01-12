@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Product } from "../context/Products";
 import {
   CardCvcElement,
@@ -9,23 +9,28 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Button } from "antd";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Box, Grid2 } from "@mui/material";
+import { setCart } from "../store/slice";
 
 function Payment() {
   const { cart, deliveryDetails } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const element = useElements();
   const stripe = useStripe();
   const { totalPrice } = useContext(Product);
+
+  // Payment data need to send server
   const paymentData = {
     amount: totalPrice,
     shipping: {
       name: deliveryDetails.Name,
       address: {
         city: deliveryDetails.City,
+        line1: deliveryDetails.Address,
         postal_code: deliveryDetails.Pincode,
         country: deliveryDetails.Country,
         state: deliveryDetails.State,
@@ -33,15 +38,18 @@ function Payment() {
       phone: deliveryDetails.Phone,
     },
   };
-  useEffect(() => {
-    console.log("");
-  }, []);
+  useEffect(() => {}, []);
 
+  // Here we get the payment intent from server and validate the payment
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const loading = toast.loading("Payment Processing.....");
+    const btn = document.querySelector("btn");
+
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/payment",
+        "https://supplement-application.onrender.com/api/v1/payment",
         paymentData,
         {
           headers: {
@@ -69,115 +77,71 @@ function Payment() {
         return;
       } else {
         if ((await result).paymentIntent.status === "succeeded") {
-          toast.success("Payment Successful", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
+          localStorage.removeItem("cart"); // remove from localStorage
+          dispatch(setCart(null)); // reset cart state
+          toast.update(loading, {
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
             progress: undefined,
+            draggable: true,
+            closeButton: true,
+            render: "Payment successfully done",
           });
           navigate("/");
         } else {
-          toast.error("Payment Failed", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
+          toast.update(loading, {
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
             progress: undefined,
+            draggable: true,
+            closeButton: true,
+            render: result.error.message,
           });
         }
       }
     } catch (e) {
-      console.error("Error:", e);
+      console.log(e);
+
+      toast.update(loading, {
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+        progress: undefined,
+        draggable: true,
+        closeButton: true,
+        render: e.response.data.message,
+      });
     }
   };
   return (
     <div className="w-100 mt-10">
-      {/* <div className="modal">
-        <form className="form">
-          <div className="separator">
-            <hr className="line" />
-            <p>or pay using credit card</p>
-            <hr className="line" />
-          </div>
-          <div className="credit-card-info--form">
-            <div className="input_container">
-              <label htmlFor="password_field" className="input_label">
-                Card holder full name
-              </label>
-              <input
-                id="password_field"
-                className="input_field"
-                type="text"
-                name="input-name"
-                title="Inpit title"
-                placeholder="Enter your full name"
-              />
-            </div>
-            <div className="input_container">
-              <label htmlFor="password_field" className="input_label">
-                Card Number
-              </label>
-              <CardNumberElement
-                id="password_field"
-                className="input_field"
-                type="number"
-                name="input-name"
-                title="Inpit title"
-                placeholder="0000 0000 0000 0000"
-              />
-            </div>
-            <div className="input_container">
-              <label htmlFor="password_field" className="input_label">
-                Expiry Date / CVV
-              </label>
-              <div className="split">
-                <CardExpiryElement
-                  id="password_field"
-                  className="input_field"
-                  type="text"
-                  name="input-name"
-                  title="Expiry Date"
-                  placeholder="01/23"
-                />
-                <CardCvcElement
-                  id="password_field"
-                  className="input_field"
-                  type="number"
-                  name="cvv"
-                  title="CVV"
-                  placeholder="CVV"
-                />
-              </div>
-            </div>
-          </div>
-          <button className="purchase--btn">Checkout</button>
-        </form>
-      </div> */}
       <h1>Card details</h1>
-      <div className="p-5">
-        <form onSubmit={handleSubmit}>
-          <CardNumberElement
-            className="form-control"
-            options={{ style: { base: { fontSize: "16px" } } }}
-          ></CardNumberElement>
-          <CardExpiryElement
-            className="form-control"
-            options={{ style: { base: { fontSize: "16px" } } }}
-          ></CardExpiryElement>
-          <CardCvcElement
-            className="form-control"
-            options={{ style: { base: { fontSize: "16px" } } }}
-          ></CardCvcElement>
-          <Button type="primary" htmlType="submit">
-            Submit Payment
-          </Button>
+      <Box
+        className="p-5  bg-dark rounded-lg "
+        sx={{ width: { xs: "100%", md: "50%" } }}
+      >
+        <form onSubmit={handleSubmit} className="w-100">
+          <CardNumberElement className="form-control h-16"></CardNumberElement>
+          <Grid2 container spacing={3} sx={{ marginTop: 5 }}>
+            <Grid2 size={8}>
+              <CardExpiryElement className="form-control h-16"></CardExpiryElement>
+            </Grid2>
+            <Grid2 size={4}>
+              <CardCvcElement className="form-control h-16"></CardCvcElement>
+            </Grid2>
+          </Grid2>
+          <button
+            id="btn"
+            type="submit"
+            className="w-100 mt-3 bg-green-500 hover:bg-green-700 rounded-md text-white h-10 "
+          >
+            Pay Now -{" "}
+            <span className="text-lg font-bold">Rs. {totalPrice}</span>
+          </button>
         </form>
-      </div>
+      </Box>
     </div>
   );
 }

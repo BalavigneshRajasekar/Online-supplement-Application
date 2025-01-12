@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./App.css";
-import ProductHandler from "./context/Products";
+import ProductHandler, { Product } from "./context/Products";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
@@ -19,11 +19,14 @@ import axios from "axios";
 import Payment from "./components/Payment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+
+let countries = null;
 function App() {
   const [stripeAPI, setStripeAPI] = useState(null);
 
   useEffect(() => {
     getStripeAPI();
+    getCountries();
   }, []);
 
   const getStripeAPI = async () => {
@@ -32,6 +35,27 @@ function App() {
         "https://supplement-application.onrender.com/api/v1/stripe/apiKey"
       );
       setStripeAPI(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const getCountries = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.countrystatecity.in/v1/countries",
+        {
+          headers: {
+            "X-CSCAPI-KEY":
+              "dFJ4Tm44TVBVcnVOWUlyblJGQzVCQm50bW0zME1MMEh4VjBGQk5CTg==",
+          },
+        }
+      );
+
+      countries = response.data.map((key) => ({
+        label: key.name,
+        value: key.name,
+      }));
+      localStorage.setItem("countries", JSON.stringify(countries));
     } catch (e) {
       console.log(e);
     }

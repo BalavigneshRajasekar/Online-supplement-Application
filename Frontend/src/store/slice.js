@@ -8,6 +8,13 @@ const productSlice = createSlice({
     deliveryDetails: null,
   },
   reducers: {
+    setCart: (state, action) => {
+      if (action.payload) {
+        state.cart = action.payload;
+      } else {
+        state.cart = [];
+      }
+    },
     addCart: (state, action) => {
       let index = state.cart.findIndex((item) => item.id == action.payload.id);
       if (index >= 0) {
@@ -15,6 +22,7 @@ const productSlice = createSlice({
       } else {
         state.cart.push(action.payload);
       }
+      localStorage.setItem("cart", JSON.stringify(state.cart));
     },
     deleteCart: (state, action) => {
       console.log(action.payload);
@@ -31,7 +39,12 @@ const productSlice = createSlice({
   },
 });
 
-export const { addCart, handleQuantity, deleteCart, setDeliveryDetails } =
-  productSlice.actions;
+export const {
+  addCart,
+  handleQuantity,
+  deleteCart,
+  setDeliveryDetails,
+  setCart,
+} = productSlice.actions;
 
 export default productSlice.reducer;

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Box, Divider } from "@mui/material";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Checkbox, Form, Input, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import { Product } from "../context/Products";
 import { toast } from "react-toastify";
 import { setDeliveryDetails } from "../store/slice";
 import axios from "axios";
-let countries = null;
+
 function Checkout() {
   const { cart, deliveryDetails } = useSelector((state) => state.products);
   const dispatch = useDispatch();
@@ -21,130 +21,112 @@ function Checkout() {
     dispatch(setDeliveryDetails(value));
     toast.success("Delivery details Added successfully");
   };
-  useEffect(() => {
-    console.log(cart);
-    if (countries) {
-      return;
-    } else {
-      console.log("countries");
 
-      getCountries(); // Fetch countries for dropdown
-    }
-  }, []);
-
-  const getCountries = async () => {
-    try {
-      const response = await axios.get(
-        "https://api.countrystatecity.in/v1/countries",
-        {
-          headers: {
-            "X-CSCAPI-KEY": "API_KEY",
-          },
-        }
-      );
-
-      countries = response.data.map((key) => ({
-        label: key.name,
-        value: key.name,
-      }));
-      localStorage.setItem("countries", JSON.stringify(countries));
-      console.log(countries);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   const processPayment = () => {
     // Payment gateway integration goes here
-    if (deliveryDetails) {
-      navigate("/payment");
-    } else {
+    if (!deliveryDetails) {
       toast.warning("Please fill in the delivery details");
+    } else if (!localStorage.getItem("logToken")) {
+      navigate("/login");
+      toast.warning("Please Login to purchase");
+    } else {
+      navigate("/payment");
     }
   };
   return (
     <div className="mt-10 d-md-flex justify-around align-items-center d-xs-flex-col gap-1 p-3">
-      <Box
-        sx={{
-          width: { xs: "100%", md: "40%" },
-          height: { md: "100vh", xs: "" },
-          backgroundColor: "#f5f5f5",
-          borderRadius: "20px",
+      <div className="w-100">
+        <Box>
+          <Checkbox >
+            <h4>Existing Delivery details</h4>
+            <h6>Name: Vicky</h6>
+            <h6>Email: vicky@example.com</h6>
+            <h6>Phone: 9876543210</h6>
+            <h6>Address: 123 Main St, City, State, Zip</h6>
+          </Checkbox>
+        </Box>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "60%" },
+            minHeight: { md: "100vh", xs: "" },
+            backgroundColor: "#f5f5f5",
+            borderRadius: "20px",
 
-          marginTop: "30px",
-        }}
-      >
-        <Form onFinish={onfinish} className="p-5">
-          <h2 className="mb-5">Delivery details</h2>
-          <Form.Item
-            name="Name"
-            rules={[{ required: true, message: "Plz enter name" }]}
-          >
-            <Input className="border" placeholder="Name" />
-          </Form.Item>
-          <Form.Item
-            name="Email"
-            rules={[
-              { required: true, message: "Plz enter Email", type: "email" },
-            ]}
-          >
-            <Input placeholder="Email" className="border" />
-          </Form.Item>
-          <Form.Item
-            name="Address"
-            rules={[{ required: true, message: "Plz enter Address" }]}
-          >
-            <TextArea placeholder="Address" size="large" className="border" />
-          </Form.Item>
-          <Form.Item
-            name="City"
-            rules={[{ required: true, message: "Plz enter City" }]}
-          >
-            <Input placeholder="City" className="border" />
-          </Form.Item>
-          <Form.Item
-            name="State"
-            rules={[{ required: true, message: "Plz enter State" }]}
-          >
-            <Input placeholder="State" className="border" />
-          </Form.Item>
-          <Form.Item
-            name="Country"
-            rules={[{ required: true, message: "Plz select country" }]}
-          >
-            {/* <Select
-              showSearch
-              options={countries}
-              size="large"
-              defaultValue="Select Country"
-              filterOption={(input, option) =>
-                (option?.label ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
-            ></Select> */}
-            <Input placeholder="Country" className="border"></Input>
-          </Form.Item>
-          <Form.Item
-            name="Pincode"
-            rules={[{ required: true, message: "Plz enter Pincode" }]}
-          >
-            <Input placeholder="Pin code" type="number" className="border" />
-          </Form.Item>
-          <Form.Item
-            name="Phone"
-            rules={[{ required: true, message: "Plz enter Phone number" }]}
-          >
-            <Input
-              placeholder="Phone Number"
-              type="number"
-              className="border"
-            />
-          </Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form>
-      </Box>
+            marginTop: "30px",
+          }}
+        >
+          <Form onFinish={onfinish} className="p-5">
+            <h2 className="mb-5">Delivery details</h2>
+            <Form.Item
+              name="Name"
+              rules={[{ required: true, message: "Plz enter name" }]}
+            >
+              <Input className="border" placeholder="Name" />
+            </Form.Item>
+            <Form.Item
+              name="Email"
+              rules={[
+                { required: true, message: "Plz enter Email", type: "email" },
+              ]}
+            >
+              <Input placeholder="Email" className="border" />
+            </Form.Item>
+            <Form.Item
+              name="Address"
+              rules={[{ required: true, message: "Plz enter Address" }]}
+            >
+              <TextArea placeholder="Address" size="large" className="border" />
+            </Form.Item>
+            <Form.Item
+              name="City"
+              rules={[{ required: true, message: "Plz enter City" }]}
+            >
+              <Input placeholder="City" className="border" />
+            </Form.Item>
+            <Form.Item
+              name="State"
+              rules={[{ required: true, message: "Plz enter State" }]}
+            >
+              <Input placeholder="State" className="border" />
+            </Form.Item>
+            <Form.Item
+              name="Country"
+              rules={[{ required: true, message: "Plz select country" }]}
+            >
+              <Select
+                showSearch
+                options={JSON.parse(localStorage.getItem("countries"))}
+                size="large"
+                defaultValue="Select Country"
+                filterOption={(input, option) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+              ></Select>
+            </Form.Item>
+            <Form.Item
+              name="Pincode"
+              rules={[{ required: true, message: "Plz enter Pincode" }]}
+            >
+              <Input placeholder="Pin code" type="number" className="border" />
+            </Form.Item>
+            <Form.Item
+              name="Phone"
+              rules={[{ required: true, message: "Plz enter Phone number" }]}
+            >
+              <Input
+                placeholder="Phone Number"
+                type="number"
+                className="border"
+              />
+            </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form>
+        </Box>
+      </div>
       <Divider orientation="vertical" textAlign="center" flexItem>
         Checkout
       </Divider>
