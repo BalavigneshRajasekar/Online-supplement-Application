@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Box, Divider } from "@mui/material";
-import { Button, Checkbox, Form, Input, Select } from "antd";
+import { Button, Card, Checkbox, Form, Input, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,12 +10,16 @@ import { useNavigate } from "react-router-dom";
 import { Product } from "../context/Products";
 import { toast } from "react-toastify";
 import { setDeliveryDetails } from "../store/slice";
-import axios from "axios";
+import { FaHome } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { IoMdPerson } from "react-icons/io";
+import { FaPhoneAlt } from "react-icons/fa";
+import { IoPin } from "react-icons/io5";
 
 function Checkout() {
   const { cart, deliveryDetails } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-  const { totalPrice } = useContext(Product);
+  const { totalPrice, getDeliveryDetails } = useContext(Product);
   const navigate = useNavigate();
   const onfinish = (value) => {
     dispatch(setDeliveryDetails(value));
@@ -33,19 +37,47 @@ function Checkout() {
       navigate("/payment");
     }
   };
+  useEffect(() => {
+    getDeliveryDetails();
+  }, []);
   return (
     <div className="mt-10 d-md-flex justify-around align-items-center d-xs-flex-col gap-1 p-3">
       <div className="w-100">
         <Box>
-          <Checkbox >
-            <h4>Existing Delivery details</h4>
-            <h6>Name: Vicky</h6>
-            <h6>Email: vicky@example.com</h6>
-            <h6>Phone: 9876543210</h6>
-            <h6>Address: 123 Main St, City, State, Zip</h6>
-          </Checkbox>
+          <h2 className="text-lg text-red-500">Existing Shipping address :</h2>
+          <Card
+            loading={!deliveryDetails}
+            size="small"
+            className="text-left text-xl text-slate-500"
+          >
+            {deliveryDetails && (
+              <Checkbox checked>
+                <h4>
+                  <FaHome className="inline-block" /> {deliveryDetails.Address}
+                </h4>
+                <h5>
+                  <FaLocationDot className="inline-block" />
+                  {deliveryDetails.City},{deliveryDetails.State} ,
+                  {deliveryDetails.Country}
+                </h5>
+                <p>
+                  <IoMdPerson className="inline-block" />
+
+                  {deliveryDetails.Name}
+                </p>
+                <p>
+                  <FaPhoneAlt className="inline-block" />
+                  {deliveryDetails.Phone}
+                </p>
+                <p>
+                  <IoPin className="inline-block" />
+                  {deliveryDetails.PinCode}
+                </p>
+              </Checkbox>
+            )}
+          </Card>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             width: { xs: "100%", md: "60%" },
             minHeight: { md: "100vh", xs: "" },
@@ -125,7 +157,7 @@ function Checkout() {
               Submit
             </Button>
           </Form>
-        </Box>
+        </Box> */}
       </div>
       <Divider orientation="vertical" textAlign="center" flexItem>
         Checkout

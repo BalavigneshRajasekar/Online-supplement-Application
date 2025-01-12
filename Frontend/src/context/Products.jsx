@@ -3,7 +3,7 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setCart } from "../store/slice";
+import { setCart, setDeliveryDetails } from "../store/slice";
 
 export const Product = createContext();
 
@@ -69,6 +69,24 @@ const ProductHandler = ({ children }) => {
     }
   };
 
+  const getDeliveryDetails = async () => {
+    try {
+      const response = await axios.get(
+        "https://supplement-application.onrender.com/api/v1/shipping/details",
+        {
+          headers: {
+            Authorization: localStorage.getItem("logToken"),
+          },
+        }
+      );
+      console.log(response.data);
+
+      dispatch(setDeliveryDetails(response.data.data));
+    } catch (e) {
+      console.error("Error fetching delivery details:", e);
+    }
+  };
+
   return (
     <Product.Provider
       value={{
@@ -87,6 +105,7 @@ const ProductHandler = ({ children }) => {
         setToggle,
         filterProducts,
         setFilterProducts,
+        getDeliveryDetails,
       }}
     >
       {children}
