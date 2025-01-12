@@ -93,7 +93,6 @@ function Payment() {
               email: deliveryDetails.Email,
             },
           },
-          receipt_email: deliveryDetails.Email,
         }
       );
       console.log(result);
