@@ -2,6 +2,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Product } from "../context/Products";
+import { FaCreditCard } from "react-icons/fa";
+import { RiVisaLine } from "react-icons/ri";
+import { Badge } from "flowbite-react";
+import { FaCcMastercard } from "react-icons/fa6";
+
 import {
   CardCvcElement,
   CardExpiryElement,
@@ -12,40 +17,59 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Box, Grid2 } from "@mui/material";
-import { setCart } from "../store/slice";
+import { Box, Button, Divider, Grid2 } from "@mui/material";
+import { deleteCart, setCart } from "../store/slice";
+import { List, Modal } from "antd";
+import { LiaRupeeSignSolid } from "react-icons/lia";
 
 function Payment() {
   const { cart, deliveryDetails } = useSelector((state) => state.products);
+  const [openPaymentModel, setOpenPaymentModel] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const element = useElements();
   const stripe = useStripe();
-  const { totalPrice } = useContext(Product);
+  const { totalPrice, getDeliveryDetails } = useContext(Product);
 
   // Payment data need to send server
-  const paymentData = {
-    amount: totalPrice,
-    shipping: {
-      name: deliveryDetails.Name,
-      address: {
-        city: deliveryDetails.City,
-        line1: deliveryDetails.Address,
-        postal_code: deliveryDetails.Pincode,
-        country: deliveryDetails.Country,
-        state: deliveryDetails.State,
-      },
-      phone: deliveryDetails.Phone,
-    },
-  };
-  useEffect(() => {}, []);
+  let paymentData = {};
+
+  useEffect(() => {
+    getDeliveryDetails();
+  }, []);
+  useEffect(() => {
+    {
+      deliveryDetails
+        ? (paymentData = {
+            amount: totalPrice,
+            shipping: {
+              name: deliveryDetails.Name,
+              address: {
+                city: deliveryDetails.City,
+                line1: deliveryDetails.Address,
+                postal_code: deliveryDetails.Pincode,
+                country: deliveryDetails.Country,
+                state: deliveryDetails.State,
+              },
+              phone: deliveryDetails.Phone,
+            },
+          })
+        : (paymentData = {});
+    }
+    console.log(paymentData);
+  }, [deliveryDetails]);
+
+  useEffect(() => {
+    if (cart.length == 0) {
+      navigate("/");
+    }
+  }, [cart]);
 
   // Here we get the payment intent from server and validate the payment
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const loading = toast.loading("Payment Processing.....");
-    const btn = document.querySelector("btn");
 
     try {
       const response = await axios.post(
@@ -63,17 +87,28 @@ function Payment() {
         {
           payment_method: {
             card: element.getElement(CardNumberElement),
+
             billing_details: {
               name: deliveryDetails.Name,
               email: deliveryDetails.Email,
             },
           },
+          receipt_email: deliveryDetails.Email,
         }
       );
       console.log(result);
 
       if (result.error) {
         console.error("Payment failed:", result.error);
+        toast.update(loading, {
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+          progress: undefined,
+          draggable: true,
+          closeButton: true,
+          render: result.error.message,
+        });
         return;
       } else {
         if ((await result).paymentIntent.status === "succeeded") {
@@ -115,32 +150,169 @@ function Payment() {
       });
     }
   };
+  const closeModal = () => {
+    setOpenPaymentModel(false);
+  };
   return (
-    <div className="w-100 mt-10">
-      <h1>Card details</h1>
+    <div className="w-100 mt-10 d-md-flex justify-around align-items-center d-xs-flex-col gap-1 p-3">
+      <Modal open={openPaymentModel} onOk={closeModal} onCancel={closeModal}>
+        <Box
+          className="p-5  bg-dark rounded-lg "
+          sx={{ width: { xs: "100%", md: "100%" } }}
+        >
+          <form onSubmit={handleSubmit} className="w-100">
+            <h2 className="flex gap-3 p-3">
+              <RiVisaLine color="white" />
+              <FaCcMastercard color="white" />
+            </h2>
+            <CardNumberElement className="form-control h-16"></CardNumberElement>
+            <Grid2 container spacing={3} sx={{ marginTop: 5 }}>
+              <Grid2 size={8}>
+                <CardExpiryElement className="form-control h-16"></CardExpiryElement>
+              </Grid2>
+              <Grid2 size={4}>
+                <CardCvcElement className="form-control h-16"></CardCvcElement>
+              </Grid2>
+            </Grid2>
+            <Button
+              type="submit"
+              variant="contained"
+              color="success"
+              sx={{ width: "100%", marginTop: 5 }}
+              startIcon={<LiaRupeeSignSolid />}
+            >
+              <span className="text-lg font-bold">{totalPrice}- Pay Now</span>
+            </Button>
+          </form>
+        </Box>
+      </Modal>
+
       <Box
-        className="p-5  bg-dark rounded-lg "
-        sx={{ width: { xs: "100%", md: "50%" } }}
+        sx={{
+          width: { xs: "100%", md: "100%" },
+          height: "100dvh",
+
+          overflow: "auto",
+          padding: "20px",
+        }}
       >
-        <form onSubmit={handleSubmit} className="w-100">
-          <CardNumberElement className="form-control h-16"></CardNumberElement>
-          <Grid2 container spacing={3} sx={{ marginTop: 5 }}>
-            <Grid2 size={8}>
-              <CardExpiryElement className="form-control h-16"></CardExpiryElement>
-            </Grid2>
-            <Grid2 size={4}>
-              <CardCvcElement className="form-control h-16"></CardCvcElement>
-            </Grid2>
-          </Grid2>
-          <button
-            id="btn"
-            type="submit"
-            className="w-100 mt-3 bg-green-500 hover:bg-green-700 rounded-md text-white h-10 "
-          >
-            Pay Now -{" "}
-            <span className="text-lg font-bold">Rs. {totalPrice}</span>
-          </button>
-        </form>
+        {cart.length > 0 && (
+          <>
+            <List
+              className="demo-loadmore-list"
+              itemLayout="horizontal"
+              dataSource={cart}
+              renderItem={(item, index) => (
+                <List.Item
+                  actions={[
+                    <a
+                      key="list-loadmore-edit"
+                      onClick={() => dispatch(deleteCart(item.id))}
+                    >
+                      Delete
+                    </a>,
+                  ]}
+                  key={index}
+                >
+                  <List.Item.Meta
+                    avatar={<img src={item.image} style={{ width: "50px" }} />}
+                    title={
+                      <a onClick={() => navigate(`/products/${item.id}`)}>
+                        {item.name}
+                      </a>
+                    }
+                    description={
+                      <p>
+                        <b>Price:</b>
+                        <LiaRupeeSignSolid
+                          style={{ display: "inline-block" }}
+                        />
+                        {item.price} <b>Quantity:</b>
+                        {item.quantity}
+                      </p>
+                    }
+                  />
+                  <b>
+                    subtotal :
+                    <LiaRupeeSignSolid style={{ display: "inline-block" }} />
+                    {item.quantity * item.price}
+                  </b>
+                </List.Item>
+              )}
+            />
+            <Divider>Summary</Divider>
+            <div className="bg-dark p-3 rounded-md">
+              <div className="flex justify-between ">
+                <h3 className="text-slate-400">Price : </h3>
+                <Badge color="success">
+                  <LiaRupeeSignSolid className="inline-block" />
+                  {totalPrice}
+                </Badge>
+              </div>
+              <div className="flex justify-between mt-3">
+                <h3 className="text-slate-400">Shipping Charge : </h3>
+                <Badge color="success">
+                  <LiaRupeeSignSolid className="inline-block" />
+                  {0}
+                </Badge>
+              </div>
+              <div className="flex justify-between mt-3">
+                <h3 className="text-slate-400">GST % : </h3>
+                <Badge color="success">
+                  <LiaRupeeSignSolid className="inline-block" />
+                  {0}
+                </Badge>
+              </div>
+            </div>
+            <Divider>...</Divider>
+            <div className="flex justify-between mt-3 bg-dark rounded-md p-3">
+              <h3 className="text-slate-400">Total : </h3>
+              <Badge color="success">
+                <LiaRupeeSignSolid className="inline-block" />
+                {totalPrice}
+              </Badge>
+            </div>
+          </>
+        )}
+      </Box>
+      <Divider orientation="vertical" textAlign="center" flexItem>
+        Select Payments
+      </Divider>
+      <Box
+        sx={{
+          width: {
+            xs: "100%",
+            md: "100%",
+          },
+
+          overflow: "auto",
+          padding: "20px",
+          textAlign: "center",
+          display: "flex",
+          justifyContent: { xs: "flex-start", md: "center" },
+          alignItems: { xs: "flex-start", md: "center" },
+          flexFlow: "column",
+          gap: "10px",
+        }}
+      >
+        <Button
+          variant="contained"
+          color="success"
+          startIcon={<FaCreditCard />}
+          size="large"
+          sx={{ width: "100%" }}
+          onClick={() => setOpenPaymentModel(true)}
+        >
+          Card
+        </Button>
+        <Button
+          variant="contained"
+          disabled
+          color="error"
+          sx={{ width: "100%" }}
+        >
+          Pay on delivery
+        </Button>
       </Box>
     </div>
   );

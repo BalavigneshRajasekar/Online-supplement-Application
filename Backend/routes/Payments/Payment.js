@@ -12,8 +12,8 @@ paymentRouter.post("/payment", loginAuth, async (req, res) => {
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
-      currency: "usd",
-      description: "TEST PAYMENT",
+      currency: "inr",
+      description: "Dark Knight Supplements",
       metadata: { integration_check: "accept payment" },
       shipping: shipping,
     });

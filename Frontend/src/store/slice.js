@@ -29,6 +29,7 @@ const productSlice = createSlice({
 
       let data = state.cart.filter((item) => item.id !== action.payload);
       state.cart = data;
+      localStorage.setItem("cart", JSON.stringify(state.cart));
     },
 
     setDeliveryDetails: (state, action) => {

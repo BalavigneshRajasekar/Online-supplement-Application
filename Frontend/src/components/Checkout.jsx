@@ -9,7 +9,7 @@ import { LiaRupeeSignSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../context/Products";
 import { toast } from "react-toastify";
-import { setDeliveryDetails } from "../store/slice";
+
 import { FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoMdPerson } from "react-icons/io";
@@ -97,7 +97,7 @@ function Checkout() {
               setOpenModel(true);
             }}
           >
-            Add New Delivery Address
+            Add New Shipping Address
           </Button>
         </Box>
 
@@ -250,14 +250,13 @@ function Checkout() {
                 </List.Item>
               )}
             />
-            <Divider>Total Amount</Divider>
+            <Divider>Final step</Divider>
             <div className="flex justify-center mt-4">
               <button
                 className="bg-green-600 hover:bg-green-700 text-white  border rounded-md p-2"
                 onClick={() => processPayment()}
               >
-                Proceed To pay - <LiaRupeeSignSolid className="inline-block" />
-                {totalPrice}
+                Proceed To pay
               </button>
             </div>
           </>
