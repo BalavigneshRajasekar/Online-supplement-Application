@@ -16,7 +16,7 @@ import {
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Box, Button, Divider, Grid2 } from "@mui/material";
 import { deleteCart, setCart } from "../store/slice";
 import { List, Modal } from "antd";
@@ -29,41 +29,32 @@ function Payment() {
   const navigate = useNavigate();
   const element = useElements();
   const stripe = useStripe();
-  const { totalPrice, getDeliveryDetails } = useContext(Product);
+  const { totalPrice, getDeliveryDetails, setPaymentDetails, paymentDetails } =
+    useContext(Product);
+
+  console.log(deliveryDetails);
 
   // Payment data need to send server
-  let paymentData = {};
-
-  useEffect(() => {
-    getDeliveryDetails();
-  }, []);
-  useEffect(() => {
-    {
-      deliveryDetails
-        ? (paymentData = {
-            amount: totalPrice,
-            shipping: {
-              name: deliveryDetails.Name,
-              address: {
-                city: deliveryDetails.City,
-                line1: deliveryDetails.Address,
-                postal_code: deliveryDetails.Pincode,
-                country: deliveryDetails.Country,
-                state: deliveryDetails.State,
-              },
-              phone: deliveryDetails.Phone,
-            },
-          })
-        : (paymentData = {});
-    }
-    console.log(paymentData);
-  }, [deliveryDetails]);
-
+  let paymentData = {
+    amount: totalPrice,
+    shipping: {
+      name: JSON.parse(localStorage.getItem("Shipping")).Name,
+      address: {
+        city: JSON.parse(localStorage.getItem("Shipping")).City,
+        line1: JSON.parse(localStorage.getItem("Shipping")).Address,
+        postal_code: JSON.parse(localStorage.getItem("Shipping")).PinCode,
+        country: JSON.parse(localStorage.getItem("Shipping")).Country,
+        state: JSON.parse(localStorage.getItem("Shipping")).State,
+      },
+      phone: JSON.parse(localStorage.getItem("Shipping")).Phone,
+    },
+  };
+  console.log(paymentData);
   useEffect(() => {
     if (cart.length == 0) {
       navigate("/");
     }
-  }, [cart]);
+  }, []);
 
   // Here we get the payment intent from server and validate the payment
   const handleSubmit = async (e) => {
@@ -72,8 +63,10 @@ function Payment() {
     const loading = toast.loading("Payment Processing.....");
 
     try {
+      console.log(paymentData);
+
       const response = await axios.post(
-        "https://supplement-application.onrender.com/api/v1/payment",
+        "http://localhost:3000/api/v1/payment",
         paymentData,
         {
           headers: {
@@ -81,6 +74,7 @@ function Payment() {
           },
         }
       );
+      console.log(response.data.clientSecret);
 
       const result = await stripe.confirmCardPayment(
         response.data.clientSecret,
@@ -111,6 +105,7 @@ function Payment() {
         return;
       } else {
         if ((await result).paymentIntent.status === "succeeded") {
+          setPaymentDetails(result.paymentIntent);
           localStorage.removeItem("cart"); // remove from localStorage
           dispatch(setCart(null)); // reset cart state
           toast.update(loading, {
@@ -122,7 +117,7 @@ function Payment() {
             closeButton: true,
             render: "Payment successfully done",
           });
-          navigate("/");
+          navigate("success");
         } else {
           toast.update(loading, {
             type: "error",

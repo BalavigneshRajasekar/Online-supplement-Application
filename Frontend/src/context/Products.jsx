@@ -19,6 +19,7 @@ const ProductHandler = ({ children }) => {
   const [toggle, setToggle] = useState(false);
   const [quantities, setQuantities] = useState();
   const [totalPrice, setTotalPrice] = useState();
+  const [paymentDetails, setPaymentDetails] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -83,7 +84,7 @@ const ProductHandler = ({ children }) => {
         }
       );
       console.log(response.data);
-
+      localStorage.setItem("Shipping", JSON.stringify(response.data.data));
       dispatch(setDeliveryDetails(response.data.data));
     } catch (e) {
       toast.error(e.response.data.message);
@@ -103,7 +104,7 @@ const ProductHandler = ({ children }) => {
         }
       );
       console.log(response.data);
-
+      localStorage.setItem("Shipping", JSON.stringify(response.data.data));
       dispatch(setDeliveryDetails(response.data.data));
       toast.update(loading, {
         render: response.data.message,
@@ -139,6 +140,8 @@ const ProductHandler = ({ children }) => {
         setFilterProducts,
         getDeliveryDetails,
         addDeliveryDetails,
+        setPaymentDetails,
+        paymentDetails,
       }}
     >
       {children}

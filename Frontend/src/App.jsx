@@ -19,6 +19,8 @@ import axios from "axios";
 import Payment from "./components/Payment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import PaymentSuccess from "./components/PaymentSuccess";
+import PaymentError from "./components/PaymentError";
 
 let countries = null;
 function App() {
@@ -84,6 +86,7 @@ function App() {
                 element={<SingleViewProducts />}
               ></Route>
               <Route path="/Checkout" element={<Checkout />}></Route>
+
               {stripeAPI && (
                 <Route
                   path="/payment"
@@ -94,6 +97,11 @@ function App() {
                   }
                 ></Route>
               )}
+              <Route
+                path="/payment/success"
+                element={<PaymentSuccess />}
+              ></Route>
+              <Route path="/payment/error" element={<PaymentError />}></Route>
             </Routes>
           </BrowserRouter>
         </ProductHandler>
