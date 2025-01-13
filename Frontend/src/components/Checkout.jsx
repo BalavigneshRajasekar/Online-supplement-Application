@@ -43,7 +43,7 @@ function Checkout() {
     }
   };
   useEffect(() => {
-    getDeliveryDetails();
+    getDeliveryDetails(navigate);
   }, []);
   const closeModel = () => {
     setOpenModel(false);

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setCart, setDeliveryDetails } from "../store/slice";
 import { toast } from "react-toastify";
 import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export const Product = createContext();
 
@@ -71,7 +72,7 @@ const ProductHandler = ({ children }) => {
     }
   };
 
-  const getDeliveryDetails = async () => {
+  const getDeliveryDetails = async (navigate) => {
     try {
       const response = await axios.get(
         "https://supplement-application.onrender.com/api/v1/shipping/details",
@@ -86,6 +87,7 @@ const ProductHandler = ({ children }) => {
       dispatch(setDeliveryDetails(response.data.data));
     } catch (e) {
       toast.error(e.response.data.message);
+      navigate("/login");
     }
   };
   const addDeliveryDetails = async (values) => {
