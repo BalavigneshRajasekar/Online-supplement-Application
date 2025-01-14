@@ -83,8 +83,8 @@ function Payment() {
             card: element.getElement(CardNumberElement),
 
             billing_details: {
-              name: deliveryDetails.Name,
-              email: deliveryDetails.Email,
+              name: JSON.parse(localStorage.getItem("Shipping")).Name,
+              email: JSON.parse(localStorage.getItem("Shipping")).Email,
             },
           },
         }
@@ -102,10 +102,22 @@ function Payment() {
           closeButton: true,
           render: result.error.message,
         });
+
         return;
       } else {
         if ((await result).paymentIntent.status === "succeeded") {
           setPaymentDetails(result.paymentIntent);
+
+          const orderResponse = await axios.post(
+            "http://localhost:3000/api/v1/payment/myOrders",
+            { cart: cart, paymentData: result.paymentIntent },
+            {
+              headers: {
+                Authorization: localStorage.getItem("logToken"),
+              },
+            }
+          );
+
           localStorage.removeItem("cart"); // remove from localStorage
           dispatch(setCart(null)); // reset cart state
           toast.update(loading, {
@@ -128,6 +140,7 @@ function Payment() {
             closeButton: true,
             render: result.error.message,
           });
+          navigate("error");
         }
       }
     } catch (e) {
@@ -140,7 +153,7 @@ function Payment() {
         progress: undefined,
         draggable: true,
         closeButton: true,
-        render: e.response.data.message,
+        render: "PLZ fill the details",
       });
     }
   };

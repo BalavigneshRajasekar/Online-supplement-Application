@@ -63,4 +63,42 @@ paymentRouter.get("/shipping/details", loginAuth, async (req, res) => {
   }
 });
 
+// Route to add Purchased product and payment details
+paymentRouter.post("/payment/myOrders", loginAuth, async (req, res) => {
+  console.log(req.body);
+
+  try {
+    const user = await User.findByIdAndUpdate(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.myOrders.push(req.body);
+    await user.save();
+    res.status(200).json({
+      message: "My orders updated",
+      data: user.myOrders,
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Server Error", e });
+    return;
+  }
+});
+
+// Route to get My orders with payment data
+
+paymentRouter.get("/get/myOrders", loginAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.status(200).json({
+      message: "My orders retrieved",
+      data: user.myOrders,
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Server Error", e });
+    return;
+  }
+});
+
 module.exports = paymentRouter;

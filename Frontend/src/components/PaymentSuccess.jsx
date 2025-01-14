@@ -2,6 +2,7 @@
 import React, { useContext, useEffect } from "react";
 import { Button, Card, Result } from "antd";
 import { Product } from "../context/Products";
+import { LiaRupeeSignSolid } from "react-icons/lia";
 function PaymentSuccess() {
   const { paymentDetails, setPaymentDetails } = useContext(Product);
   useEffect(() => {}, []);
@@ -11,10 +12,14 @@ function PaymentSuccess() {
         <Result
           status="success"
           title="Payment SuccessFull !!!"
-          subTitle={`Payment ID : ${paymentDetails.id} , Paid Rupees : ${paymentDetails.amount}`}
+          subTitle={`Payment ID : ${paymentDetails.id} `}
           extra={[
-            <Button type="primary" key="console">
-              View Details
+            <h1 key="text">
+              <LiaRupeeSignSolid className="inline-block" />
+              {paymentDetails.amount}
+            </h1>,
+            <Button type="primary" key="console" className="mt-5">
+              My orders
             </Button>,
             <Button key="buy">Home</Button>,
           ]}
