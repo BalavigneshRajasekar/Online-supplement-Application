@@ -77,6 +77,7 @@ function Nav() {
         localStorage.removeItem("logToken");
         break;
       case "MyOrders":
+        navigate("/MyOrders");
         break;
     }
   };

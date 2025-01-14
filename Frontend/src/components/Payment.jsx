@@ -108,6 +108,7 @@ function Payment() {
         if ((await result).paymentIntent.status === "succeeded") {
           setPaymentDetails(result.paymentIntent);
 
+          //API to add payment details and purchased products
           const orderResponse = await axios.post(
             "http://localhost:3000/api/v1/payment/myOrders",
             { cart: cart, paymentData: result.paymentIntent },
@@ -153,7 +154,7 @@ function Payment() {
         progress: undefined,
         draggable: true,
         closeButton: true,
-        render: "PLZ fill the details",
+        render: "Server Error",
       });
     }
   };

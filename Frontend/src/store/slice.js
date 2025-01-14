@@ -6,6 +6,7 @@ const productSlice = createSlice({
   initialState: {
     cart: [],
     deliveryDetails: null,
+    myOrders: [],
   },
   reducers: {
     setCart: (state, action) => {
@@ -37,6 +38,9 @@ const productSlice = createSlice({
 
       state.deliveryDetails = action.payload;
     },
+    setMyOrders: (state, action) => {
+      state.myOrders = action.payload;
+    },
   },
 });
 
@@ -46,6 +50,7 @@ export const {
   deleteCart,
   setDeliveryDetails,
   setCart,
+  setMyOrders,
 } = productSlice.actions;
 
 export default productSlice.reducer;

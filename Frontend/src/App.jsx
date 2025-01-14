@@ -21,6 +21,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentSuccess from "./components/PaymentSuccess";
 import PaymentError from "./components/PaymentError";
+import MyOrders from "./components/MyOrders";
 
 let countries = null;
 function App() {
@@ -102,6 +103,7 @@ function App() {
                 element={<PaymentSuccess />}
               ></Route>
               <Route path="/payment/error" element={<PaymentError />}></Route>
+              <Route path="/MyOrders" element={<MyOrders />}></Route>
             </Routes>
           </BrowserRouter>
         </ProductHandler>
