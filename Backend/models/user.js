@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   resetCode: { type: String, default: null },
   shippingDetails: { type: Object, default: null },
   myOrders: [{ type: Object, default: null }],
+  image: { type: String, default: null },
 
   role: {
     type: String,

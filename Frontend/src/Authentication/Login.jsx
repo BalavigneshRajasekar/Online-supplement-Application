@@ -31,6 +31,9 @@ function Login() {
         closeButton: true,
       });
       localStorage.setItem("logToken", response.data.token);
+      localStorage.setItem("name", response.data.name);
+      localStorage.setItem("email", response.data.email);
+
       navigate("/");
     } catch (e) {
       toast.update(id, {

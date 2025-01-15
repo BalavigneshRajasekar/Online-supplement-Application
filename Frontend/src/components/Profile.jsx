@@ -69,10 +69,9 @@ function Profile() {
         <div>
           <h2>Profile Information</h2>
           {/* Display user information here */}
-          <p>Name: John Doe</p>
-          <p>Email: johndoe@example.com</p>
-          <p>Phone: 1234567890</p>
-          <p>Address: 123 Main St, Anytown, USA</p>
+          <p>Name: {localStorage.getItem("name")}</p>
+          <p>Email: {localStorage.getItem("email")}</p>
+
           {/* Update user information here */}
         </div>
       </div>

@@ -2,9 +2,13 @@ const Products = require("../../models/products");
 const Review = require("../../models/reviews");
 const loginAuth = require("../../middlewares/loginAuth");
 const express = require("express");
+const multer = require("multer");
+const cloudinary = require("../../cloudinary");
 
 const productRouter = express.Router();
 
+const memory = multer.memoryStorage();
+const upload = multer({ storage: memory });
 // Sample route for retrieving all supplements
 
 productRouter.get("/products", async (req, res) => {
@@ -98,6 +102,34 @@ productRouter.get("/products/:id", async (req, res) => {
     res.json(product);
   } catch (error) {
     res.status(500).json({ message: "Server error", data: error.message });
+  }
+});
+
+productRouter.post("/profile/add", upload.array("media"), async (req, res) => {
+  try {
+    const mediaUrls = await Promise.all(
+      req.files.map(async (file) => {
+        return new Promise((resolve, reject) => {
+          const uploadStream = cloudinary.uploader.upload_stream(
+            {
+              resource_type: "auto",
+              upload_preset: "Unsigned",
+            },
+            (error, result) => {
+              if (error) return reject(error);
+              resolve(result.secure_url);
+            }
+          );
+          uploadStream.end(file.buffer);
+        });
+      })
+    );
+    console.log(mediaUrls[0]);
+    res.status(200).send(mediaUrls[0]);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Server Error", e });
+    return;
   }
 });
 
