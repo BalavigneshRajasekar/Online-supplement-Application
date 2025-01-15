@@ -4,6 +4,7 @@ const loginAuth = require("../../middlewares/loginAuth");
 const express = require("express");
 const multer = require("multer");
 const cloudinary = require("../../cloudinary");
+const User = require("../../models/user");
 
 const productRouter = express.Router();
 
@@ -105,32 +106,39 @@ productRouter.get("/products/:id", async (req, res) => {
   }
 });
 
-productRouter.post("/profile/add", upload.array("media"), async (req, res) => {
-  try {
-    const mediaUrls = await Promise.all(
-      req.files.map(async (file) => {
-        return new Promise((resolve, reject) => {
-          const uploadStream = cloudinary.uploader.upload_stream(
-            {
-              resource_type: "auto",
-              upload_preset: "Unsigned",
-            },
-            (error, result) => {
-              if (error) return reject(error);
-              resolve(result.secure_url);
-            }
-          );
-          uploadStream.end(file.buffer);
-        });
-      })
-    );
-    console.log(mediaUrls[0]);
-    res.status(200).send(mediaUrls[0]);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ message: "Server Error", e });
-    return;
+productRouter.post(
+  "/profile/add",
+  loginAuth,
+  upload.array("media"),
+  async (req, res) => {
+    try {
+      const mediaUrls = await Promise.all(
+        req.files.map(async (file) => {
+          return new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream(
+              {
+                resource_type: "auto",
+                upload_preset: "Unsigned",
+              },
+              (error, result) => {
+                if (error) return reject(error);
+                resolve(result.secure_url);
+              }
+            );
+            uploadStream.end(file.buffer);
+          });
+        })
+      );
+      const user = await User.findById(req.user.id);
+      user.image = mediaUrls[0];
+      user.save();
+      res.status(200).send(mediaUrls[0]);
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ message: "Server Error", e });
+      return;
+    }
   }
-});
+);
 
 module.exports = productRouter;
