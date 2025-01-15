@@ -8,41 +8,39 @@ import {
   BsInstagram,
   BsTwitter,
 } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 function FooterMenu() {
   return (
     <div className="mt-5">
-      <Footer style={{ backgroundColor: "black" }}>
+      <Footer className="bg-dark">
         <div className="w-full p-4">
           <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
             <div>
-              <Footer.Brand
-                className=""
-                href="https://flowbite.com"
-                src="logo.png"
-                alt="Dark knight supplements"
-                name="Dark knight supplements"
-              />
+              <img src="logo.png" width={"30px"} className="inline-block"></img>
+              <h4 className="text-white inline-block ml-5">
+                Dark Knight Supplements
+              </h4>
             </div>
             <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
-              <div className="text">
-                <Footer.Title title="Quick Links" />
-                <Footer.LinkGroup col>
-                  <Footer.Link href="#">Proteins</Footer.Link>
+              <div className="text mt-5">
+                <Footer.Title title="Links" className="text-white" />
+                <Footer.LinkGroup col className="text-white">
+                  <Footer.Link>Proteins</Footer.Link>
                   <Footer.Link href="#">Mass Gainers</Footer.Link>
                   <Footer.Link href="#">Creatine</Footer.Link>
                 </Footer.LinkGroup>
               </div>
-              <div>
-                <Footer.Title title="Follow us" />
-                <Footer.LinkGroup col>
+              <div className="mt-5">
+                <Footer.Title title="Follow us" className="text-white" />
+                <Footer.LinkGroup col className="text-white">
                   <Footer.Link href="#">Facebook</Footer.Link>
                   <Footer.Link href="#">Instagram</Footer.Link>
                 </Footer.LinkGroup>
               </div>
-              <div>
-                <Footer.Title title="Legal" />
-                <Footer.LinkGroup col>
+              <div className="mt-5">
+                <Footer.Title title="Legal" className="text-white" />
+                <Footer.LinkGroup col className="text-white">
                   <Footer.Link href="#">Privacy Policy</Footer.Link>
                   <Footer.Link href="#">Terms &amp; Conditions</Footer.Link>
                 </Footer.LinkGroup>

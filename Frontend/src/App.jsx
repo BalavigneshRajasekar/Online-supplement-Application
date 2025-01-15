@@ -22,6 +22,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import PaymentSuccess from "./components/PaymentSuccess";
 import PaymentError from "./components/PaymentError";
 import MyOrders from "./components/MyOrders";
+import Profile from "./components/Profile";
+import FooterMenu from "./components/FooterMenu";
 
 let countries = null;
 function App() {
@@ -104,8 +106,10 @@ function App() {
               ></Route>
               <Route path="/payment/error" element={<PaymentError />}></Route>
               <Route path="/MyOrders" element={<MyOrders />}></Route>
+              <Route path="/profile" element={<Profile />}></Route>
             </Routes>
           </BrowserRouter>
+          <FooterMenu />
         </ProductHandler>
       </Provider>
       <ToastContainer

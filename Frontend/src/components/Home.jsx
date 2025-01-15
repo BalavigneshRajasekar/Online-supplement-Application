@@ -14,7 +14,6 @@ function Home() {
     <div style={{ position: "relative" }} className="mt-5">
       <Offers></Offers>
       <AllProducts></AllProducts>
-      <FooterMenu></FooterMenu>
     </div>
   );
 }

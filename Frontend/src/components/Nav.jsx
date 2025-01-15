@@ -70,16 +70,19 @@ function Nav() {
     };
   }, [toggle]);
 
-
   //Actions for settings
   const handleSettings = (settings) => {
     switch (settings) {
       case "Profile":
+        navigate("/profile");
         break;
       case "Logout":
-        console.log("logout");
+        if (confirm("Are you sure you want to log out")) {
+          localStorage.removeItem("logToken");
+        } else {
+          return;
+        }
 
-        localStorage.removeItem("logToken");
         break;
       case "MyOrders":
         navigate("/MyOrders");
@@ -182,7 +185,7 @@ function Nav() {
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
                         alt="Remy Sharp"
-                        src="/static/images/avatar/2.jpg"
+                        src={localStorage.getItem("profilePic")}
                       />
                     </IconButton>
                   </Tooltip>

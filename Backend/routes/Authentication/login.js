@@ -27,7 +27,12 @@ loginRouter.post("/users", async (req, res) => {
       process.env.TOKENKEY,
       { expiresIn: "1h" }
     );
-    res.status(200).json({ message: "Login successfully", token: authToken });
+    res.status(200).json({
+      message: "Login successfully",
+      token: authToken,
+      name: userExists.username,
+      email: userExists.email,
+    });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }

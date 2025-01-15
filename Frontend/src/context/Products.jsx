@@ -13,6 +13,7 @@ export const Product = createContext();
 // Sample Provider component
 
 const ProductHandler = ({ children }) => {
+  const [imgUrl, setImageUrl] = useState(null);
   const [products, setProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
   const [singleProduct, setSingleProduct] = useState(null);
@@ -142,6 +143,8 @@ const ProductHandler = ({ children }) => {
         addDeliveryDetails,
         setPaymentDetails,
         paymentDetails,
+        imgUrl,
+        setImageUrl,
       }}
     >
       {children}
