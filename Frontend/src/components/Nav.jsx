@@ -48,6 +48,7 @@ function Nav() {
     navigate(`/product/${name}`);
   };
 
+  //Function for cart toggle actions
   const openCart = () => {
     if (toggle) {
       setToggle(false);
@@ -55,6 +56,8 @@ function Nav() {
       setToggle(true);
     }
   };
+
+  //Function for cart toggle actions
   useEffect(() => {
     const data = (e) => {
       if (!navRef.current.contains(e.target)) {
@@ -67,6 +70,8 @@ function Nav() {
     };
   }, [toggle]);
 
+
+  //Actions for settings
   const handleSettings = (settings) => {
     switch (settings) {
       case "Profile":

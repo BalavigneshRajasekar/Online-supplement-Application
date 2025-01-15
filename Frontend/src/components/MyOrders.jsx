@@ -19,6 +19,7 @@ function MyOrders() {
     getMyOrders();
   }, []);
 
+  // Async function which going to get all user orders in server
   const getMyOrders = async () => {
     try {
       const response = await axios.get(
@@ -38,12 +39,12 @@ function MyOrders() {
   return (
     <div className="mt-5">
       <Divider>My orders</Divider>
-      <Button>Go back</Button>
+      <Button onClick={() => navigate("/")}>Go back</Button>
       {myOrders.length > 0 ? (
         <div className="w-100 p-3">
           {myOrders.map((orders, i) => (
             <Card key={i} className="bg-slate-200 mt-3">
-              <div className="bg-green-600 p-3 text-slate-800">
+              <div className="bg-green-600 p-3 text-slate-800 rounded-md">
                 <b className="block">Order ID : #DkUs_12{i + 1}</b>
                 <b className="block">Payment ID :{orders.paymentData.id}</b>
               </div>
@@ -114,9 +115,7 @@ function MyOrders() {
                   </b>
                 </div>
                 <Divider>Order Status</Divider>
-               <div>
-                
-               </div>
+                <div></div>
               </div>
             </Card>
           ))}

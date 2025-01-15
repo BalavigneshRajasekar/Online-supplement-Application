@@ -4,7 +4,7 @@ import { Card, Checkbox, Empty, Form, Input, Modal, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, List, Skeleton } from "antd";
+import { List, Skeleton } from "antd";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../context/Products";
@@ -32,9 +32,10 @@ function Checkout() {
   };
 
   const processPayment = () => {
-    // Payment gateway integration goes here
+    //Check user added delivery details
     if (!deliveryDetails) {
       toast.warning("Please fill in the delivery details");
+      //Check user is logged in
     } else if (!localStorage.getItem("logToken")) {
       navigate("/login");
       toast.warning("Please Login to purchase");

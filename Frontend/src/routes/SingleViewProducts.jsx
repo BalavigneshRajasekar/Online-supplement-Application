@@ -74,6 +74,7 @@ function SingleViewProducts() {
     }
   }, [singleProduct]);
 
+  //Get data for single product  on unmount value set to null
   useEffect(() => {
     getSingleProductsById(id);
 
@@ -82,6 +83,7 @@ function SingleViewProducts() {
     };
   }, []);
 
+  //Add product review action when user logged in
   const addReview = async (value) => {
     const load = toast.loading("Review adding");
 

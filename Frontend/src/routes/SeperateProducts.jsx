@@ -37,6 +37,7 @@ function SeperateProducts() {
       console.error("Error fetching products:", e);
     }
   };
+  
   const addProductToCart = (prod) => {
     if (localStorage.getItem("logToken")) {
       dispatch(

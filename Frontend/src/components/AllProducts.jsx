@@ -23,10 +23,12 @@ function AllProducts() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Navigate to particular Products
   const navigateToProducts = (name) => {
     navigate(`/product/${name}`);
   };
 
+  // Add to cart action
   const addProductToCart = (prod) => {
     if (localStorage.getItem("logToken")) {
       dispatch(
@@ -42,6 +44,7 @@ function AllProducts() {
       message.warning("Please Login to add product to cart");
     }
   };
+  // Search filter action
   const searchByName = (e) => {
     setFilterProducts(
       products.filter((product) =>

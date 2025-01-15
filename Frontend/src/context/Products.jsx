@@ -28,15 +28,15 @@ const ProductHandler = ({ children }) => {
     dispatch(setCart(cartData));
     console.log("this executed");
   }, []);
-  useEffect(() => {
-    console.log("before");
-    console.log(quantities);
 
+  // UseState to add default quantities for products rerender whenever Products value changed
+  useEffect(() => {
     if (products.length > 0) {
       let one = products.reduce((acc, item) => ({ ...acc, [item._id]: 1 }), {});
       setQuantities(one);
     }
   }, [products]);
+
   const getAllProducts = async () => {
     try {
       const response = await axios.get(
@@ -103,7 +103,7 @@ const ProductHandler = ({ children }) => {
           },
         }
       );
-      console.log(response.data);
+
       localStorage.setItem("Shipping", JSON.stringify(response.data.data));
       dispatch(setDeliveryDetails(response.data.data));
       toast.update(loading, {

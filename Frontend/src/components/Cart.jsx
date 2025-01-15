@@ -19,12 +19,12 @@ function Cart(props) {
   const { toggle, setToggle } = props;
 
   useEffect(() => {
+    //Find total price based on cart items
     const subTotal = cart.reduce(
       (acc, curr) => acc + curr.price * curr.quantity,
       0
     );
     setTotalPrice(subTotal);
-    console.log(subTotal);
   }, [cart]);
 
   const goToCheckout = () => {

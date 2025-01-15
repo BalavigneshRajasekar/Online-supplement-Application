@@ -50,6 +50,8 @@ function Payment() {
     },
   };
   console.log(paymentData);
+
+  //User send to home when cart is empty
   useEffect(() => {
     if (cart.length == 0) {
       navigate("/");
@@ -65,6 +67,7 @@ function Payment() {
     try {
       console.log(paymentData);
 
+      //This call will get the clientSecret from server
       const response = await axios.post(
         "http://localhost:3000/api/v1/payment",
         paymentData,
@@ -76,6 +79,7 @@ function Payment() {
       );
       console.log(response.data.clientSecret);
 
+      //Here we validate payment with client secret
       const result = await stripe.confirmCardPayment(
         response.data.clientSecret,
         {
@@ -108,7 +112,7 @@ function Payment() {
         if ((await result).paymentIntent.status === "succeeded") {
           setPaymentDetails(result.paymentIntent);
 
-          //API to add payment details and purchased products
+          //API to add payment details and purchased products to DB
           const orderResponse = await axios.post(
             "http://localhost:3000/api/v1/payment/myOrders",
             { cart: cart, paymentData: result.paymentIntent },
