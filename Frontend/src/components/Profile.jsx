@@ -18,7 +18,6 @@ function Profile() {
       const reader = new FileReader();
       // Convert file to base64 string for preview
       reader.onload = () => {
-        localStorage.setItem("profilePic", reader.result);
         setImageUrl(reader.result);
         console.log("1");
       };
@@ -44,6 +43,7 @@ function Profile() {
         }
       );
       info.onSuccess("ok");
+      localStorage.setItem("profilePic", response.data);
       console.log(response.data);
     } catch (e) {
       console.error("Failed to upload image", e);

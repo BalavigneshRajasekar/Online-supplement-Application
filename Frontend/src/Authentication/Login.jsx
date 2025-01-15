@@ -33,6 +33,7 @@ function Login() {
       localStorage.setItem("logToken", response.data.token);
       localStorage.setItem("name", response.data.name);
       localStorage.setItem("email", response.data.email);
+      localStorage.setItem("profilePic", response.data.image);
 
       navigate("/");
     } catch (e) {

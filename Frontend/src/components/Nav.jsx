@@ -79,6 +79,7 @@ function Nav() {
       case "Logout":
         if (confirm("Are you sure you want to log out")) {
           localStorage.removeItem("logToken");
+          localStorage.removeItem("profilePic");
         } else {
           return;
         }
