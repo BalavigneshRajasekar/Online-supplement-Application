@@ -4,6 +4,7 @@ import { Upload, Avatar, Button, message } from "antd";
 import { UploadOutlined, UserOutlined } from "@ant-design/icons";
 import { Product } from "../context/Products";
 import { MdDeleteForever } from "react-icons/md";
+import axios from "axios";
 function Profile() {
   const { imgUrl, setImageUrl } = useContext(Product);
 
@@ -29,10 +30,24 @@ function Profile() {
     }
   };
   // Function to upload image to server
-  const uploadToServer = (info) => {
-    setTimeout(() => {
+  const uploadToServer = async (info) => {
+    try {
+      const formData = new FormData();
+      formData.append("media", info.file);
+      const response = await axios.post(
+        "https://supplement-application.onrender.com/api/p1/profile/add",
+        formData,
+        {
+          headers: {
+            Authorization: localStorage.getItem("logToken"),
+          },
+        }
+      );
       info.onSuccess("ok");
-    }, 0);
+      console.log(response.data);
+    } catch (e) {
+      console.error("Failed to upload image", e);
+    }
   };
 
   const removeProfile = () => {
