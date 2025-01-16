@@ -130,6 +130,7 @@ function SingleViewProducts() {
           name: prod.name,
           price: prod.price,
           quantity: quantities[prod._id],
+          image: prod.image[0],
         })
       );
     } else {

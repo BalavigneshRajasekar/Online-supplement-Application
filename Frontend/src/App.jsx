@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import ProductHandler, { Product } from "./context/Products";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,6 +24,7 @@ import PaymentError from "./components/PaymentError";
 import MyOrders from "./components/MyOrders";
 import Profile from "./components/Profile";
 import FooterMenu from "./components/FooterMenu";
+import Dashboard from "./Admin/Dashboard";
 
 let countries = null;
 function App() {
@@ -107,6 +108,11 @@ function App() {
               <Route path="/payment/error" element={<PaymentError />}></Route>
               <Route path="/MyOrders" element={<MyOrders />}></Route>
               <Route path="/profile" element={<Profile />}></Route>
+
+              {/* Admin Routes */}
+              {localStorage.getItem("role") == "Admin" && (
+                <Route path="/dashboard" element={<Dashboard />}></Route>
+              )}
             </Routes>
           </BrowserRouter>
           <FooterMenu />

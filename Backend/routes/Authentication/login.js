@@ -33,6 +33,7 @@ loginRouter.post("/users", async (req, res) => {
       name: userExists.username,
       email: userExists.email,
       image: userExists.image,
+      role: userExists.role,
     });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
