@@ -5,6 +5,7 @@ import { UploadOutlined, UserOutlined } from "@ant-design/icons";
 import { Product } from "../context/Products";
 import { MdDeleteForever } from "react-icons/md";
 import axios from "axios";
+import { toast } from "react-toastify";
 function Profile() {
   const { imgUrl, setImageUrl } = useContext(Product);
 
@@ -23,13 +24,13 @@ function Profile() {
       };
       //Set read data as orginFileObj to display the profile
       reader.readAsDataURL(info.file.originFileObj);
-      message.success("Image uploaded successfully");
     } else if (info.file.status === "error") {
       message.error("Failed to upload image");
     }
   };
   // Function to upload image to server
   const uploadToServer = async (info) => {
+    const load = toast.loading("Uploading Profile Picture ...");
     try {
       const formData = new FormData();
       formData.append("media", info.file);
@@ -43,10 +44,28 @@ function Profile() {
         }
       );
       info.onSuccess("ok");
+      toast.update(load, {
+        render: response.data.message,
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+        progress: undefined,
+        draggable: true,
+        closeButton: true,
+      });
       localStorage.setItem("profilePic", response.data);
       console.log(response.data);
     } catch (e) {
       console.error("Failed to upload image", e);
+      toast.update(load, {
+        render: e.response.data.message,
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+        progress: undefined,
+        draggable: true,
+        closeButton: true,
+      });
     }
   };
 
@@ -83,11 +102,9 @@ function Profile() {
         </div>
         <div>
           <h2>Profile Information</h2>
-          {/* Display user information here */}
+
           <p>Name: {localStorage.getItem("name")}</p>
           <p>Email: {localStorage.getItem("email")}</p>
-
-          {/* Update user information here */}
         </div>
       </div>
     </div>

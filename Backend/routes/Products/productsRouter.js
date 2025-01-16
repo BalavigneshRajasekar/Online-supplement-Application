@@ -132,7 +132,9 @@ productRouter.post(
       const user = await User.findById(req.user.id);
       user.image = mediaUrls[0];
       user.save();
-      res.status(200).send(mediaUrls[0]);
+      res
+        .status(200)
+        .send({ message: "Uploaded successfully", data: mediaUrls[0] });
     } catch (e) {
       console.error(e);
       res.status(500).json({ message: "Server Error", e });
