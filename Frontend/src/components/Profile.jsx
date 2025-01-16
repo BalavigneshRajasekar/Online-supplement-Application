@@ -10,7 +10,6 @@ function Profile() {
   const { imgUrl, setImageUrl } = useContext(Product);
 
   useEffect(() => {
-    "1"
     const profilePic = localStorage.getItem("profilePic");
     setImageUrl(profilePic);
   }, []);
