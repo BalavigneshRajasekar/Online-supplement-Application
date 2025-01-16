@@ -4,16 +4,18 @@ import { Box } from "@mui/material";
 import { Button, Form, Input } from "antd";
 import { SiMailtrap } from "react-icons/si";
 import { FaKey } from "react-icons/fa";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ImConfused2 } from "react-icons/im";
 import { MdSwitchAccount } from "react-icons/md";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Product } from "../context/Products";
 
 function Login() {
   const navigate = useNavigate();
+  const { setRole } = useContext(Product);
   const onFinish = async (values) => {
     const id = toast.loading("logging In ....");
     try {
@@ -34,6 +36,8 @@ function Login() {
       localStorage.setItem("name", response.data.name);
       localStorage.setItem("email", response.data.email);
       localStorage.setItem("profilePic", response.data.image);
+      localStorage.setItem("role", response.data.role);
+      setRole(response.data.role);
 
       navigate("/");
     } catch (e) {

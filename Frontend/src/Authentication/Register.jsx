@@ -31,6 +31,7 @@ function Register() {
         draggable: true,
         closeButton: true,
       });
+      navigate("/login");
     } catch (e) {
       toast.update(id, {
         render: e.response.data.message,
