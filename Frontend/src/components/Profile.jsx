@@ -53,7 +53,7 @@ function Profile() {
         draggable: true,
         closeButton: true,
       });
-      localStorage.setItem("profilePic", response.data);
+      localStorage.setItem("profilePic", response.data.data);
       console.log(response.data);
     } catch (e) {
       console.error("Failed to upload image", e);
