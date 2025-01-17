@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -69,13 +69,18 @@ const demoTheme = createTheme({
 function Dashboard() {
   const navigate = useNavigate();
   const router = useDemoRouter("/");
-  const [session, setSession] = React.useState({
+  const [session, setSession] = useState({
     user: {
       name: localStorage.getItem("name"),
       email: localStorage.getItem("email"),
       image: localStorage.getItem("profilePic"),
     },
   });
+  useEffect(() => {
+    if (!localStorage.getItem("logToken")) {
+      navigate("/login");
+    }
+  }, []);
   const authentication = React.useMemo(() => {
     return {
       signIn: () => {
@@ -89,6 +94,7 @@ function Dashboard() {
       },
       signOut: () => {
         setSession(null);
+        localStorage.removeItem("logToken");
         navigate("/login");
       },
     };

@@ -33,7 +33,9 @@ function MyOrders() {
       console.log(response.data);
       dispatch(setMyOrders(response.data.data));
     } catch (e) {
-      console.error("Error fetching orders", e); // Log the error to the console for debugging purposes.
+      console.error("Error fetching orders", e);
+
+      navigate("/"); // Log the error to the console for debugging purposes.
     }
   };
   return (
