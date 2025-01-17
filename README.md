@@ -37,9 +37,9 @@ Pass : vicky1234
 
 #### Admin Test Credentials
 
-EMail: vicky@gmail.com
+EMail: balaAdmin@gmail.com
 
-Pass : vicky1234
+Pass : bala1234
 
 #### Test Card Number
 
@@ -127,4 +127,4 @@ To run this project, you will need to add the following environment variables to
 
 Backend : https://supplement-application.onrender.com
 
-Frontend :
+Frontend : https://dksupplements.vercel.app/
