@@ -14,7 +14,7 @@ export const Product = createContext();
 
 const ProductHandler = ({ children }) => {
   const [imgUrl, setImageUrl] = useState(null);
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState("User");
   const [products, setProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
   const [singleProduct, setSingleProduct] = useState(null);
