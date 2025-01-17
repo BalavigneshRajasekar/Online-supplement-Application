@@ -69,7 +69,7 @@ function Payment() {
 
       //This call will get the clientSecret from server
       const response = await axios.post(
-        "http://localhost:3000/api/v1/payment",
+        "https://supplement-application.onrender.com/api/v1/payment",
         paymentData,
         {
           headers: {
@@ -114,7 +114,7 @@ function Payment() {
 
           //API to add payment details and purchased products to DB
           const orderResponse = await axios.post(
-            "http://localhost:3000/api/v1/payment/myOrders",
+            "https://supplement-application.onrender.com/api/v1/payment/myOrders",
             { cart: cart, paymentData: result.paymentIntent },
             {
               headers: {

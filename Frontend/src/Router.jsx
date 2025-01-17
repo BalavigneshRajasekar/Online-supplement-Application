@@ -93,7 +93,7 @@ function Router() {
             <Route path="/" element={<Dashboard />}></Route>
           </Routes>
         )}
-        {localStorage.getItem("role") == "User" && <FooterMenu />}
+        {role == "User" && <FooterMenu />}
       </BrowserRouter>
     </div>
   );
