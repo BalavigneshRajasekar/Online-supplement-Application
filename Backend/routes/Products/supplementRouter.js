@@ -12,6 +12,8 @@ const supplementRouter = express.Router();
 // Sample route for adding a new supplement
 
 supplementRouter.post("/add", upload.array("image"), async (req, res) => {
+  console.log(req.body);
+
   const {
     name,
     price,
@@ -59,7 +61,7 @@ supplementRouter.post("/add", upload.array("image"), async (req, res) => {
 
     res
       .status(201)
-      .json({ message: "saved successfully", data: savedSupplement });
+      .json({ message: "Product added successfully", data: savedSupplement });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error", err: error.message });

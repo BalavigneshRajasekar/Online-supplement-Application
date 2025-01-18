@@ -1,6 +1,15 @@
 /* eslint-disable no-unused-vars */
 import { Box, Button, Divider, Hidden } from "@mui/material";
-import { Card, Checkbox, Empty, Form, Input, Modal, Select } from "antd";
+import {
+  Breadcrumb,
+  Card,
+  Checkbox,
+  Empty,
+  Form,
+  Input,
+  Modal,
+  Select,
+} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +18,6 @@ import { LiaRupeeSignSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../context/Products";
 import { toast } from "react-toastify";
-
 import { FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoMdPerson } from "react-icons/io";
@@ -50,7 +58,7 @@ function Checkout() {
     setOpenModel(false);
   };
   return (
-    <div className="mt-10 d-md-flex justify-around align-items-center d-xs-flex-col gap-1 p-3">
+    <div className="mt-20 d-md-flex justify-around align-items-center d-xs-flex-col gap-1 p-3">
       <div className="w-100">
         <Box>
           <h2 className="text-lg text-red-500">Existing Shipping address :</h2>

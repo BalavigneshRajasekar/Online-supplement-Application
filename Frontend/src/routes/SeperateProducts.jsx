@@ -4,8 +4,8 @@ import { Button, Chip } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { HiArrowLeft, HiHome } from "react-icons/hi";
-import { Card, Breadcrumb } from "flowbite-react";
-import { message, Rate } from "antd";
+import { Breadcrumb } from "flowbite-react";
+import { Card, message, Rate } from "antd";
 import { Grid2 } from "@mui/material";
 import { Product } from "../context/Products";
 import { useDispatch } from "react-redux";
@@ -75,7 +75,7 @@ function SeperateProducts() {
           <Breadcrumb.Item>{params.name}</Breadcrumb.Item>
         </Breadcrumb>
 
-        {seperateProduct.length > 0 ? (
+        <Card loading={!seperateProduct.length > 0} className="mt-3">
           <Grid2
             container
             spacing={2}
@@ -89,7 +89,10 @@ function SeperateProducts() {
               <Grid2
                 key={index}
                 size={{ xs: 12, md: 3 }}
-                sx={{ justifyContent: "space-around", alignContent: "center" }}
+                sx={{
+                  justifyContent: "space-around",
+                  alignContent: "center",
+                }}
               >
                 <Card className="max-w-sm cardStyle">
                   <img src={prod.image[0]} width={"200px"}></img>
@@ -101,9 +104,9 @@ function SeperateProducts() {
                   <Chip
                     label={prod.quantity > 0 ? "In-stock" : "Out of Stock"}
                     color={prod.quantity > 0 ? "success" : "failure"}
-                    sx={{ width: "fit-content" }}
+                    sx={{ width: "fit-content", marginTop: "10px" }}
                   ></Chip>
-                  <div className="d-flex gap-3 mt-2">
+                  <div className="d-flex gap-3 mt-3">
                     <Button
                       variant="contained"
                       sx={{ bgcolor: "orange" }}
@@ -122,9 +125,9 @@ function SeperateProducts() {
                       +
                     </Button>
                   </div>
-                  <Rate disabled value={"2"}></Rate>
+                  <Rate disabled value={"2"} className="mt-3"></Rate>
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-3">
                     <span className="text-lg font-bold text-gray-900 dark:text-white">
                       <LiaRupeeSignSolid style={{ display: "inline-block" }} />{" "}
                       {prod.price}
@@ -143,9 +146,7 @@ function SeperateProducts() {
               </Grid2>
             ))}
           </Grid2>
-        ) : (
-          <h1>Loading Products...</h1>
-        )}
+        </Card>
       </div>
     </>
   );

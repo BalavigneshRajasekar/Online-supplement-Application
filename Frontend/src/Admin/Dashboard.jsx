@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -16,6 +16,8 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { useDemoRouter } from "@toolpad/core/internal";
 import Orders from "./Orders";
 import { useNavigate } from "react-router-dom";
+import AddProducts from "./AddProducts";
+import { Product } from "../context/Products";
 
 const NAVIGATION = [
   {
@@ -68,6 +70,7 @@ const demoTheme = createTheme({
 
 function Dashboard() {
   const navigate = useNavigate();
+  const { setRole } = useContext(Product);
   const router = useDemoRouter("/");
   const [session, setSession] = useState({
     user: {
@@ -110,12 +113,13 @@ function Dashboard() {
         authentication={authentication}
         branding={{
           homeUrl: "/",
-          title: "Dark Knight Supplements Admin panel",
+          title: " Admin panel",
           logo: <img src="logo.png"></img>,
         }}
       >
         <DashboardLayout>
           {router.pathname == "/orders" && <Orders />}
+          {router.pathname == "/addProducts" && <AddProducts />}
         </DashboardLayout>
       </AppProvider>
     </div>
