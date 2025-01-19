@@ -115,8 +115,8 @@ supplementRouter.put("/update/:id", upload.array("image"), async (req, res) => {
           (file) => file.endsWith(".jpg") || file.endsWith(".png")
         ),
         category,
-        supplementType: new Date(expirationDate),
-        expirationDate,
+        supplementType,
+        expirationDate: new Date(expirationDate),
       },
       { new: true, runValidators: true }
     );
