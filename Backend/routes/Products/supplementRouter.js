@@ -2,7 +2,6 @@ const express = require("express");
 const Products = require("../../models/products");
 const multer = require("multer");
 const cloudinary = require("../../cloudinary");
-const dayJs = require();
 
 // Multer setup for handling image uploads
 const memory = multer.memoryStorage();
