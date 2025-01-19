@@ -19,6 +19,8 @@ import { useNavigate } from "react-router-dom";
 import AddProducts from "./AddProducts";
 import { Product } from "../context/Products";
 
+import EditAndDeleteProducts from "./EditAndDeleteProducts";
+
 const NAVIGATION = [
   {
     kind: "header",
@@ -120,6 +122,7 @@ function Dashboard() {
         <DashboardLayout>
           {router.pathname == "/orders" && <Orders />}
           {router.pathname == "/addProducts" && <AddProducts />}
+          {router.pathname == "/EditProducts" && <EditAndDeleteProducts />}
         </DashboardLayout>
       </AppProvider>
     </div>

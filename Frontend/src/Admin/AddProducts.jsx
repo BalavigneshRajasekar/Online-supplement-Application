@@ -79,6 +79,7 @@ function AddProducts() {
   return (
     <Box sx={{ marginTop: "20px", display: "flex", justifyContent: "center" }}>
       <Form
+        className="form"
         onFinish={handleUpload}
         ref={form}
         initialValues={{ expirationDate: dayjs("01/22/2027") }}
@@ -160,6 +161,7 @@ function AddProducts() {
         </Form.Item>
         <Form.Item
           name="expirationDate"
+          label="Expiration Date"
           rules={[
             {
               required: true,

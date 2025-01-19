@@ -2,6 +2,7 @@ const express = require("express");
 const Products = require("../../models/products");
 const multer = require("multer");
 const cloudinary = require("../../cloudinary");
+const dayJs = require();
 
 // Multer setup for handling image uploads
 const memory = multer.memoryStorage();
@@ -54,7 +55,7 @@ supplementRouter.post("/add", upload.array("image"), async (req, res) => {
       ),
       category,
       supplementType,
-      expirationDate,
+      expirationDate: new Date(expirationDate),
     });
 
     const savedSupplement = await newSupplement.save();

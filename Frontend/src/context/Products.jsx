@@ -22,6 +22,7 @@ const ProductHandler = ({ children }) => {
   const [quantities, setQuantities] = useState();
   const [totalPrice, setTotalPrice] = useState();
   const [paymentDetails, setPaymentDetails] = useState(null);
+  const [editProducts, setEditProducts] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -127,6 +128,7 @@ const ProductHandler = ({ children }) => {
       value={{
         products,
         setProducts,
+        getAllProducts,
         singleProduct,
         getSingleProductsById,
         setSingleProduct,
@@ -148,6 +150,8 @@ const ProductHandler = ({ children }) => {
         setImageUrl,
         role,
         setRole,
+        editProducts,
+        setEditProducts,
       }}
     >
       {children}
