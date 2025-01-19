@@ -18,6 +18,7 @@ import { CiEdit } from "react-icons/ci";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
+import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 
 function EditAndDeleteProducts() {
@@ -57,17 +58,14 @@ function EditAndDeleteProducts() {
       media.forEach((file) => {
         formData.append("image", file.originFileObj);
       });
-      // Update Expiry date to form Data
-      formData.append(
-        "expirationDate",
-        dayjs(value.expirationDate).format("MM/DD/YYYY")
-      );
+
       // Send form data to server
       updateEditChange(formData);
     }
   };
 
   const updateEditChange = async (formData) => {
+    const load = toast.loading("Updating product...");
     try {
       const response = await axios.put(
         `https://supplement-application.onrender.com/api/admin/update/${editProducts._id}`,
@@ -78,12 +76,61 @@ function EditAndDeleteProducts() {
           },
         }
       );
-      toast.success("Product updated successfully");
+      toast.update(load, {
+        render: response.data.message,
+        status: "success",
+        isLoading: false,
+        autoClose: 3000,
+        progress: undefined,
+        closeButton: true,
+      });
       getAllProducts();
       setEditProducts(null);
     } catch (e) {
-      console.log(e);
+      toast.update(load, {
+        render: e.response.data.message,
+        status: "error",
+        isLoading: false,
+        autoClose: 3000,
+        progress: undefined,
+        closeButton: true,
+      });
     }
+  };
+
+  //Delete products
+  const deleteProduct = async (prod) => {
+    console.log(prod);
+
+    // const load = toast.loading("Delete Product...");
+    // try {
+    //   const response = await axios.delete(
+    //     `https://supplement-application.onrender.com/api/admin/delete/${prod._id}`,
+    //     {
+    //       headers: {
+    //         Authorization: localStorage.getItem("logToken"),
+    //       },
+    //     }
+    //   );
+    //   getAllProducts();
+    //   toast.update(load, {
+    //     render: response.data.message,
+    //     status: "success",
+    //     isLoading: false,
+    //     autoClose: 3000,
+    //     progress: undefined,
+    //     closeButton: true,
+    //   });
+    // } catch (e) {
+    //   toast.update(load, {
+    //     render: e.response.data.message,
+    //     status: "error",
+    //     isLoading: false,
+    //     autoClose: 3000,
+    //     progress: undefined,
+    //     closeButton: true,
+    //   });
+    // }
   };
   return (
     <div>
@@ -108,6 +155,9 @@ function EditAndDeleteProducts() {
                 <div className="flex items-center justify-between">
                   <IconButton color="success" onClick={() => edit(prod)}>
                     <CiEdit />
+                  </IconButton>
+                  <IconButton color="error" onClick={() => deleteProduct(prod)}>
+                    <AiFillDelete />
                   </IconButton>
                 </div>
                 <img

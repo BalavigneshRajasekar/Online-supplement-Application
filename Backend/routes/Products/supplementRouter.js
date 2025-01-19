@@ -132,10 +132,11 @@ supplementRouter.put("/update/:id", upload.array("image"), async (req, res) => {
 // Sample route for deleting a supplement by ID
 
 supplementRouter.delete("/delete/:id", async (req, res) => {
-  const { id } = req.params.id;
+  const { id } = req.params;
 
   try {
     const deletedSupplement = await Products.findByIdAndDelete(id);
+
     if (!deletedSupplement)
       return res.status(404).json({ message: "Supplement not found" });
 
