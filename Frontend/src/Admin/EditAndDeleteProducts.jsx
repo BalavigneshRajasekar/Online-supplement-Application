@@ -100,37 +100,35 @@ function EditAndDeleteProducts() {
 
   //Delete products
   const deleteProduct = async (prod) => {
-    console.log(prod);
-
-    // const load = toast.loading("Delete Product...");
-    // try {
-    //   const response = await axios.delete(
-    //     `https://supplement-application.onrender.com/api/admin/delete/${prod._id}`,
-    //     {
-    //       headers: {
-    //         Authorization: localStorage.getItem("logToken"),
-    //       },
-    //     }
-    //   );
-    //   getAllProducts();
-    //   toast.update(load, {
-    //     render: response.data.message,
-    //     status: "success",
-    //     isLoading: false,
-    //     autoClose: 3000,
-    //     progress: undefined,
-    //     closeButton: true,
-    //   });
-    // } catch (e) {
-    //   toast.update(load, {
-    //     render: e.response.data.message,
-    //     status: "error",
-    //     isLoading: false,
-    //     autoClose: 3000,
-    //     progress: undefined,
-    //     closeButton: true,
-    //   });
-    // }
+    const load = toast.loading("Delete Product...");
+    try {
+      const response = await axios.delete(
+        `https://supplement-application.onrender.com/api/admin/delete/${prod._id}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("logToken"),
+          },
+        }
+      );
+      getAllProducts();
+      toast.update(load, {
+        render: response.data.message,
+        status: "success",
+        isLoading: false,
+        autoClose: 3000,
+        progress: undefined,
+        closeButton: true,
+      });
+    } catch (e) {
+      toast.update(load, {
+        render: e.response.data.message,
+        status: "error",
+        isLoading: false,
+        autoClose: 3000,
+        progress: undefined,
+        closeButton: true,
+      });
+    }
   };
   return (
     <div>
@@ -151,7 +149,7 @@ function EditAndDeleteProducts() {
               size={{ xs: 12, md: 3 }}
               sx={{ justifyContent: "space-around", alignContent: "center" }}
             >
-              <Card className="max-w-sm cardStyle">
+              <Card className="min-h-full cardStyle">
                 <div className="flex items-center justify-between">
                   <IconButton color="success" onClick={() => edit(prod)}>
                     <CiEdit />
