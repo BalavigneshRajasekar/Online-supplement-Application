@@ -142,7 +142,7 @@ function AllProducts() {
               size={{ xs: 12, md: 3 }}
               sx={{ justifyContent: "space-around", alignContent: "center" }}
             >
-              <Card className="max-w-sm cardStyle">
+              <Card className="max-w-sm  min-h-full cardStyle">
                 <img
                   src={prod.image[0]}
                   width={"200px"}

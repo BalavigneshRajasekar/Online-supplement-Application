@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import { Button, Form, Input, Select, Upload } from "antd";
 import { FaCloudUploadAlt } from "react-icons/fa";
@@ -8,9 +8,11 @@ import { toast } from "react-toastify";
 import { DatePicker, Space } from "antd";
 import axios from "axios";
 import dayjs from "dayjs";
+import { Product } from "../context/Products";
 
 function AddProducts() {
   const [media, setMedia] = useState([]);
+  const { getAllProducts } = useContext(Product);
   const form = useRef();
 
   const handleChange = (file) => {
@@ -48,8 +50,7 @@ function AddProducts() {
           },
         }
       );
-      console.log(response.data);
-      console.log("executed");
+      getAllProducts();
       setMedia([]);
       form.current.resetFields();
       toast.update(load, {
@@ -73,142 +74,142 @@ function AddProducts() {
       });
     }
   };
-  const data = (date, dateSTring) => {
-    console.log(date, dateSTring);
-  };
+
   return (
-    <Box sx={{ marginTop: "20px", display: "flex", justifyContent: "center" }}>
-      <Form
-        className="form"
-        onFinish={handleUpload}
-        ref={form}
-        initialValues={{ expirationDate: dayjs("01/22/2027") }}
+    <>
+      <h2 className="text-center font-mono p-5 bg-green-600 font-extrabold">
+        Add New Products to store
+      </h2>
+      <Box
+        sx={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
       >
-        <Form.Item
-          label="Product image"
-          rules={[
-            {
-              required: true,
-              message: "Plz select the Product picture",
-            },
-            {
-              max: 2 * 1024 * 1024, // 2MB
-              message: "File size should be less than or equal to 2MB",
-            },
-          ]}
-        >
-          <Upload
-            fileList={media}
-            beforeUpload={() => false}
-            accept=".jpg,.png,.jpeg"
-            onChange={handleChange}
+        <Form className="form" onFinish={handleUpload} ref={form}>
+          <Form.Item
+            label="Product image"
+            rules={[
+              {
+                required: true,
+                message: "Plz select the Product picture",
+              },
+              {
+                max: 2 * 1024 * 1024, // 2MB
+                message: "File size should be less than or equal to 2MB",
+              },
+            ]}
           >
-            <Button>
-              <FaCloudUploadAlt className="text-4xl" />
-            </Button>
-          </Upload>
-          <p>
-            Only jpg, png, and jpeg images are allowed. Maximum file size is
-            2MB.
-          </p>
-        </Form.Item>
-        <Form.Item
-          name="name"
-          rules={[
-            {
-              required: true,
-              message: "Please input the product name!",
-            },
-          ]}
-        >
-          <Input placeholder="Product Name" className="border"></Input>
-        </Form.Item>
-        <Form.Item
-          name="price"
-          rules={[
-            {
-              required: true,
-              message: "Please input the product price!",
-            },
-          ]}
-        >
-          <Input placeholder="Price" className="border"></Input>
-        </Form.Item>
-        <Form.Item
-          name="description"
-          rules={[
-            {
-              required: true,
-              message: "Please input the product description!",
-            },
-          ]}
-        >
-          <TextArea
-            placeholder="Product description"
-            className="border"
-          ></TextArea>
-        </Form.Item>
-        <Form.Item
-          name="quantity"
-          rules={[
-            {
-              required: true,
-              message: "Please input the product quantity!",
-            },
-          ]}
-        >
-          <Input placeholder="Product quantity" className="border"></Input>
-        </Form.Item>
-        <Form.Item
-          name="expirationDate"
-          label="Expiration Date"
-          rules={[
-            {
-              required: true,
-              message: "Please Select the Expiry Date!",
-            },
-          ]}
-        >
-          <DatePicker format={"MM/DD/YYYY"} onChange={data}></DatePicker>
-        </Form.Item>
-        <label>Select Category</label>
-        <Form.Item
-          name="category"
-          rules={[
-            {
-              required: true,
-              message: "Please Select the product category!",
-            },
-          ]}
-        >
-          <Select value="select">
-            <Select.Option value="supplements">supplements</Select.Option>
-            <Select.Option value="preworkout">preworkout</Select.Option>
-            <Select.Option value="medicines">medicines</Select.Option>
-          </Select>
-        </Form.Item>
-        <label>Select Supplement Type</label>
-        <Form.Item
-          name="supplementType"
-          rules={[
-            {
-              required: true,
-              message: "Please Select the supplementType !",
-            },
-          ]}
-        >
-          <Select value="select" className="w-100">
-            <Select.Option value="protein">protein</Select.Option>
-            <Select.Option value="MassGainer">MassGainer</Select.Option>
-            <Select.Option value="Creatine">Creatine</Select.Option>
-            <Select.Option value="MultiVitamins">MultiVitamins</Select.Option>
-          </Select>
-        </Form.Item>
-        <Button htmlType="submit" variant="solid" type="primary">
-          Add Products
-        </Button>
-      </Form>
-    </Box>
+            <Upload
+              fileList={media}
+              beforeUpload={() => false}
+              accept=".jpg,.png,.jpeg"
+              onChange={handleChange}
+            >
+              <Button>
+                <FaCloudUploadAlt className="text-4xl" />
+              </Button>
+            </Upload>
+            <p>
+              Only jpg, png, and jpeg images are allowed. Maximum file size is
+              2MB.
+            </p>
+          </Form.Item>
+          <Form.Item
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Please input the product name!",
+              },
+            ]}
+          >
+            <Input placeholder="Product Name" className="border"></Input>
+          </Form.Item>
+          <Form.Item
+            name="price"
+            rules={[
+              {
+                required: true,
+                message: "Please input the product price!",
+              },
+            ]}
+          >
+            <Input placeholder="Price" className="border"></Input>
+          </Form.Item>
+          <Form.Item
+            name="description"
+            rules={[
+              {
+                required: true,
+                message: "Please input the product description!",
+              },
+            ]}
+          >
+            <TextArea
+              placeholder="Product description"
+              className="border"
+            ></TextArea>
+          </Form.Item>
+          <Form.Item
+            name="quantity"
+            rules={[
+              {
+                required: true,
+                message: "Please input the product quantity!",
+              },
+            ]}
+          >
+            <Input placeholder="Product quantity" className="border"></Input>
+          </Form.Item>
+          <Form.Item
+            name="expirationDate"
+            label="Expiration Date"
+            rules={[
+              {
+                required: true,
+                message: "Please Select the Expiry Date!",
+              },
+            ]}
+          >
+            <DatePicker format={"MM/DD/YYYY"}></DatePicker>
+          </Form.Item>
+          <label>Select Category</label>
+          <Form.Item
+            name="category"
+            rules={[
+              {
+                required: true,
+                message: "Please Select the product category!",
+              },
+            ]}
+          >
+            <Select value="select">
+              <Select.Option value="supplements">supplements</Select.Option>
+              <Select.Option value="preworkout">preworkout</Select.Option>
+              <Select.Option value="medicines">medicines</Select.Option>
+            </Select>
+          </Form.Item>
+          <label>Select Supplement Type</label>
+          <Form.Item
+            name="supplementType"
+            rules={[
+              {
+                required: true,
+                message: "Please Select the supplementType !",
+              },
+            ]}
+          >
+            <Select value="select" className="w-100">
+              <Select.Option value="protein">protein</Select.Option>
+              <Select.Option value="MassGainer">MassGainer</Select.Option>
+              <Select.Option value="Creatine">Creatine</Select.Option>
+              <Select.Option value="MultiVitamins">MultiVitamins</Select.Option>
+            </Select>
+          </Form.Item>
+          <Button htmlType="submit" variant="solid" type="primary">
+            Add Products
+          </Button>
+        </Form>
+      </Box>
+    </>
   );
 }
 

@@ -27,7 +27,7 @@ function EditAndDeleteProducts() {
     useContext(Product);
   useEffect(() => {
     console.log(products);
-  }, []);
+  }, [products]);
 
   //Set product image to media state
   const handleChange = (file) => {
@@ -132,6 +132,9 @@ function EditAndDeleteProducts() {
   };
   return (
     <div>
+      <h2 className="text-center p-5 font-mono font-extrabold bg-orange-300">
+        Manage Products
+      </h2>
       <Card loading={!products.length > 0} className="mt-3">
         <Grid2
           container
@@ -330,7 +333,7 @@ function EditAndDeleteProducts() {
             </Select>
           </Form.Item>
           <Button htmlType="submit" variant="solid" type="primary">
-            Add Products
+            Update Products
           </Button>
         </Form>
       </Modal>
