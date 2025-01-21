@@ -20,6 +20,7 @@ import AddProducts from "./AddProducts";
 import { Product } from "../context/Products";
 
 import EditAndDeleteProducts from "./EditAndDeleteProducts";
+import DashboardData from "./DashboardData";
 
 const NAVIGATION = [
   {
@@ -120,6 +121,7 @@ function Dashboard() {
         }}
       >
         <DashboardLayout>
+          {router.pathname == "/dashboard" && <DashboardData />}
           {router.pathname == "/orders" && <Orders />}
           {router.pathname == "/addProducts" && <AddProducts />}
           {router.pathname == "/EditProducts" && <EditAndDeleteProducts />}
