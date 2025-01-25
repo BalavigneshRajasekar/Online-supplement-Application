@@ -44,14 +44,11 @@ a {
   box-sizing: border-box;
   width: 80px;
   height: 80px;
-  background: linear-gradient(
-    180deg,
-    rgba(248, 248, 248, 0) 50%,
-    #f8f8f888 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(248, 248, 248, 0) 50%,
+      #f8f8f888 100%);
   border: 1px solid #f7f7f8;
-  filter: drop-shadow(0px 0.5px 0.5px #efefef)
-    drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+  filter: drop-shadow(0px 0.5px 0.5px #efefef) drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
   border-radius: 11px;
 }
 
@@ -230,7 +227,7 @@ a {
 
 /* Credit cart design */
 
-.modal {
+/* .modal {
   width: fit-content;
   height: fit-content;
   background: #ffffff;
@@ -366,7 +363,7 @@ a {
 }
 
 /* Reset input number styles */
-.input_field::-webkit-outer-spin-button,
+/* .input_field::-webkit-outer-spin-button,
 .input_field::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
@@ -374,8 +371,9 @@ a {
 
 .input_field[type="number"] {
   -moz-appearance: textfield;
-}
+} */
 @media only screen and (max-width: 600px) {
+
   /* Cart screen styles */
   .transitions {
     position: fixed;

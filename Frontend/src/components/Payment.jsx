@@ -112,7 +112,7 @@ function Payment() {
         if ((await result).paymentIntent.status === "succeeded") {
           setPaymentDetails(result.paymentIntent);
 
-          //API to add payment details and purchased products to DB
+          //API to Update Orders in DB
           const orderResponse = await axios.post(
             "https://supplement-application.onrender.com/api/v1/payment/myOrders",
             { cart: cart, paymentData: result.paymentIntent },
@@ -134,7 +134,7 @@ function Payment() {
             closeButton: true,
             render: "Payment successfully done",
           });
-          navigate("success");
+          navigate(orderResponse.route);
         } else {
           toast.update(loading, {
             type: "error",

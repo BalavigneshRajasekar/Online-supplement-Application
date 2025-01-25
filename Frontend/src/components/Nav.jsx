@@ -94,7 +94,7 @@ function Nav() {
 
   return (
     <div style={{ position: "relative" }} ref={navRef}>
-      <AppBar position="fixed" sx={{ backgroundColor: "black" }}>
+      <AppBar sx={{ backgroundColor: "black" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Box sx={{ display: { xs: "none", md: "block" } }}>

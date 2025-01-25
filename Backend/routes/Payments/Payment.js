@@ -68,13 +68,13 @@ paymentRouter.get("/shipping/details", loginAuth, async (req, res) => {
 // Route to add Purchased product and payment details
 paymentRouter.post("/payment/myOrders", loginAuth, async (req, res) => {
   console.log(req.body);
-  const { cart, paymentDetails } = req.body;
+  const { cart, paymentData } = req.body;
 
   try {
     const newOrder = new Orders({
       user: req.user.id,
       products: cart.map((prod) => prod.id),
-      paymentData: paymentDetails,
+      paymentData: paymentData,
     });
 
     await newOrder.save();
