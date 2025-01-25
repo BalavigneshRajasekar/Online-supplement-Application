@@ -3,13 +3,17 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setMyOrders } from "../store/slice";
-import { Button, Card, Divider, Empty, List, Tag } from "antd";
+import { Button, Card, Divider, Empty, List, message, Steps, Tag } from "antd";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { Badge } from "flowbite-react";
 import { IoMdHome } from "react-icons/io";
 import { FaCreditCard } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { IoIosTime } from "react-icons/io";
+import { FaShippingFast } from "react-icons/fa";
+import { TiTick } from "react-icons/ti";
+import { MdDeliveryDining } from "react-icons/md";
 
 function MyOrders() {
   const { myOrders } = useSelector((state) => state.products);
@@ -33,9 +37,8 @@ function MyOrders() {
       console.log(response.data);
       dispatch(setMyOrders(response.data.data));
     } catch (e) {
-      console.error("Error fetching orders", e);
-
-      navigate("/"); // Log the error to the console for debugging purposes.
+      message.error(e.response.data.message);
+      navigate("/login"); // Log the error to the console for debugging purposes.
     }
   };
   return (
@@ -117,7 +120,38 @@ function MyOrders() {
                   </b>
                 </div>
                 <Divider>Order Status</Divider>
-                <div></div>
+                <div>
+                  <Steps
+                    items={[
+                      {
+                        title: "Preparing",
+                        icon: (
+                          <IoIosTime className="inline-block text-green-700" />
+                        ),
+                        status: "process",
+                      },
+                      {
+                        title: "Shipped",
+                        icon: (
+                          <FaShippingFast className="inline-block text-dark" />
+                        ),
+                        status: "wait",
+                      },
+                      {
+                        title: "Out For delivery",
+                        icon: (
+                          <MdDeliveryDining className="inline-block text-dark" />
+                        ),
+                        status: "wait",
+                      },
+                      {
+                        title: "Delivered",
+                        icon: <TiTick className="inline-block text-dark" />,
+                        status: "finish",
+                      },
+                    ]}
+                  ></Steps>
+                </div>
               </div>
             </Card>
           ))}

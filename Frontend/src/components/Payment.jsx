@@ -131,7 +131,7 @@ function Payment() {
             closeButton: true,
             render: "Payment successfully done",
           });
-          navigate(orderResponse.route);
+          navigate("success");
         } else {
           toast.update(loading, {
             type: "error",
