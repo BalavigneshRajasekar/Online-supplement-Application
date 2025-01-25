@@ -55,7 +55,7 @@ function MyOrders() {
                 <List
                   className="demo-loadmore-list"
                   itemLayout="horizontal"
-                  dataSource={orders.cart}
+                  dataSource={orders.products}
                   renderItem={(item, index) => (
                     <List.Item key={index} className="">
                       <List.Item.Meta

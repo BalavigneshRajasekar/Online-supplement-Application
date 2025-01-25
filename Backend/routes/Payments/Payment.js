@@ -71,16 +71,6 @@ paymentRouter.post("/payment/myOrders", loginAuth, async (req, res) => {
   const { cart, paymentDetails } = req.body;
 
   try {
-    // const user = await User.findByIdAndUpdate(req.user.id);
-    // if (!user) return res.status(404).json({ message: "User not found" });
-
-    // user.myOrders.push(req.body);
-    // await user.save();
-    // res.status(200).json({
-    //   message: "My orders updated",
-    //   data: user.myOrders,
-    // });
-
     const newOrder = new Orders({
       user: req.user.id,
       products: cart.map((prod) => prod.id),
@@ -90,7 +80,7 @@ paymentRouter.post("/payment/myOrders", loginAuth, async (req, res) => {
     await newOrder.save();
     res
       .status(200)
-      .json({ message: "Order placed successfully", data: newOrder });
+      .json({ message: "Order placed successfully", route: "success" });
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "Server Error", e });
@@ -102,13 +92,6 @@ paymentRouter.post("/payment/myOrders", loginAuth, async (req, res) => {
 
 paymentRouter.get("/get/myOrders", loginAuth, async (req, res) => {
   try {
-    // const user = await User.findById(req.user.id);
-    // if (!user) return res.status(404).json({ message: "User not found" });
-    // res.status(200).json({
-    //   message: "My orders retrieved",
-    //   data: user.myOrders,
-    // });
-
     const orders = await Orders.find({ user: req.user.id }).populate({
       path: "products",
     });
