@@ -3,6 +3,8 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const loginAuth = require("../../middlewares/loginAuth");
 const User = require("../../models/user");
+const Orders = require("../../models/orders");
+
 const paymentRouter = express.Router();
 
 paymentRouter.post("/payment", loginAuth, async (req, res) => {
@@ -66,17 +68,29 @@ paymentRouter.get("/shipping/details", loginAuth, async (req, res) => {
 // Route to add Purchased product and payment details
 paymentRouter.post("/payment/myOrders", loginAuth, async (req, res) => {
   console.log(req.body);
+  const { cart, paymentDetails } = req.body;
 
   try {
-    const user = await User.findByIdAndUpdate(req.user.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    // const user = await User.findByIdAndUpdate(req.user.id);
+    // if (!user) return res.status(404).json({ message: "User not found" });
 
-    user.myOrders.push(req.body);
-    await user.save();
-    res.status(200).json({
-      message: "My orders updated",
-      data: user.myOrders,
+    // user.myOrders.push(req.body);
+    // await user.save();
+    // res.status(200).json({
+    //   message: "My orders updated",
+    //   data: user.myOrders,
+    // });
+
+    const newOrder = new Orders({
+      user: req.user.id,
+      products: cart.map((prod) => prod.id),
+      paymentData: paymentDetails,
     });
+
+    await newOrder.save();
+    res
+      .status(200)
+      .json({ message: "Order placed successfully", data: newOrder });
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "Server Error", e });
@@ -88,12 +102,17 @@ paymentRouter.post("/payment/myOrders", loginAuth, async (req, res) => {
 
 paymentRouter.get("/get/myOrders", loginAuth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.status(200).json({
-      message: "My orders retrieved",
-      data: user.myOrders,
+    // const user = await User.findById(req.user.id);
+    // if (!user) return res.status(404).json({ message: "User not found" });
+    // res.status(200).json({
+    //   message: "My orders retrieved",
+    //   data: user.myOrders,
+    // });
+
+    const orders = await Orders.find({ user: req.user.id }).populate({
+      path: "products",
     });
+    res.status(200).json({ message: "My orders retrieved", data: orders });
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "Server Error", e });

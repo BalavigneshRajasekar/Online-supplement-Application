@@ -106,6 +106,7 @@ productRouter.get("/products/:id", async (req, res) => {
   }
 });
 
+//Route for adding profile picture
 productRouter.post(
   "/profile/add",
   loginAuth,
