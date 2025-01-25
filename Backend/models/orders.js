@@ -6,8 +6,8 @@ const orderModel = new mongoose.Schema({
   paymentData: { type: Object, required: true },
   orderStatus: {
     type: String,
-    default: "Pending",
-    enum: ["Pending", "Shipped", "Delivered", "Cancelled"],
+    default: "preparing",
+    enum: ["preparing", "Shipped", "Delivered", "Cancelled"],
   },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
