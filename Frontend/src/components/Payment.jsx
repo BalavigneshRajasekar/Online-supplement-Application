@@ -49,7 +49,6 @@ function Payment() {
       phone: JSON.parse(localStorage.getItem("Shipping")).Phone,
     },
   };
-  console.log(paymentData);
 
   //User send to home when cart is empty
   useEffect(() => {
@@ -77,7 +76,6 @@ function Payment() {
           },
         }
       );
-      console.log(response.data.clientSecret);
 
       //Here we validate payment with client secret
       const result = await stripe.confirmCardPayment(
@@ -93,7 +91,6 @@ function Payment() {
           },
         }
       );
-      console.log(result);
 
       if (result.error) {
         console.error("Payment failed:", result.error);

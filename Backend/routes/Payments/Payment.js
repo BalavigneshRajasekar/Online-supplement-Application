@@ -73,7 +73,7 @@ paymentRouter.post("/payment/myOrders", loginAuth, async (req, res) => {
   try {
     const newOrder = new Orders({
       user: req.user.id,
-      products: cart.map((prod) => prod.id),
+      products: cart,
       paymentData: paymentData,
     });
 

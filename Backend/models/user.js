@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
   supplements: [{ type: mongoose.Schema.Types.ObjectId, ref: "products" }],
   resetCode: { type: String, default: null },
   shippingDetails: { type: Object, default: null },
-  myOrders: [{ type: Object, default: null }],
   image: { type: String, default: null },
 
   role: {

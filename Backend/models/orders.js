@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const orderModel = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Products" }],
+  products: [{ type: Object, required: true }],
   paymentData: { type: Object, required: true },
   orderStatus: {
     type: String,
