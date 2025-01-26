@@ -20,7 +20,6 @@ function Profile() {
       // Convert file to base64 string for preview
       reader.onload = () => {
         setImageUrl(reader.result);
-        console.log("1");
       };
       //Set read data as orginFileObj to display the profile
       reader.readAsDataURL(info.file.originFileObj);
@@ -76,7 +75,7 @@ function Profile() {
   };
   return (
     <div>
-      <div className="mt-5 flex justify-center flex-col align-items-center gap-10">
+      <div className="mt-32 flex justify-center flex-col align-items-center gap-10">
         <Avatar src={imgUrl} icon={!imgUrl && <UserOutlined />} size={128}>
           {" "}
         </Avatar>

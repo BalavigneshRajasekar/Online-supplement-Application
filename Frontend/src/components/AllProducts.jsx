@@ -125,7 +125,7 @@ function AllProducts() {
           searchByName(e);
         }}
       ></Search>
-      <Card loading={!products.length > 0} className="mt-3">
+      <Card loading={!products.length > 0} className="mt-3 border-none">
         <Grid2
           container
           spacing={2}

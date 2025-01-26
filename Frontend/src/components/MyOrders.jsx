@@ -55,7 +55,10 @@ function MyOrders() {
         <div className="w-100 p-3">
           {myOrders.map((orders, i) => (
             <Card key={i} className="bg-slate-200 mt-3">
-              <div className="bg-green-600 p-3 text-slate-800 rounded-md">
+              <Tag color="gold-inverse">
+                {new Date(orders.createdAt).toDateString()}
+              </Tag>
+              <div className="bg-green-600 p-3 mt-3 text-slate-800 rounded-md">
                 <b className="block">Order ID : #DkUs_12{i + 1}</b>
                 <b className="block">Payment ID :{orders.paymentData.id}</b>
               </div>

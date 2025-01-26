@@ -107,7 +107,7 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="">
+    <div>
       <AppProvider
         router={router}
         navigation={NAVIGATION}
