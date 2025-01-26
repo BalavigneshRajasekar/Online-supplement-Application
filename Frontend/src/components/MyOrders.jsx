@@ -15,6 +15,12 @@ import { FaShippingFast } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 import { MdDeliveryDining } from "react-icons/md";
 
+const deliveryStatus = [
+  "Preparing",
+  "Shipped",
+  "Out For Delivery",
+  "Delivered",
+];
 function MyOrders() {
   const { myOrders } = useSelector((state) => state.products);
   const navigate = useNavigate();
@@ -122,32 +128,33 @@ function MyOrders() {
                 <Divider>Order Status</Divider>
                 <div>
                   <Steps
+                    current={deliveryStatus.findIndex(
+                      //For Dynamic Update of Order status
+                      (data) => data == orders.OrderStatus
+                    )}
                     items={[
                       {
                         title: "Preparing",
                         icon: (
                           <IoIosTime className="inline-block text-green-700" />
                         ),
-                        status: "process",
                       },
                       {
                         title: "Shipped",
+
                         icon: (
                           <FaShippingFast className="inline-block text-dark" />
                         ),
-                        status: "wait",
                       },
                       {
-                        title: "Out For delivery",
+                        title: "Out For Delivery",
                         icon: (
                           <MdDeliveryDining className="inline-block text-dark" />
                         ),
-                        status: "wait",
                       },
                       {
                         title: "Delivered",
                         icon: <TiTick className="inline-block text-dark" />,
-                        status: "finish",
                       },
                     ]}
                   ></Steps>

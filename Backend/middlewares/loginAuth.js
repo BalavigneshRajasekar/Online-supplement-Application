@@ -3,6 +3,11 @@ require("dotenv").config();
 // Middleware to verify Login token
 
 const loginAuth = (req, res, next) => {
+  // Get the token from the request header
+  // If the token doesn't exist, return a 401 status and an error message.
+  // If the token is valid, use jwt.verify() to decode the token and attach the user object to the request.
+  // If the token is invalid, return a 401 status and an error message.
+
   const token = req.header("Authorization");
   try {
     if (!token) {

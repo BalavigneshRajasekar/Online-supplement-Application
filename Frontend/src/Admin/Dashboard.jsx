@@ -116,7 +116,7 @@ function Dashboard() {
         authentication={authentication}
         branding={{
           homeUrl: "/",
-          title: " Admin panel",
+          title: "Admin panel",
           logo: <img src="logo.png"></img>,
         }}
       >

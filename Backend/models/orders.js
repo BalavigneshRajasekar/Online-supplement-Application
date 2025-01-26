@@ -7,7 +7,13 @@ const orderModel = new mongoose.Schema({
   orderStatus: {
     type: String,
     default: "preparing",
-    enum: ["preparing", "Shipped", "Delivered", "Cancelled"],
+    enum: [
+      "preparing",
+      "Shipped",
+      "Delivered",
+      "Cancelled",
+      "Out For Delivery",
+    ],
   },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
