@@ -1,10 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { Box, Typography } from "@mui/material";
 import { Tag } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaRupeeSign } from "react-icons/fa";
 
 function Orders() {
+  useEffect(() => {
+    
+  }, []);
   return (
     <Box
       sx={{
