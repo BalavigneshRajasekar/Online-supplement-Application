@@ -1,26 +1,17 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { createTheme } from "@mui/material/styles";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import DescriptionIcon from "@mui/icons-material/Description";
 import LayersIcon from "@mui/icons-material/Layers";
-import { AppProvider } from "@toolpad/core";
-
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
-import { useDemoRouter } from "@toolpad/core/internal";
-import Orders from "./Orders";
-import { useNavigate } from "react-router-dom";
-import AddProducts from "./AddProducts";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Product } from "../context/Products";
+import { ReactRouterAppProvider } from "@toolpad/core/react-router";
 
-import EditAndDeleteProducts from "./EditAndDeleteProducts";
-import DashboardData from "./DashboardData";
+import "./Dashboard.css";
 
 const NAVIGATION = [
   {
@@ -74,7 +65,6 @@ const demoTheme = createTheme({
 function Dashboard() {
   const navigate = useNavigate();
   const { setRole } = useContext(Product);
-  const router = useDemoRouter("/");
   const [session, setSession] = useState({
     user: {
       name: localStorage.getItem("name"),
@@ -105,11 +95,18 @@ function Dashboard() {
       },
     };
   }, []);
+  // Function to generate path dynamically based on segment
+  const generatePath = (segment) => {
+    if (segment === "dashboard") return "/dashboard";
+    if (segment === "orders") return "/orders";
+    if (segment === "addProducts") return "/addProducts";
+    if (segment === "EditProducts") return "/EditProducts";
+    return "#"; // Default if no match
+  };
 
   return (
     <div>
-      <AppProvider
-        router={router}
+      <ReactRouterAppProvider
         navigation={NAVIGATION}
         theme={demoTheme}
         session={session}
@@ -121,12 +118,9 @@ function Dashboard() {
         }}
       >
         <DashboardLayout>
-          {router.pathname == "/dashboard" && <DashboardData />}
-          {router.pathname == "/orders" && <Orders />}
-          {router.pathname == "/addProducts" && <AddProducts />}
-          {router.pathname == "/EditProducts" && <EditAndDeleteProducts />}
+          <Outlet />
         </DashboardLayout>
-      </AppProvider>
+      </ReactRouterAppProvider>
     </div>
   );
 }

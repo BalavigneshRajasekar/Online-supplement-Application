@@ -1,28 +1,39 @@
 /* eslint-disable no-unused-vars */
 import { Box, Typography } from "@mui/material";
 import { Tag } from "antd";
-import React, { useEffect } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import { FaRupeeSign } from "react-icons/fa";
+import { Product } from "../context/Products";
+import { useNavigate } from "react-router";
 
 function Orders() {
+  const { orders, getAllOrders } = useContext(Product);
+  const navigate = useNavigate();
   useEffect(() => {
-    
+    // Fetching orders data from API
+    getAllOrders(navigate);
   }, []);
+  const viewOrders = (id) => {
+    navigate(`/SingleViewOrder/${id}`);
+  };
   return (
     <Box
       sx={{
         py: 4,
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+
         textAlign: "center",
       }}
     >
-      <Typography variant="h1">Total orders :30</Typography>
+      <Typography variant="h1" className="ordersHeader">
+        Total orders :{orders.length}
+      </Typography>
       <Box>
-        <table className="table  w-100 table-striped overflow-auto">
+        <table className="table  overflow-auto">
           <thead className="">
-            <tr>
+            <tr className="text-lg">
               <th>Order ID</th>
               <th>Customer Name</th>
               <th>Order Date</th>
@@ -32,26 +43,39 @@ function Orders() {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody className="table-row-group ">
-            <tr>
-              <td>123456</td>
-              <td>John Doe</td>
-              <td>2022-01-01</td>
-              <td>
-                <Tag
-                  color="green-inverse"
-                  icon={<FaRupeeSign className="inline-block" />}
-                >
-                  2000
-                </Tag>
-              </td>
-              <td>
-                <Tag color="green-inverse">Done</Tag>
-              </td>
-              <td>Shipped</td>
-              <td className="cursor-pointer">View Order</td>
-            </tr>
-          </tbody>
+          {orders.length > 0 ? (
+            <tbody className="">
+              {orders.map((order, i) => (
+                <tr className="tableRow" key={i}>
+                  <td>{order._id}</td>
+                  <td>{order.paymentData.shipping.name}</td>
+                  <td>{new Date(order.createdAt).toDateString()}</td>
+                  <td>
+                    <Tag
+                      color="green-inverse"
+                      icon={<FaRupeeSign className="inline-block" />}
+                    >
+                      {order.paymentData.amount}
+                    </Tag>
+                  </td>
+                  <td>
+                    <Tag color="green-inverse">{order.paymentData.status}</Tag>
+                  </td>
+                  <td>{order.orderStatus}</td>
+                  <td className="cursor-pointer">
+                    <button
+                      onClick={() => viewOrders(order._id)}
+                      className="bg-red-600 ps-2 pe-2 p-1 hover:bg-red-500 active:scale-90 transition-all rounded-md"
+                    >
+                      View Order
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          ) : (
+            <>Loading orders...</>
+          )}
         </table>
       </Box>
     </Box>

@@ -11,9 +11,6 @@ import ForgotPassword from "./Authentication/ForgotPassword";
 import SeperateProducts from "./routes/SeperateProducts";
 import Nav from "./components/Nav";
 import SingleViewProducts from "./routes/SingleViewProducts";
-import { Provider } from "react-redux";
-import store from "./store/store";
-import { ToastContainer } from "react-toastify";
 import Checkout from "./components/Checkout";
 import axios from "axios";
 import Payment from "./components/Payment";
@@ -25,6 +22,11 @@ import MyOrders from "./components/MyOrders";
 import Profile from "./components/Profile";
 import FooterMenu from "./components/FooterMenu";
 import Dashboard from "./Admin/Dashboard";
+import SingleViewOrder from "./Admin/SingleViewOrder";
+import DashboardData from "./Admin/DashboardData";
+import Orders from "./Admin/Orders";
+import EditAndDeleteProducts from "./Admin/EditAndDeleteProducts";
+import AddProducts from "./Admin/AddProducts";
 
 function Router() {
   const [stripeAPI, setStripeAPI] = useState(null);
@@ -91,7 +93,19 @@ function Router() {
         {/* Admin Routes */}
         {role == "Admin" && (
           <Routes>
-            <Route path="/" element={<Dashboard />}></Route>
+            <Route path="/" element={<Dashboard />}>
+              <Route index path="dashboard" element={<DashboardData />} />
+              <Route path="orders" element={<Orders />}></Route>
+              <Route
+                path="EditProducts"
+                element={<EditAndDeleteProducts />}
+              ></Route>
+              <Route path="addProducts" element={<AddProducts />}></Route>
+              <Route
+                path="SingleViewOrder/:id"
+                element={<SingleViewOrder />}
+              ></Route>
+            </Route>
           </Routes>
         )}
         {role == "User" && <FooterMenu />}

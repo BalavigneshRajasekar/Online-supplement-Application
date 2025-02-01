@@ -8,6 +8,7 @@ const roleAuth = require("../../middlewares/roleAuth");
 
 const paymentRouter = express.Router();
 
+//Route to create client secret
 paymentRouter.post("/payment", loginAuth, async (req, res) => {
   console.log(req.body);
 
@@ -32,9 +33,8 @@ paymentRouter.get("/stripe/apiKey", (req, res) => {
   res.status(200).send(process.env.STRIPE_API);
 });
 
+//Route to add shipping details in user collection
 paymentRouter.post("/Shipping/details", loginAuth, async (req, res) => {
-  console.log("hello");
-
   try {
     const user = await User.findByIdAndUpdate(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -51,6 +51,7 @@ paymentRouter.post("/Shipping/details", loginAuth, async (req, res) => {
   }
 });
 
+//Route to get User Shipping details
 paymentRouter.get("/shipping/details", loginAuth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -88,36 +89,5 @@ paymentRouter.post("/payment/myOrders", loginAuth, async (req, res) => {
     return;
   }
 });
-
-// Route to get Particular users Order
-
-paymentRouter.get("/get/myOrders", loginAuth, async (req, res) => {
-  try {
-    const orders = await Orders.find({ user: req.user.id });
-    res.status(200).json({ message: "My orders retrieved", data: orders });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ message: "Server Error", e });
-    return;
-  }
-});
-
-// Route to get all orders in the Application
-
-paymentRouter.get(
-  "/get/allOrders",
-  loginAuth,
-  roleAuth("Admin"),
-  async (req, res) => {
-    try {
-      const orders = await Orders.find();
-      res.status(200).json({ message: "All orders retrieved", data: orders });
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({ message: "Server Error", e });
-      return;
-    }
-  }
-);
 
 module.exports = paymentRouter;

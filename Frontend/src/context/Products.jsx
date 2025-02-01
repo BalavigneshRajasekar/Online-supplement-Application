@@ -23,6 +23,7 @@ const ProductHandler = ({ children }) => {
   const [totalPrice, setTotalPrice] = useState();
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [editProducts, setEditProducts] = useState(null);
+  const [orders, setOrders] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -124,6 +125,29 @@ const ProductHandler = ({ children }) => {
     }
   };
 
+  //Admin dashboard Orders context
+  const getAllOrders = async (navigate) => {
+    // Fetching orders data from API
+    try {
+      const response = await axios.get(
+        "https://supplement-application.onrender.com/api/v1/get/allOrders",
+        {
+          headers: {
+            Authorization: localStorage.getItem("logToken"), // Use the logged-in user's token for authentication.
+          },
+        }
+      );
+      console.log(response.data);
+      setOrders(response.data.data);
+    } catch (error) {
+      console.error("Error fetching orders data", error);
+      if (error.response.data.message == "Invalid token") {
+        message.error("Timeout");
+        navigate("/login"); // Redirect to login page if token is expired.
+      }
+    }
+  };
+
   return (
     <Product.Provider
       value={{
@@ -153,6 +177,8 @@ const ProductHandler = ({ children }) => {
         setRole,
         editProducts,
         setEditProducts,
+        getAllOrders,
+        orders,
       }}
     >
       {children}
