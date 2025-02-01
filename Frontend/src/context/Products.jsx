@@ -130,7 +130,7 @@ const ProductHandler = ({ children }) => {
     // Fetching orders data from API
     try {
       const response = await axios.get(
-        "https://supplement-application.onrender.com/api/v1/get/allOrders",
+        "https://supplement-application.onrender.com/api/O1/get/allOrders",
         {
           headers: {
             Authorization: localStorage.getItem("logToken"), // Use the logged-in user's token for authentication.

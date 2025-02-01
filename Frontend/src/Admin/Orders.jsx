@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaRupeeSign } from "react-icons/fa";
 import { Product } from "../context/Products";
 import { useNavigate } from "react-router";
+import { SyncOutlined } from "@ant-design/icons";
 
 function Orders() {
   const { orders, getAllOrders } = useContext(Product);
@@ -52,6 +53,7 @@ function Orders() {
                   <td>{new Date(order.createdAt).toDateString()}</td>
                   <td>
                     <Tag
+                      className="p-2"
                       color="green-inverse"
                       icon={<FaRupeeSign className="inline-block" />}
                     >
@@ -59,13 +61,23 @@ function Orders() {
                     </Tag>
                   </td>
                   <td>
-                    <Tag color="green-inverse">{order.paymentData.status}</Tag>
+                    <Tag className="p-2" color="green-inverse">
+                      {order.paymentData.status}
+                    </Tag>
                   </td>
-                  <td>{order.orderStatus}</td>
+                  <td>
+                    <Tag
+                      className="p-2"
+                      color="orange-inverse"
+                      icon={<SyncOutlined spin />}
+                    >
+                      {order.orderStatus}
+                    </Tag>
+                  </td>
                   <td className="cursor-pointer">
                     <button
                       onClick={() => viewOrders(order._id)}
-                      className="bg-red-600 ps-2 pe-2 p-1 hover:bg-red-500 active:scale-90 transition-all rounded-md"
+                      className="bg-sky-600 p-2 hover:bg-sky-700 active:scale-90 transition-all rounded-md"
                     >
                       View Order
                     </button>
