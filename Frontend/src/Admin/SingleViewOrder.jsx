@@ -88,7 +88,7 @@ function SingleViewOrder() {
               )}
             />
           </div>
-          <div className="d-flex p-3">
+          <div className="d-flex flex-column flex-md-row gap-4 p-3 justify-around">
             <div className="p-3 border shadow-md  ">
               <h2 className="">
                 <img src="/fast-delivery.png" style={{ width: "70px" }}></img>
@@ -120,8 +120,19 @@ function SingleViewOrder() {
                 {singleOrder.paymentData.shipping.address.postal_code}
               </h5>
             </div>
-            <div className="delivery Actions">
-              <Button>Confirm Order</Button>
+            <div className="d-flex flex-md-column justify-center  gap-5">
+              <h5>
+                <Tag color="green-inverse" className="">
+                  Payment Received
+                </Tag>
+                <span>
+                  : <LiaRupeeSignSolid className="inline" />
+                  {singleOrder.paymentData.amount}
+                </span>
+              </h5>
+              <button className="border p-3 rounded-md  bg-black text-white active:scale-95">
+                Confirm Order
+              </button>
             </div>
           </div>
         </Box>

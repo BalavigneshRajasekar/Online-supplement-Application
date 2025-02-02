@@ -68,8 +68,17 @@ function Orders() {
                   <td>
                     <Tag
                       className="p-2"
-                      color="orange-inverse"
-                      icon={<SyncOutlined spin />}
+                      color={
+                        (order.orderStatus == "New Order" && "green-inverse") ||
+                        (order.orderStatus == "Confirmed" && "blue-inverse") ||
+                        (order.orderStatus == "Shipped" && "gold-inverse") ||
+                        (order.orderStatus == "Out For Delivery" &&
+                          "lime-inverse") ||
+                        (order.orderStatus == "Delivered" && "teal-inverse") ||
+                        (order.orderStatus == "Cancelled" && "red-inverse") ||
+                        "orange-inverse"
+                      }
+                      icon={<SyncOutlined />}
                     >
                       {order.orderStatus}
                     </Tag>
