@@ -59,39 +59,43 @@ function Router() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
-        </Routes>
 
-        {/* User Routes */}
-        {role == "User" && (
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/product/:name" element={<SeperateProducts />}></Route>
-            <Route
-              path="/products/:id"
-              element={<SingleViewProducts />}
-            ></Route>
-            <Route path="/Checkout" element={<Checkout />}></Route>
-
-            {stripeAPI && (
+          {/* User Routes */}
+          {role == "User" && (
+            <>
+              <Route path="/" element={<Home />} />
               <Route
-                path="/payment"
-                element={
-                  <Elements stripe={loadStripe(stripeAPI)}>
-                    <Payment />
-                  </Elements>
-                }
+                path="/product/:name"
+                element={<SeperateProducts />}
               ></Route>
-            )}
-            <Route path="/payment/success" element={<PaymentSuccess />}></Route>
-            <Route path="/payment/error" element={<PaymentError />}></Route>
-            <Route path="/MyOrders" element={<MyOrders />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
-          </Routes>
-        )}
+              <Route
+                path="/products/:id"
+                element={<SingleViewProducts />}
+              ></Route>
+              <Route path="/Checkout" element={<Checkout />}></Route>
 
-        {/* Admin Routes */}
-        {role == "Admin" && (
-          <Routes>
+              {stripeAPI && (
+                <Route
+                  path="/payment"
+                  element={
+                    <Elements stripe={loadStripe(stripeAPI)}>
+                      <Payment />
+                    </Elements>
+                  }
+                ></Route>
+              )}
+              <Route
+                path="/payment/success"
+                element={<PaymentSuccess />}
+              ></Route>
+              <Route path="/payment/error" element={<PaymentError />}></Route>
+              <Route path="/MyOrders" element={<MyOrders />}></Route>
+              <Route path="/profile" element={<Profile />}></Route>
+            </>
+          )}
+
+          {/* Admin Routes */}
+          {role == "Admin" && (
             <Route path="/" element={<Dashboard />}>
               <Route index path="dashboard" element={<DashboardData />} />
               <Route path="orders" element={<Orders />}></Route>
@@ -105,8 +109,8 @@ function Router() {
                 element={<SingleViewOrder />}
               ></Route>
             </Route>
-          </Routes>
-        )}
+          )}
+        </Routes>
         {role == "User" && <FooterMenu />}
       </BrowserRouter>
     </div>

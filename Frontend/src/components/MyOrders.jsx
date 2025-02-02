@@ -14,9 +14,11 @@ import { IoIosTime } from "react-icons/io";
 import { FaShippingFast } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 import { MdDeliveryDining } from "react-icons/md";
+import { FaRocketchat } from "react-icons/fa";
 
 const deliveryStatus = [
-  "Preparing",
+  "New Order",
+  "Confirmed",
   "Shipped",
   "Out For Delivery",
   "Delivered",
@@ -54,7 +56,7 @@ function MyOrders() {
       {myOrders.length > 0 ? (
         <div className="w-100 p-3">
           {myOrders.map((orders, i) => (
-            <Card key={i} className="bg-slate-200 mt-3">
+            <Card key={i} className="shadow-md bg-slate-50 mt-3">
               <Tag color="gold-inverse">
                 {new Date(orders.createdAt).toDateString()}
               </Tag>
@@ -131,33 +133,33 @@ function MyOrders() {
                 <Divider>Order Status</Divider>
                 <div>
                   <Steps
+                    responsive
                     current={deliveryStatus.findIndex(
                       //For Dynamic Update of Order status
-                      (data) => data == orders.OrderStatus
+                      (data) =>
+                        data.toLowerCase() == orders.orderStatus.toLowerCase()
                     )}
                     items={[
                       {
-                        title: "Preparing",
-                        icon: (
-                          <IoIosTime className="inline-block text-green-700" />
-                        ),
+                        title: "Processing",
+                        icon: <IoIosTime className="inline-block" />,
+                      },
+                      {
+                        title: "Confirmed",
+                        icon: <FaRocketchat className="inline-block" />,
                       },
                       {
                         title: "Shipped",
 
-                        icon: (
-                          <FaShippingFast className="inline-block text-dark" />
-                        ),
+                        icon: <FaShippingFast className="inline-block" />,
                       },
                       {
                         title: "Out For Delivery",
-                        icon: (
-                          <MdDeliveryDining className="inline-block text-dark" />
-                        ),
+                        icon: <MdDeliveryDining className="inline-block " />,
                       },
                       {
                         title: "Delivered",
-                        icon: <TiTick className="inline-block text-dark" />,
+                        icon: <TiTick className="inline-block " />,
                       },
                     ]}
                   ></Steps>
