@@ -36,7 +36,6 @@ function Router() {
     getStripeAPI();
   }, []);
   useEffect(() => {
-    setRole(localStorage.getItem("role"));
     console.log("role", role);
   }, [role]);
 
