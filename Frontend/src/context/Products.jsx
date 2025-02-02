@@ -29,7 +29,10 @@ const ProductHandler = ({ children }) => {
   useEffect(() => {
     getAllProducts();
     const cartData = JSON.parse(localStorage.getItem("cart"));
-    setRole(localStorage.getItem("role"));
+
+    if (localStorage.getItem("role")) {
+      setRole(localStorage.getItem("role"));
+    }
     dispatch(setCart(cartData));
     console.log("this executed");
   }, []);
