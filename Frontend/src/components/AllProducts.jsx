@@ -9,7 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCart } from "../store/slice";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import ScrollAnimation from "react-animate-on-scroll";
+import { IoArrowBackCircle } from "react-icons/io5";
 import Search from "antd/es/transfer/search";
+import { IoArrowForwardCircle } from "react-icons/io5";
 function AllProducts() {
   const {
     products,
@@ -23,6 +25,28 @@ function AllProducts() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Pagination data set
+  const [currentPage, setCurrentPage] = useState(0);
+  const productPerPage = 8;
+  const pageNumber = Math.ceil(
+    products && filterProducts.length / productPerPage
+  );
+  let start = currentPage * productPerPage;
+  let end = start + productPerPage;
+
+  const changePage = (n) => {
+    setCurrentPage(n);
+  };
+  const forwardChange = () => {
+    if (currentPage < pageNumber - 1) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+  const backwardChange = () => {
+    if (currentPage > 0) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
   // Navigate to particular Products
   const navigateToProducts = (name) => {
     navigate(`/product/${name}`);
@@ -136,7 +160,7 @@ function AllProducts() {
         >
           {/* Products List */}
 
-          {filterProducts.map((prod, index) => (
+          {filterProducts.slice(start, end).map((prod, index) => (
             <Grid2
               key={index}
               size={{ xs: 12, md: 3 }}
@@ -199,6 +223,27 @@ function AllProducts() {
             </Grid2>
           ))}
         </Grid2>
+        <div className="d-flex justify-center mt-3 gap-4">
+          <button style={{ fontSize: "40px" }} onClick={backwardChange}>
+            <IoArrowBackCircle />
+          </button>
+          {[...Array(pageNumber).keys()].map((n) => (
+            <button
+              className={
+                n == currentPage
+                  ? "bg-red-500 border p-3 rounded-md transition-all"
+                  : "border p-3 rounded-md transition-all"
+              }
+              key={n}
+              onClick={() => changePage(n)}
+            >
+              {n}
+            </button>
+          ))}
+          <button style={{ fontSize: "40px" }} onClick={forwardChange}>
+            <IoArrowForwardCircle />
+          </button>
+        </div>
       </Card>
     </>
   );

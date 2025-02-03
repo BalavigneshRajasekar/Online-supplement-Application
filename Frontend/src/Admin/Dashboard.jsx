@@ -114,7 +114,7 @@ function Dashboard() {
         branding={{
           homeUrl: "/",
           title: "Admin panel",
-          logo: <img src="logo.png"></img>,
+          logo: <img src="/logo.png"></img>,
         }}
       >
         <DashboardLayout>

@@ -4,14 +4,15 @@ import { Button, List, Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { LiaRupeeSignSolid } from "react-icons/lia";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { IoPersonCircle } from "react-icons/io5";
 import { IoCall } from "react-icons/io5";
-import { IoMdMail } from "react-icons/io";
 import { FaMapPin } from "react-icons/fa";
+import { IoArrowBackCircle } from "react-icons/io5";
 
 function SingleViewOrder() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [singleOrder, setSingleOrder] = useState(null);
   useEffect(() => {
     // fetch order details with id
@@ -37,7 +38,13 @@ function SingleViewOrder() {
   return (
     <>
       {singleOrder ? (
-        <Box>
+        <Box sx={{ marginTop: 5 }}>
+          <button onClick={() => navigate("/orders")}>
+            <IoArrowBackCircle
+              style={{ fontSize: "50px" }}
+              className="active:scale-50 transition-all"
+            />
+          </button>
           <div className="p-3 d-flex flex-col gap-2 spanStyle">
             <h5>
               <Tag color="green-inverse" className="">
