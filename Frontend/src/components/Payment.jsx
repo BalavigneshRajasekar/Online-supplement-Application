@@ -131,7 +131,9 @@ function Payment() {
             closeButton: true,
             render: "Payment successfully done",
           });
+        
           navigate("success");
+          
         } else {
           toast.update(loading, {
             type: "error",
