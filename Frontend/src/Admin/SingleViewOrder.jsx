@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Box } from "@mui/material";
-import { Button, List, Tag } from "antd";
+import { Button, List, message, Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { LiaRupeeSignSolid } from "react-icons/lia";
@@ -9,6 +9,8 @@ import { IoPersonCircle } from "react-icons/io5";
 import { IoCall } from "react-icons/io5";
 import { FaMapPin } from "react-icons/fa";
 import { IoArrowBackCircle } from "react-icons/io5";
+import { toast } from "react-toastify";
+
 
 function SingleViewOrder() {
   const { id } = useParams();
@@ -20,6 +22,9 @@ function SingleViewOrder() {
   }, []);
   const getOrderByID = async () => {
     // fetch order details with id from API
+    console.log("products");
+    
+   
     try {
       let response = await axios.get(
         `https://supplement-application.onrender.com/api/O1/get/orders/${id}`,
@@ -31,21 +36,26 @@ function SingleViewOrder() {
       );
       console.log(response.data);
       setSingleOrder(response.data.data);
-    } catch (e) {
-      console.log("Error fetching order details", e);
+     
+    } catch (error) {
+      if (error.response.data.message == "Invalid token") {
+        message.error("Timeout");
+       return navigate("/login"); // Redirect to login page if token is expired.
+      }
+     
     }
   };
   return (
     <>
       {singleOrder ? (
-        <Box sx={{ marginTop: 5 }}>
+        <Box sx={{ marginTop: 1 }}>
           <button onClick={() => navigate("/orders")}>
             <IoArrowBackCircle
               style={{ fontSize: "50px" }}
               className="active:scale-50 transition-all"
             />
           </button>
-          <div className="p-3 d-flex flex-col gap-2 spanStyle">
+          <div className="p-3 d-flex flex-wrap gap-7 spanStyle" style={{width:"600px" ,backgroundColor:""}}>
             <h5>
               <Tag color="green-inverse" className="">
                 Date:
@@ -57,15 +67,16 @@ function SingleViewOrder() {
               <span>{singleOrder._id}</span>
             </h5>
             <h5>
-              <Tag color="green-inverse">Payment ID:</Tag>
-              <span>{singleOrder.paymentData.id}</span>
+            <Tag color="red-inverse">Payment Method: </Tag>
+            <span> {singleOrder.paymentData.payment_method_types[0]}</span>
             </h5>
             <h5>
-              <Tag color="red-inverse">Payment Method: </Tag>
-              <span> {singleOrder.paymentData.payment_method_types[0]}</span>
+            <Tag color="green-inverse">Payment ID:</Tag>
+            <span>{singleOrder.paymentData.id}</span>
+             
             </h5>
           </div>
-          <div>
+          <div className="p-5 shadow-md border rounded-3xl mt-2">
             <List
               className="demo-loadmore-list"
               itemLayout="horizontal"
@@ -95,8 +106,8 @@ function SingleViewOrder() {
               )}
             />
           </div>
-          <div className="d-flex flex-column flex-md-row gap-4 p-3 justify-around">
-            <div className="p-3 border shadow-md  ">
+          <div className="d-flex flex-column flex-md-row gap-4 p-3 justify-center">
+            <div className="p-3   ">
               <h2 className="">
                 <img src="/fast-delivery.png" style={{ width: "70px" }}></img>
                 <span>Delivery Details</span>

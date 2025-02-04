@@ -91,7 +91,7 @@ function AllProducts() {
               navigateToProducts("protein");
             }}
           >
-            <img src="protein.jpg" style={{ width: "50%" }}></img>
+            <img src="protein.jpg" style={{ width: "40%" }}></img>
             <span>Protein</span>
           </Button>
         </Grid2>
@@ -106,7 +106,7 @@ function AllProducts() {
               navigateToProducts("MassGainer");
             }}
           >
-            <img src="onmass.jpg" style={{ width: "50%" }}></img>
+            <img src="onmass.jpg" style={{ width: "40%" }} ></img>
             <span>Mass Gainer</span>
           </Button>
         </Grid2>
@@ -121,7 +121,7 @@ function AllProducts() {
               navigateToProducts("Creatine");
             }}
           >
-            <img src="oncreatine.jpg" width={"50%"}></img>
+            <img src="oncreatine.jpg" width={"40%"}></img>
             <span>Creatine</span>
           </Button>
         </Grid2>
@@ -155,7 +155,7 @@ function AllProducts() {
           spacing={2}
           sx={{
             justifyContent: "space-around",
-            marginLeft: { xs: 2, md: 3 },
+            marginLeft: {  md: 3 },
           }}
         >
           {/* Products List */}
@@ -166,14 +166,14 @@ function AllProducts() {
               size={{ xs: 12, md: 3 }}
               sx={{ justifyContent: "space-around", alignContent: "center" }}
             >
-              <Card className="max-w-sm  min-h-full cardStyle">
+              <Card className=" min-h-full cardStyle shadow-inner">
                 <img
                   src={prod.image[0]}
-                  width={"200px"}
+                  width={"120px"}
                   className="hover:scale-105 transition-all"
                 ></img>
                 <a onClick={() => navigate(`/products/${prod._id}`)}>
-                  <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-red-700">
+                  <h5 className="font-semibold tracking-tight text-gray-900 dark:text-white text-red-700">
                     {prod.name}
                   </h5>
                 </a>
@@ -203,7 +203,7 @@ function AllProducts() {
                 </div>
                 <Rate disabled value={"2"} className="mt-3"></Rate>
 
-                <div className="flex items-center justify-between mt-3">
+                <div className="d-flex items-center justify-between mt-3">
                   <span className="text-lg font-bold text-gray-900 dark:text-white">
                     <LiaRupeeSignSolid style={{ display: "inline-block" }} />{" "}
                     {prod.price}
@@ -214,7 +214,7 @@ function AllProducts() {
 
                   <a
                     onClick={() => addProductToCart(prod)}
-                    className="rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+                    className="rounded-lg bg-red-700 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
                   >
                     Add to cart
                   </a>
@@ -224,7 +224,7 @@ function AllProducts() {
           ))}
         </Grid2>
         <div className="d-flex justify-center mt-3 gap-4">
-          <button style={{ fontSize: "40px" }} onClick={backwardChange}>
+          <button style={{ fontSize: "30px" }} onClick={backwardChange}>
             <IoArrowBackCircle />
           </button>
           {[...Array(pageNumber).keys()].map((n) => (
@@ -240,7 +240,7 @@ function AllProducts() {
               {n}
             </button>
           ))}
-          <button style={{ fontSize: "40px" }} onClick={forwardChange}>
+          <button style={{ fontSize: "30px" }} onClick={forwardChange}>
             <IoArrowForwardCircle />
           </button>
         </div>

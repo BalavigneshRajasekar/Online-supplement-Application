@@ -149,13 +149,13 @@ function SingleViewProducts() {
           <Box className="d-md-flex gap-5">
             <Box
               sx={{
-                height: { xs: "50vh", md: "80vh" },
-                width: { xs: "100%", md: "50%" },
+                height: { sm:" 300px", md: "80vh" },
+                width: { xs: "50%", md: "50%" },
               }}
             >
               <img
                 src={singleProduct.image[0]}
-                style={{ height: "100%" }}
+                style={{ height: "50%" }}
               ></img>
             </Box>
             <div>

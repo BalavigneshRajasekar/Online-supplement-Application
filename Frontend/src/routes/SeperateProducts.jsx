@@ -81,7 +81,7 @@ function SeperateProducts() {
             spacing={2}
             sx={{
               justifyContent: "space-around",
-              marginLeft: { xs: 2, md: 3 },
+              marginLeft: { md: 3 },
             }}
           >
             {/* Products List */}
@@ -94,10 +94,10 @@ function SeperateProducts() {
                   alignContent: "center",
                 }}
               >
-                <Card className="max-w-sm cardStyle">
-                  <img src={prod.image[0]} width={"200px"}></img>
+                <Card className="min-h-full shadow-inner">
+                  <img src={prod.image[0]} width={"100px"}></img>
                   <a onClick={() => navigate(`/products/${prod._id}`)}>
-                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-red-700">
+                    <h5 className="font-semibold tracking-tight text-gray-900 dark:text-white text-red-700">
                       {prod.name}
                     </h5>
                   </a>
@@ -137,7 +137,7 @@ function SeperateProducts() {
                     </span>
                     <a
                       onClick={() => addProductToCart(prod)}
-                      className="rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+                      className="rounded-lg bg-red-700 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
                     >
                       Add to cart
                     </a>
