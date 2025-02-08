@@ -234,6 +234,7 @@ function Checkout() {
                       avatar={
                         <img src={item.image} style={{ width: "100px" }} />
                       }
+                      
                       title={
                         <a onClick={() => navigate(`/products/${item.id}`)}>
                           {item.name}

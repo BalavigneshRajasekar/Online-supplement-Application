@@ -39,7 +39,8 @@ const productSlice = createSlice({
       state.deliveryDetails = action.payload;
     },
     setMyOrders: (state, action) => {
-      state.myOrders = action.payload;
+
+      state.myOrders = action.payload.reverse();
     },
   },
 });
