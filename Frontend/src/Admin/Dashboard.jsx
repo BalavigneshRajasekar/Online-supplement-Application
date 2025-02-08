@@ -95,14 +95,8 @@ function Dashboard() {
       },
     };
   }, []);
-  // Function to generate path dynamically based on segment
-  const generatePath = (segment) => {
-    if (segment === "dashboard") return "/dashboard";
-    if (segment === "orders") return "/orders";
-    if (segment === "addProducts") return "/addProducts";
-    if (segment === "EditProducts") return "/EditProducts";
-    return "#"; // Default if no match
-  };
+  
+  
 
   return (
     <div>
