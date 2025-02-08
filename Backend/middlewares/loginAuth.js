@@ -9,7 +9,9 @@ const loginAuth = (req, res, next) => {
   // If the token is invalid, return a 401 status and an error message.
 
   const token = req.header("Authorization");
+  console.log(token)
   try {
+
     if (!token) {
       return res.status(401).json({ message: "Token doesn't exist" });
     }

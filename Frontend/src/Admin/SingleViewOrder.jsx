@@ -9,9 +9,18 @@ import { IoPersonCircle } from "react-icons/io5";
 import { IoCall } from "react-icons/io5";
 import { FaMapPin } from "react-icons/fa";
 import { IoArrowBackCircle } from "react-icons/io5";
+import { TbTruckDelivery } from "react-icons/tb";
+import { MdDeliveryDining } from "react-icons/md";
+import { TiTickOutline } from "react-icons/ti";
 import { toast } from "react-toastify";
 
 
+const orderStatus =[
+      "New Order",
+      "Confirmed",
+      "Shipped",
+      "Out For Delivery",
+      "Delivered",]
 function SingleViewOrder() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -19,6 +28,7 @@ function SingleViewOrder() {
   useEffect(() => {
     // fetch order details with id
     getOrderByID();
+
   }, []);
   const getOrderByID = async () => {
     // fetch order details with id from API
@@ -45,16 +55,48 @@ function SingleViewOrder() {
      
     }
   };
+
+  const changeOrderStatus =async()=>{
+    //Find current status and update to next one 
+    let index= orderStatus.findIndex((value)=>value === singleOrder.orderStatus)   
+    console.log(index+1);
+     
+    try{
+      const updatedOrder = await axios.put(
+        `http://localhost:3000/api/O1/change/status/${id}`,
+        {status: orderStatus[index+1]},
+        {
+          headers: {
+            Authorization: localStorage.getItem("logToken"),
+          }
+        }
+        
+      );
+      message.success(updatedOrder.data.message);
+       getOrderByID()
+ 
+
+    }catch(e){
+      message.error("Error changing order status");
+      console.log(e);
+      
+    }
+
+  }
   return (
     <>
       {singleOrder ? (
         <Box sx={{ marginTop: 1 }}>
+          <div className="d-flex justify-between">
           <button onClick={() => navigate("/orders")}>
             <IoArrowBackCircle
               style={{ fontSize: "50px" }}
               className="active:scale-50 transition-all"
             />
           </button>
+          <Tag color="cyan-inverse" style={{height:"fit-content", fontSize:"15px", padding:"5px"}}><input type="radio" checked>
+          </input>   {singleOrder.orderStatus}</Tag>
+          </div>
           <div className="p-3 d-flex flex-wrap gap-7 spanStyle" style={{width:"600px" ,backgroundColor:""}}>
             <h5>
               <Tag color="green-inverse" className="">
@@ -148,9 +190,26 @@ function SingleViewOrder() {
                   {singleOrder.paymentData.amount}
                 </span>
               </h5>
-              <button className="border p-3 rounded-md  bg-black text-white active:scale-95">
+              
+              {singleOrder.orderStatus==orderStatus[0] &&
+              <button disabled={singleOrder.orderStatus=="Delivered"} className="border p-3 rounded-md  bg-black text-white active:scale-95" onClick={()=>changeOrderStatus()}>
                 Confirm Order
-              </button>
+              </button>}
+              {singleOrder.orderStatus==orderStatus[1] &&
+              <button disabled={singleOrder.orderStatus=="Delivered"} className="border p-3 rounded-md  bg-orange-700 text-white active:scale-95" onClick={()=>changeOrderStatus()}>
+                <TbTruckDelivery className="inline me-2" size={"30px"}/>
+               Confirm Shipping
+              </button>}
+              {singleOrder.orderStatus==orderStatus[2] &&
+              <button disabled={singleOrder.orderStatus=="Delivered"} className="border p-3 rounded-md  bg-yellow-300 text-white active:scale-95" onClick={()=>changeOrderStatus()}>
+                <MdDeliveryDining className="inline me-2" size={"30px"} />
+                Order Out For Delivery
+              </button>}
+              {singleOrder.orderStatus==orderStatus[3] &&
+              <button disabled={singleOrder.orderStatus=="Delivered"} className="border p-3 rounded-md  bg-green-600 text-white active:scale-95" onClick={()=>changeOrderStatus()}>
+                <TiTickOutline className="inline me-2" size={"30px"}/>
+                Order Delivered
+              </button>}
             </div>
           </div>
         </Box>

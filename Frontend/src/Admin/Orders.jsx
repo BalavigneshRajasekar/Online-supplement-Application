@@ -74,7 +74,7 @@ function Orders() {
                         (order.orderStatus == "Shipped" && "gold-inverse") ||
                         (order.orderStatus == "Out For Delivery" &&
                           "lime-inverse") ||
-                        (order.orderStatus == "Delivered" && "teal-inverse") ||
+                        (order.orderStatus == "Delivered" && "volcano-inverse") ||
                         (order.orderStatus == "Cancelled" && "red-inverse") ||
                         "orange-inverse"
                       }

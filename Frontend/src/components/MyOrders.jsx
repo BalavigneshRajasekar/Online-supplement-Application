@@ -150,7 +150,7 @@ function MyOrders() {
                       },
                       {
                         title: "Shipped",
-
+                        
                         icon: <FaShippingFast className="inline-block" />,
                       },
                       {

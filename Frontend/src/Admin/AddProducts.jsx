@@ -81,7 +81,7 @@ function AddProducts() {
         Add New Products to store
       </h2>
       <Box
-        sx={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
+        sx={{ marginTop: "20px", display: "flex", justifyContent: "center",padding:"50px" }}
       >
         <Form className="form" onFinish={handleUpload} ref={form}>
           <Form.Item
