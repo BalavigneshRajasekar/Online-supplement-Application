@@ -120,8 +120,7 @@ function Payment() {
             }
           );
 
-          localStorage.removeItem("cart"); // remove from localStorage
-          dispatch(setCart(null)); // reset cart state
+         
           toast.update(loading, {
             type: "success",
             isLoading: false,
@@ -166,7 +165,7 @@ function Payment() {
   };
   return (
     <div className="w-100 mt-10 d-md-flex justify-around align-items-center d-xs-flex-col gap-1 p-3">
-      <Modal open={openPaymentModel} onOk={closeModal} onCancel={closeModal}>
+      <Modal open={openPaymentModel}  onCancel={closeModal} footer={null} >
         <Box
           className="p-5  bg-dark rounded-lg "
           sx={{ width: { xs: "100%", md: "100%" } }}

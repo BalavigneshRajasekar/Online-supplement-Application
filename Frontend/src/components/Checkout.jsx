@@ -117,7 +117,7 @@ function Checkout() {
           destroyOnClose
           open={openModel}
           okButtonProps={ariaHidden}
-          onOk={closeModel}
+          footer={null}
           onCancel={closeModel}
         >
           <Box

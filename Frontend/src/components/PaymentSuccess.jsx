@@ -4,11 +4,15 @@ import { Button, Card, Result } from "antd";
 import { Product } from "../context/Products";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCart } from "../store/slice";
 function PaymentSuccess() {
   const { paymentDetails, setPaymentDetails } = useContext(Product);
+  const dispatch =useDispatch()
   const navigate = useNavigate();
   useEffect(() => {
-     
+      localStorage.removeItem("cart"); // remove from localStorage
+      dispatch(setCart(null)); // reset cart state
     if(!paymentDetails){
           navigate('/')
     }
@@ -36,7 +40,7 @@ function PaymentSuccess() {
             >
               My orders
             </Button>,
-            <Button key="buy">Home</Button>,
+            <Button key="buy" onClick={()=>navigate('/')}>Home</Button>,
           ]}
         />
       </Card>

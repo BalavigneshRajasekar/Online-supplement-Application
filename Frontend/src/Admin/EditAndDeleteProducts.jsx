@@ -193,10 +193,11 @@ function EditAndDeleteProducts() {
       </Card>
       {/* Edit Form Model */}
       <Modal
+      footer={null}
         destroyOnClose
         open={editProducts}
         onCancel={() => setEditProducts(null)}
-        onOk={() => setEditProducts(null)}
+       
       >
         {/* Edit Product Form */}
         <Form

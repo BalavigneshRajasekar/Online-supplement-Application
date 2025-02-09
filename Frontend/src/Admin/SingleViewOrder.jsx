@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Box } from "@mui/material";
-import { Button, List, message, Tag } from "antd";
+import { Button, Form, Input, List, message, Modal, Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { LiaRupeeSignSolid } from "react-icons/lia";
@@ -25,6 +25,7 @@ function SingleViewOrder() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [singleOrder, setSingleOrder] = useState(null);
+  const [model,setModel]=useState(false)
   useEffect(() => {
     // fetch order details with id
     getOrderByID();
@@ -56,33 +57,65 @@ function SingleViewOrder() {
     }
   };
 
-  const changeOrderStatus =async()=>{
+  const changeOrderStatus =async(values)=>{
+    let loading = toast.loading("Wait for a moment...")
     //Find current status and update to next one 
     let index= orderStatus.findIndex((value)=>value === singleOrder.orderStatus)   
     console.log(index+1);
+   
      
     try{
+      //Check if order status is confirmed and open modal to update Courier details if true
+      if(singleOrder.orderStatus=="Confirmed"){
+        setModel(true)
+     await updateShippingDetail(values) 
+      }
       const updatedOrder = await axios.put(
-        `http://localhost:3000/api/O1/change/status/${id}`,
+        `https://supplement-application.onrender.com/api/O1/change/status/${id}`,
         {status: orderStatus[index+1]},
         {
           headers: {
             Authorization: localStorage.getItem("logToken"),
           }
         }
+
         
       );
-      message.success(updatedOrder.data.message);
+      toast.update(loading, {
+        render: updatedOrder.data.message,
+        type: "success",
+        
+        isLoading: false,
+        autoClose: 3000,
+        progress:undefined
+      });
        getOrderByID()
  
 
     }catch(e){
-      message.error("Error changing order status");
+      toast.update(loading, {
+        render: e.response.data.message,
+        type: "error",
+        autoClose: 3000,
+        isLoading: false,
+        progress:undefined
+
+      })
       console.log(e);
       
     }
 
   }
+  //Seperate Endpoint to add courier details
+const updateShippingDetail=async(values)=>{
+  try{
+    const response = await axios.put(`http://localhost:3000/api/O1/update/courier/${id}`,values)
+  }catch(e){
+    
+     return e
+     
+  }
+}
   return (
     <>
       {singleOrder ? (
@@ -124,9 +157,9 @@ function SingleViewOrder() {
               itemLayout="horizontal"
               dataSource={singleOrder.products}
               renderItem={(item, index) => (
-                <List.Item key={index} style={{ marginRight: "100px" }}>
+                <List.Item key={index} >
                   <List.Item.Meta
-                    avatar={<img src={item.image} style={{ width: "100px" }} />}
+                    avatar={<img src={item.image} style={{ width: "70px" }} />}
                     title={<a>{item.name}</a>}
                     description={
                       <p>
@@ -134,7 +167,7 @@ function SingleViewOrder() {
                         <LiaRupeeSignSolid
                           style={{ display: "inline-block" }}
                         />
-                        {item.price} <b className="ml-5">Quantity:</b>{" "}
+                        {item.price} <b >Quantity:</b>{" "}
                         {item.quantity}
                       </p>
                     }
@@ -148,7 +181,7 @@ function SingleViewOrder() {
               )}
             />
           </div>
-          <div className="d-flex flex-column flex-md-row gap-4 p-3 justify-center">
+          <div className="d-flex flex-column flex-md-row gap-4 p-3 justify-around">
             <div className="p-3   ">
               <h2 className="">
                 <img src="/fast-delivery.png" style={{ width: "70px" }}></img>
@@ -216,6 +249,34 @@ function SingleViewOrder() {
       ) : (
         "loadingProducts..."
       )}
+      <Modal  onCancel={()=>setModel(false)} open={model} footer={null}>
+      <Form onFinish={changeOrderStatus} >
+      <label>Courier</label>
+        <Form.Item
+        name="courier"
+        rules={[{
+          required: true,
+          message: "Please input your courier name!",
+        }]}
+        >
+          
+          <Input type="text" />
+        </Form.Item>
+        <label aria-required>Tracking Id</label>
+        <Form.Item
+        name="trackingId"
+        rules={[{
+          required: true,
+          message: "Please enter tracking Id!",
+        }]}
+        >
+           
+          <Input type="text" />
+          
+        </Form.Item>
+        <Button type="primary" htmlType="submit" className="mt-3">Submit</Button>
+      </Form>
+      </Modal>
     </>
   );
 }

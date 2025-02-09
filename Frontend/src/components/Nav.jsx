@@ -80,6 +80,7 @@ function Nav() {
         if (confirm("Are you sure you want to log out")) {
           localStorage.removeItem("logToken");
           localStorage.removeItem("profilePic");
+          
           navigate("/");
         } else {
           return;
