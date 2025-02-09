@@ -53,15 +53,18 @@ function Checkout() {
   };
   useEffect(() => {
     getDeliveryDetails(navigate);
+   
   }, []);
   const closeModel = () => {
     setOpenModel(false);
   };
   return (
-    <div className="mt-20 d-md-flex justify-around align-items-center d-xs-flex-col gap-1 p-3">
+    <div className="mt-20 d-md-flex justify-around  d-xs-flex-col gap-1 p-3">
       <div className="w-100">
         <Box>
-          <h2 className="text-lg text-red-500">Existing Shipping address :</h2>
+          <h2 className="text-lg text-red-500 p-2">
+            <img src="/fast-delivery.png" width={"100px"}></img>
+            Existing Shipping address :</h2>
           {deliveryDetails ? (
             <Card
               loading={!deliveryDetails}
@@ -218,7 +221,7 @@ function Checkout() {
             md: "50%",
           },
           overflow: "auto",
-          height: { md: "100vh", xs: "" },
+          height: { md: "", xs: "" },
         }}
       >
         {cart.length > 0 ? (
@@ -231,8 +234,9 @@ function Checkout() {
                 <List.Item key={index} style={{ marginRight: "100px" }}>
                   <Skeleton avatar title={false} loading={item.loading} active>
                     <List.Item.Meta
+                
                       avatar={
-                        <img src={item.image} style={{ width: "100px" }} />
+                        <img src={item.image} style={{ width: "50px" }} />
                       }
                       
                       title={
@@ -241,14 +245,16 @@ function Checkout() {
                         </a>
                       }
                       description={
+                        <>
                         <p>
                           <b>Price:</b>
                           <LiaRupeeSignSolid
                             style={{ display: "inline-block" }}
                           />
-                          {item.price} <b className="ml-5">Quantity:</b>{" "}
+                          {item.price} <b className="ml-5">Quantity:</b>
                           {item.quantity}
                         </p>
+                        </>
                       }
                     />
                     <b>

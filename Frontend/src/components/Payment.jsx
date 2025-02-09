@@ -55,7 +55,7 @@ function Payment() {
     if (cart.length == 0) {
       navigate("/");
     }
-  }, []);
+  }, [cart]);
 
   // Here we get the payment intent from server and validate the payment
   const handleSubmit = async (e) => {
@@ -201,7 +201,7 @@ function Payment() {
       <Box
         sx={{
           width: { xs: "100%", md: "100%" },
-          height: "100dvh",
+         maxHeight:"100vh",
 
           overflow: "auto",
           padding: "20px",
@@ -227,8 +227,9 @@ function Payment() {
                 >
                   <List.Item.Meta
                     avatar={<img src={item.image} style={{ width: "50px" }} />}
+                   style={{maxHeight:"200px" ,overflow: "auto"}}
                     title={
-                      <a onClick={() => navigate(`/products/${item.id}`)}>
+                      <a onClick={() => navigate(`/products/${item.id}`)} style={{minHeight:"10px"}}>
                         {item.name}
                       </a>
                     }

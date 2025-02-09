@@ -44,7 +44,8 @@ function Cart(props) {
         borderRadius: "10px",
       }}
     >
-      <Divider>{cart.length} Cart Items</Divider>
+     
+      <Divider><img src="trolley.png" width={"50px"} className="inline-block"></img> x {cart.length}</Divider>
       {cart.length > 0 ? (
         <>
           <List
