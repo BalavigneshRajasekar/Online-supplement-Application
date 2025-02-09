@@ -150,7 +150,8 @@ function MyOrders() {
                       },
                       {
                         title: "Shipped",
-                        
+                        subTitle:`${orders.paymentData.shipping.carrier ?orders.paymentData.shipping.carrier:""}`,
+                        description:`${orders.paymentData.shipping.tracking_number ?orders.paymentData.shipping.tracking_number:""}`,
                         icon: <FaShippingFast className="inline-block" />,
                       },
                       {

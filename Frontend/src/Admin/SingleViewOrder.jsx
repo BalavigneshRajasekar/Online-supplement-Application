@@ -57,7 +57,7 @@ function SingleViewOrder() {
     }
   };
 
-  const changeOrderStatus =async(values)=>{
+  const changeOrderStatus =async()=>{
     let loading = toast.loading("Wait for a moment...")
     //Find current status and update to next one 
     let index= orderStatus.findIndex((value)=>value === singleOrder.orderStatus)   
@@ -65,11 +65,7 @@ function SingleViewOrder() {
    
      
     try{
-      //Check if order status is confirmed and open modal to update Courier details if true
-      if(singleOrder.orderStatus=="Confirmed"){
-        setModel(true)
-     await updateShippingDetail(values) 
-      }
+    
       const updatedOrder = await axios.put(
         `https://supplement-application.onrender.com/api/O1/change/status/${id}`,
         {status: orderStatus[index+1]},
@@ -89,6 +85,7 @@ function SingleViewOrder() {
         autoClose: 3000,
         progress:undefined
       });
+   
        getOrderByID()
  
 
@@ -101,21 +98,32 @@ function SingleViewOrder() {
         progress:undefined
 
       })
+    
       console.log(e);
       
     }
 
   }
-  //Seperate Endpoint to add courier details
-const updateShippingDetail=async(values)=>{
-  try{
-    const response = await axios.put(`http://localhost:3000/api/O1/update/courier/${id}`,values)
-  }catch(e){
+  
+
+  //Endpoint to add courier details
+  const addCourierData=async(values)=>{
     
-     return e
-     
+     try{
+      const response = await axios.put(`http://localhost:3000/api/O1/update/courier/${id}`,values)
+      changeOrderStatus()
+      setModel(false)
+     }catch(e){
+console.log(e);
+     setModel(false)
+
+     }
+        
+        
+      
+
   }
-}
+
   return (
     <>
       {singleOrder ? (
@@ -229,7 +237,7 @@ const updateShippingDetail=async(values)=>{
                 Confirm Order
               </button>}
               {singleOrder.orderStatus==orderStatus[1] &&
-              <button disabled={singleOrder.orderStatus=="Delivered"} className="border p-3 rounded-md  bg-orange-700 text-white active:scale-95" onClick={()=>changeOrderStatus()}>
+              <button disabled={singleOrder.orderStatus=="Delivered"} className="border p-3 rounded-md  bg-orange-700 text-white active:scale-95" onClick={()=>setModel(true)}>
                 <TbTruckDelivery className="inline me-2" size={"30px"}/>
                Confirm Shipping
               </button>}
@@ -250,7 +258,7 @@ const updateShippingDetail=async(values)=>{
         "loadingProducts..."
       )}
       <Modal  onCancel={()=>setModel(false)} open={model} footer={null}>
-      <Form onFinish={changeOrderStatus} >
+      <Form onFinish={addCourierData} >
       <label>Courier</label>
         <Form.Item
         name="courier"
