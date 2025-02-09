@@ -147,7 +147,7 @@ console.log(e);
             </h5>
             <h5>
               <Tag color="gold-inverse">Order Id:</Tag>
-              <span>{singleOrder._id}</span>
+              <span>#{singleOrder._id}</span>
             </h5>
             <h5>
             <Tag color="red-inverse">Payment Method: </Tag>
@@ -155,7 +155,7 @@ console.log(e);
             </h5>
             <h5>
             <Tag color="green-inverse">Payment ID:</Tag>
-            <span>{singleOrder.paymentData.id}</span>
+            <span>#{singleOrder.paymentData.id}</span>
              
             </h5>
           </div>

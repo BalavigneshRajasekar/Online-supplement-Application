@@ -48,7 +48,7 @@ function Orders() {
             <tbody className="">
               {orders.map((order, i) => (
                 <tr className="tableRow" key={i}>
-                  <td>{order._id}</td>
+                  <td>#{order._id}</td>
                   <td>{order.paymentData.shipping.name}</td>
                   <td>{new Date(order.createdAt).toDateString()}</td>
                   <td>

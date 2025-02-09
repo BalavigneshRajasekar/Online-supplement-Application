@@ -61,8 +61,8 @@ function MyOrders() {
                 {new Date(orders.createdAt).toDateString()}
               </Tag>
               <div className="bg-green-600 p-3 mt-3 text-slate-800 rounded-md">
-                <b className="block">Order ID : #DkUs_12{i + 1}</b>
-                <b className="block">Payment ID :{orders.paymentData.id}</b>
+                <b className="block">Order ID :#{orders._id}</b>
+                <b className="block">Payment ID :#{orders.paymentData.id}</b>
               </div>
 
               <div>
@@ -151,7 +151,7 @@ function MyOrders() {
                       {
                         title: "Shipped",
                         subTitle:`${orders.paymentData.shipping.carrier ?orders.paymentData.shipping.carrier:""}`,
-                        description:`${orders.paymentData.shipping.tracking_number ?orders.paymentData.shipping.tracking_number:""}`,
+                        description:`${orders.paymentData.shipping.tracking_number ?"#"+orders.paymentData.shipping.tracking_number:""}`,
                         icon: <FaShippingFast className="inline-block" />,
                       },
                       {
