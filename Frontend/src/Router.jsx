@@ -35,9 +35,6 @@ function Router() {
   useEffect(() => {
     getStripeAPI();
   }, []);
-  // useEffect(() => {
-  //   console.log("role", role);
-  // }, [role]);
 
   const getStripeAPI = async () => {
     try {

@@ -1,16 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { Footer } from "flowbite-react";
-import {
-  BsDribbble,
-  BsFacebook,
-  BsGithub,
-  BsInstagram,
-  BsTwitter,
-} from "react-icons/bs";
+import { BsDribbble, BsFacebook, BsInstagram } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
 function FooterMenu() {
+  const navigate = useNavigate();
+  const handleNavigate = (e) => {
+    e.preventDefault();
+    navigate(`/product/${e.target.innerText}`);
+  };
   return (
     <div className="mt-5">
       <Footer className="bg-dark">
@@ -26,9 +25,15 @@ function FooterMenu() {
               <div className="text mt-5">
                 <Footer.Title title="Links" className="text-white" />
                 <Footer.LinkGroup col className="text-white">
-                  <Footer.Link>Proteins</Footer.Link>
-                  <Footer.Link href="#">Mass Gainers</Footer.Link>
-                  <Footer.Link href="#">Creatine</Footer.Link>
+                  <Footer.Link onClick={(e) => handleNavigate(e)}>
+                    protein
+                  </Footer.Link>
+                  <Footer.Link onClick={(e) => handleNavigate(e)}>
+                    MassGainer
+                  </Footer.Link>
+                  <Footer.Link onClick={(e) => handleNavigate(e)}>
+                    Creatine
+                  </Footer.Link>
                 </Footer.LinkGroup>
               </div>
               <div className="mt-5">

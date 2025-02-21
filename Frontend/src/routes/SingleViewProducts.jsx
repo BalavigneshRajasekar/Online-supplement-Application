@@ -149,14 +149,11 @@ function SingleViewProducts() {
           <Box className="d-md-flex gap-5">
             <Box
               sx={{
-                height: { sm:" 300px", md: "80vh" },
+                height: { sm: " 300px", md: "80vh" },
                 width: { xs: "50%", md: "50%" },
               }}
             >
-              <img
-                src={singleProduct.image[0]}
-                style={{ height: "50%" }}
-              ></img>
+              <img src={singleProduct.image[0]} style={{ height: "50%" }}></img>
             </Box>
             <div>
               <h2>{singleProduct.name}</h2>
@@ -213,6 +210,7 @@ function SingleViewProducts() {
                 Add to cart <FaCartPlus className="ml-2 h-5 w-5" />
               </Button>
               <Collapse
+                style={{ border: "1px solid green" }}
                 className="mt-3"
                 items={items}
                 size="large"
