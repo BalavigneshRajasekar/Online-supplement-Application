@@ -46,7 +46,7 @@ function Orders() {
           </thead>
           {orders.length > 0 ? (
             <tbody className="">
-              {orders.map((order, i) => (
+              {orders.reverse().map((order, i) => (
                 <tr className="tableRow" key={i}>
                   <td>#{order._id}</td>
                   <td>{order.paymentData.shipping.name}</td>
@@ -74,7 +74,8 @@ function Orders() {
                         (order.orderStatus == "Shipped" && "gold-inverse") ||
                         (order.orderStatus == "Out For Delivery" &&
                           "lime-inverse") ||
-                        (order.orderStatus == "Delivered" && "volcano-inverse") ||
+                        (order.orderStatus == "Delivered" &&
+                          "volcano-inverse") ||
                         (order.orderStatus == "Cancelled" && "red-inverse") ||
                         "orange-inverse"
                       }

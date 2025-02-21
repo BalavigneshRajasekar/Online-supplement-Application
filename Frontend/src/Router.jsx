@@ -27,6 +27,7 @@ import DashboardData from "./Admin/DashboardData";
 import Orders from "./Admin/Orders";
 import EditAndDeleteProducts from "./Admin/EditAndDeleteProducts";
 import AddProducts from "./Admin/AddProducts";
+import ScrollToTop from "./routes/ScrollToTop";
 
 function Router() {
   const [stripeAPI, setStripeAPI] = useState(null);
@@ -49,6 +50,7 @@ function Router() {
   return (
     <div>
       <BrowserRouter>
+        <ScrollToTop />
         {role == "User" && <Nav></Nav>}
 
         {/* General Routes for both */}

@@ -141,7 +141,8 @@ const ProductHandler = ({ children }) => {
         }
       );
       console.log(response.data);
-      setOrders(response.data.data);
+
+      setOrders(response.data.data.reverse());
     } catch (error) {
       console.error("Error fetching orders data", error);
       if (error.response.data.message == "Invalid token") {
