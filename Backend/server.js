@@ -21,10 +21,12 @@ const supplementRouter = require("./routes/Products/supplementRouter");
 const productRouter = require("./routes/Products/productsRouter");
 const paymentRouter = require("./routes/Payments/Payment");
 const orderRouter = require("./routes/Products/orders");
+const googleLoginRouter = require("./routes/Authentication/googleLogin");
 
 //Routes Goes here
 app.use("/api/register", registerRouter);
 app.use("/api/login", loginRouter);
+app.use("/api/googleLogin", googleLoginRouter);
 app.use("/api/reset", resetRouter);
 app.use("/api/resetPassword", resetPassword);
 app.use("/api/admin", supplementRouter);
