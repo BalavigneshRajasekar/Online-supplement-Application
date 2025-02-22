@@ -4,10 +4,12 @@ const jwt = require("jsonwebtoken");
 const admin = require("firebase-admin");
 require("dotenv").config();
 
-//Firebase service Config
-
+// Parse JSON stored in environment variable
+// const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+// console.log(serviceAccount)
+const service = require('../../firebaseCred.json')
 admin.initializeApp({
-  credential: admin.credential.cert(process.env.FireBase_Config),
+  credential: admin.credential.cert(service),
 });
 
 const authRouter = express.Router();
