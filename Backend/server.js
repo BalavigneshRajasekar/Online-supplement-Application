@@ -10,7 +10,7 @@ const allowedOrigins = [
   "http://localhost:3000", // Local frontend
   "https://dksupplements.vercel.app/" // Deployed frontend (replace with actual domain)
 ];
-app.use(cors({origin:allowedOrigins,credentials:true}));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./public"));
