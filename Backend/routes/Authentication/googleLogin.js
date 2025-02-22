@@ -5,9 +5,9 @@ const admin = require("firebase-admin");
 require("dotenv").config();
 
 //Firebase service Config
-const service = require("../../firebase-service-account.json");
+
 admin.initializeApp({
-  credential: admin.credential.cert(service),
+  credential: admin.credential.cert(process.env.FireBase_Config),
 });
 
 const authRouter = express.Router();
