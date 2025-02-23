@@ -120,7 +120,6 @@ function Payment() {
             }
           );
 
-         
           toast.update(loading, {
             type: "success",
             isLoading: false,
@@ -130,9 +129,8 @@ function Payment() {
             closeButton: true,
             render: "Payment successfully done",
           });
-        
+
           navigate("success");
-          
         } else {
           toast.update(loading, {
             type: "error",
@@ -165,7 +163,7 @@ function Payment() {
   };
   return (
     <div className="w-100 mt-10 d-md-flex justify-around align-items-center d-xs-flex-col gap-1 p-3">
-      <Modal open={openPaymentModel}  onCancel={closeModal} footer={null} >
+      <Modal open={openPaymentModel} onCancel={closeModal} footer={null}>
         <Box
           className="p-5  bg-dark rounded-lg "
           sx={{ width: { xs: "100%", md: "100%" } }}
@@ -191,7 +189,9 @@ function Payment() {
               sx={{ width: "100%", marginTop: 5 }}
               startIcon={<LiaRupeeSignSolid />}
             >
-              <span className="text-lg font-bold">{totalPrice}- Pay Now</span>
+              <span className="text-lg font-bold">
+                {parseInt(totalPrice).toLocaleString("en-IN")}- Pay Now
+              </span>
             </Button>
           </form>
         </Box>
@@ -200,7 +200,7 @@ function Payment() {
       <Box
         sx={{
           width: { xs: "100%", md: "100%" },
-         maxHeight:"100vh",
+          maxHeight: "100vh",
 
           overflow: "auto",
           padding: "20px",
@@ -226,9 +226,12 @@ function Payment() {
                 >
                   <List.Item.Meta
                     avatar={<img src={item.image} style={{ width: "50px" }} />}
-                   style={{maxHeight:"200px" ,overflow: "auto"}}
+                    style={{ maxHeight: "200px", overflow: "auto" }}
                     title={
-                      <a onClick={() => navigate(`/products/${item.id}`)} style={{minHeight:"10px"}}>
+                      <a
+                        onClick={() => navigate(`/products/${item.id}`)}
+                        style={{ minHeight: "10px" }}
+                      >
                         {item.name}
                       </a>
                     }
@@ -238,7 +241,8 @@ function Payment() {
                         <LiaRupeeSignSolid
                           style={{ display: "inline-block" }}
                         />
-                        {item.price} <b>Quantity:</b>
+                        {parseInt(item.price).toLocaleString("en-IN")}{" "}
+                        <b>Quantity:</b>
                         {item.quantity}
                       </p>
                     }
@@ -246,7 +250,9 @@ function Payment() {
                   <b>
                     subtotal :
                     <LiaRupeeSignSolid style={{ display: "inline-block" }} />
-                    {item.quantity * item.price}
+                    {parseInt(item.quantity * item.price).toLocaleString(
+                      "en-IN"
+                    )}
                   </b>
                 </List.Item>
               )}
@@ -257,7 +263,7 @@ function Payment() {
                 <h3 className="text-slate-400">Price : </h3>
                 <Badge color="success">
                   <LiaRupeeSignSolid className="inline-block" />
-                  {totalPrice}
+                  {parseInt(totalPrice).toLocaleString("en-IN")}
                 </Badge>
               </div>
               <div className="flex justify-between mt-3">
@@ -280,7 +286,7 @@ function Payment() {
               <h3 className="text-slate-400">Total : </h3>
               <Badge color="success">
                 <LiaRupeeSignSolid className="inline-block" />
-                {totalPrice}
+                {parseInt(totalPrice).toLocaleString("en-IN")}
               </Badge>
             </div>
           </>

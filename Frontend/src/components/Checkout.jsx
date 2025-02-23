@@ -53,7 +53,6 @@ function Checkout() {
   };
   useEffect(() => {
     getDeliveryDetails(navigate);
-   
   }, []);
   const closeModel = () => {
     setOpenModel(false);
@@ -64,7 +63,8 @@ function Checkout() {
         <Box>
           <h2 className="text-lg text-red-500 p-2">
             <img src="/fast-delivery.png" width={"100px"}></img>
-            Existing Shipping address :</h2>
+            Existing Shipping address :
+          </h2>
           {deliveryDetails ? (
             <Card
               loading={!deliveryDetails}
@@ -234,11 +234,9 @@ function Checkout() {
                 <List.Item key={index} style={{ marginRight: "100px" }}>
                   <Skeleton avatar title={false} loading={item.loading} active>
                     <List.Item.Meta
-                
                       avatar={
                         <img src={item.image} style={{ width: "50px" }} />
                       }
-                      
                       title={
                         <a onClick={() => navigate(`/products/${item.id}`)}>
                           {item.name}
@@ -246,21 +244,24 @@ function Checkout() {
                       }
                       description={
                         <>
-                        <p>
-                          <b>Price:</b>
-                          <LiaRupeeSignSolid
-                            style={{ display: "inline-block" }}
-                          />
-                          {item.price} <b className="ml-5">Quantity:</b>
-                          {item.quantity}
-                        </p>
+                          <p>
+                            <b>Price:</b>
+                            <LiaRupeeSignSolid
+                              style={{ display: "inline-block" }}
+                            />
+                            {parseInt(item.price).toLocaleString("en-IN")}
+                            <b className="ml-5">Quantity:</b>
+                            {item.quantity}
+                          </p>
                         </>
                       }
                     />
                     <b>
                       subtotal :
                       <LiaRupeeSignSolid style={{ display: "inline-block" }} />
-                      {item.quantity * item.price}
+                      {parseInt(item.quantity * item.price).toLocaleString(
+                        "en-IN"
+                      )}
                     </b>
                   </Skeleton>
                 </List.Item>

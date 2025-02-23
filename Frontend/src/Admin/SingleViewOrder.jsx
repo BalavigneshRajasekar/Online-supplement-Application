@@ -178,7 +178,9 @@ function SingleViewOrder() {
                   <b>
                     subtotal :
                     <LiaRupeeSignSolid style={{ display: "inline-block" }} />
-                    {item.quantity * item.price}
+                    {parseInt(item.quantity * item.price).toLocaleString(
+                      "en-IN"
+                    )}
                   </b>
                 </List.Item>
               )}
@@ -223,7 +225,9 @@ function SingleViewOrder() {
                 </Tag>
                 <span>
                   : <LiaRupeeSignSolid className="inline" />
-                  {singleOrder.paymentData.amount}
+                  {parseInt(singleOrder.paymentData.amount).toLocaleString(
+                    "en-IN"
+                  )}
                 </span>
               </h5>
 

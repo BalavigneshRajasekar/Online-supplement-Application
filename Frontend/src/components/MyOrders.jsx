@@ -82,7 +82,8 @@ function MyOrders() {
                             <LiaRupeeSignSolid
                               style={{ display: "inline-block" }}
                             />
-                            {item.price} <b>Quantity:</b>
+                            {parseInt(item.price).toLocaleString("en-IN")}{" "}
+                            <b>Quantity:</b>
                             {item.quantity}
                           </p>
                         }
@@ -92,7 +93,9 @@ function MyOrders() {
                         <LiaRupeeSignSolid
                           style={{ display: "inline-block" }}
                         />
-                        {item.quantity * item.price}
+                        {parseInt(item.quantity * item.price).toLocaleString(
+                          "en-IN"
+                        )}
                       </b>
                     </List.Item>
                   )}
@@ -127,7 +130,9 @@ function MyOrders() {
                   </b>
                   <b className="block mt-2">
                     Amount Paid : <LiaRupeeSignSolid className="inline-block" />{" "}
-                    {orders.paymentData.amount}
+                    {parseInt(orders.paymentData.amount).toLocaleString(
+                      "en-IN"
+                    )}
                   </b>
                 </div>
                 <Divider>Order Status</Divider>
@@ -150,8 +155,8 @@ function MyOrders() {
                       },
                       {
                         title: "Shipped",
-                        subTitle:`${orders.paymentData.shipping.carrier ?orders.paymentData.shipping.carrier:""}`,
-                        description:`${orders.paymentData.shipping.tracking_number ?"#"+orders.paymentData.shipping.tracking_number:""}`,
+                        subTitle: `${orders.paymentData.shipping.carrier ? orders.paymentData.shipping.carrier : ""}`,
+                        description: `${orders.paymentData.shipping.tracking_number ? "#" + orders.paymentData.shipping.tracking_number : ""}`,
                         icon: <FaShippingFast className="inline-block" />,
                       },
                       {

@@ -106,7 +106,7 @@ function AllProducts() {
               navigateToProducts("MassGainer");
             }}
           >
-            <img src="onmass.jpg" style={{ width: "40%" }} ></img>
+            <img src="onmass.jpg" style={{ width: "40%" }}></img>
             <span>Mass Gainer</span>
           </Button>
         </Grid2>
@@ -155,7 +155,7 @@ function AllProducts() {
           spacing={2}
           sx={{
             justifyContent: "space-around",
-            marginLeft: {  md: 3 },
+            marginLeft: { md: 3 },
           }}
         >
           {/* Products List */}
@@ -206,7 +206,7 @@ function AllProducts() {
                 <div className="d-flex items-center justify-between mt-3">
                   <span className="text-lg font-bold text-gray-900 dark:text-white">
                     <LiaRupeeSignSolid style={{ display: "inline-block" }} />{" "}
-                    {prod.price}
+                    {parseInt(prod.price).toLocaleString("en-IN")}
                     <span className="ml-2 text-decoration-line-through text-red-700">
                       {prod.price + 500}
                     </span>

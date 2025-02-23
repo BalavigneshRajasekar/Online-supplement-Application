@@ -57,7 +57,9 @@ function Orders() {
                       color="green-inverse"
                       icon={<FaRupeeSign className="inline-block" />}
                     >
-                      {order.paymentData.amount}
+                      {parseInt(order.paymentData.amount).toLocaleString(
+                        "en-IN"
+                      )}
                     </Tag>
                   </td>
                   <td>

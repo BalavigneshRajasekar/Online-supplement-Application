@@ -44,8 +44,10 @@ function Cart(props) {
         borderRadius: "10px",
       }}
     >
-     
-      <Divider><img src="trolley.png" width={"50px"} className="inline-block"></img> x {cart.length}</Divider>
+      <Divider>
+        <img src="trolley.png" width={"50px"} className="inline-block"></img> x{" "}
+        {cart.length}
+      </Divider>
       {cart.length > 0 ? (
         <>
           <List
@@ -78,7 +80,8 @@ function Cart(props) {
                         <LiaRupeeSignSolid
                           style={{ display: "inline-block" }}
                         />
-                        {item.price} <b>Quantity:</b>
+                        {parseInt(item.price).toLocaleString("en-IN")}{" "}
+                        <b>Quantity:</b>
                         {item.quantity}
                       </p>
                     }
@@ -86,7 +89,9 @@ function Cart(props) {
                   <b>
                     subtotal :
                     <LiaRupeeSignSolid style={{ display: "inline-block" }} />
-                    {item.quantity * item.price}
+                    {parseInt(item.quantity * item.price).toLocaleString(
+                      "en-IN"
+                    )}
                   </b>
                 </Skeleton>
               </List.Item>
@@ -96,7 +101,7 @@ function Cart(props) {
           <div className="flex justify-content-around">
             <p>
               Total :<LiaRupeeSignSolid style={{ display: "inline-block" }} />
-              {totalPrice}
+              {parseInt(totalPrice).toLocaleString("en-IN")}
             </p>
             <Button type="primary" onClick={goToCheckout}>
               Go to checkout
