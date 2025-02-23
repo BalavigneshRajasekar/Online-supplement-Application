@@ -1,9 +1,36 @@
 .ordersHeader {
-    background-color: "";
-    padding: 10px;
-    text-align: start;
+  background-color: "";
+  padding: 10px;
+  text-align: start;
 }
 
 .spanStyle h5 span {
-    color: grey;
+  color: grey;
+}
+.homeText {
+  font-size: 80px;
+  letter-spacing: 5px;
+  font-weight: 600;
+  color: white;
+}
+.div1 {
+  background-image: linear-gradient(
+    90deg,
+    rgb(121, 148, 237),
+    rgb(91, 141, 249)
+  );
+}
+.div2 {
+  background-image: linear-gradient(
+    90deg,
+    rgb(238, 89, 144),
+    rgb(240, 44, 145)
+  );
+}
+.div3 {
+  background-image: linear-gradient(
+    90deg,
+    rgb(200, 120, 243),
+    rgb(174, 50, 245)
+  );
 }

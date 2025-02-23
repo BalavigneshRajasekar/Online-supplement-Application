@@ -20,6 +20,7 @@ const NAVIGATION = [
   },
   {
     segment: "dashboard",
+
     title: "Dashboard",
     icon: <DashboardIcon />,
   },
@@ -75,6 +76,9 @@ function Dashboard() {
   useEffect(() => {
     if (!localStorage.getItem("logToken")) {
       navigate("/login");
+
+    }else{
+      navigate('/dashboard')
     }
   }, []);
   const authentication = React.useMemo(() => {
@@ -95,8 +99,6 @@ function Dashboard() {
       },
     };
   }, []);
-  
-  
 
   return (
     <div>
@@ -106,7 +108,8 @@ function Dashboard() {
         session={session}
         authentication={authentication}
         branding={{
-          homeUrl: "/",
+          homeUrl: "dashboard",
+
           title: "Admin panel",
           logo: <img src="/logo.png"></img>,
         }}

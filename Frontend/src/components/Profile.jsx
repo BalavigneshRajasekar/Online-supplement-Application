@@ -12,6 +12,7 @@ function Profile() {
   useEffect(() => {
     const profilePic = localStorage.getItem("profilePic");
     setImageUrl(profilePic);
+    console.log(imgUrl);
   }, []);
 
   const handleUploadChange = (info) => {

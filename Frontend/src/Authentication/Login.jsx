@@ -42,6 +42,8 @@ function Login() {
 
       navigate("/");
     } catch (e) {
+      console.log(e);
+
       toast.update(id, {
         render: e.response.data.message,
         type: "error",
