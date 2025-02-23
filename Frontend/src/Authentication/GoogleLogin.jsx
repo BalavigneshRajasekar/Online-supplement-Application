@@ -6,7 +6,6 @@ import { Product } from "../context/Products";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
-
 function GoogleLogin() {
   const { setRole } = useContext(Product);
   const navigate = useNavigate();
@@ -45,7 +44,7 @@ function GoogleLogin() {
     } catch (e) {
       console.log(e);
       toast.update(id, {
-        render: e.data.message,
+        render: "failed",
         type: "error",
         isLoading: false,
         autoClose: 3000,

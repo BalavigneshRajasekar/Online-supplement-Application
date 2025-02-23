@@ -13,6 +13,7 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_measurementId,
 };
 
+// Initialize Firebase app and get auth instance. This will also create user sessions.
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
