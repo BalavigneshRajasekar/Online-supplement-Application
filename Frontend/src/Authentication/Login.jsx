@@ -12,6 +12,7 @@ import { FaArrowAltCircleRight } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Product } from "../context/Products";
+import GoogleLogin from "./GoogleLogin";
 
 function Login() {
   const navigate = useNavigate();
@@ -115,6 +116,7 @@ function Login() {
           <span>Or</span>
           <hr class="line" />
         </div>
+
         <Button
           size="large"
           block
@@ -138,6 +140,7 @@ function Login() {
           Forgot Password
         </Button>
         <p className="note">Terms of use &amp; Conditions</p>
+        <GoogleLogin />
       </Form>
     </Box>
   );
