@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Box } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaTruckMoving } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaRupeeSign } from "react-icons/fa";
@@ -8,9 +8,11 @@ import { Product } from "../context/Products";
 import { useNavigate } from "react-router";
 import { Card } from "antd";
 import NewCustomers from "./NewCustomers";
+import axios from "axios";
 
 function DashboardData() {
   const { orders, getAllOrders } = useContext(Product);
+  const [newCustomers, setNewCustomers] = useState([]);
   const totalRevenue = orders?.reduce(
     (acc, value) => acc + value.paymentData.amount,
     0
@@ -26,7 +28,19 @@ function DashboardData() {
   const navigate = useNavigate();
   useEffect(() => {
     getAllOrders(navigate);
+    getNewCustomers();
   }, []);
+  const getNewCustomers = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/o1/get/customers"
+      );
+      setNewCustomers(response.data.NewCustomer);
+      console.log(response);
+    } catch (e) {
+      console.error("Error fetching new customers", e);
+    }
+  };
   return (
     <Box>
       <div className="p-7">
@@ -88,9 +102,20 @@ function DashboardData() {
           </div>
         </Card>
       </div>
-      <div className="px-4 py-3">
-        <h2>New Customers</h2>
-        <NewCustomers />
+      <div className="px-4 py-3 border w-fit m-3 rounded-lg shadow-inner">
+        <h3>
+          <input type="radio" checked style={{ color: "green" }}></input> New
+          Customers
+        </h3>
+        {newCustomers.length > 0 ? (
+          <div className="max-h-80 overflow-auto">
+            {newCustomers.map((customer, i) => (
+              <NewCustomers key={i} customer={customer} />
+            ))}
+          </div>
+        ) : (
+          <p>loading...</p>
+        )}
       </div>
     </Box>
   );
