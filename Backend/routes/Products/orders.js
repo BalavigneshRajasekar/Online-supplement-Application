@@ -1,5 +1,6 @@
 const express = require("express");
 const Orders = require("../../models/orders");
+const User = require("../../models/user");
 const loginAuth = require("../../middlewares/loginAuth");
 const roleAuth = require("../../middlewares/roleAuth");
 
@@ -36,7 +37,6 @@ orderRouter.get(
   }
 );
 
-
 // Route to get particular Order
 orderRouter.get(
   "/get/orders/:id",
@@ -57,7 +57,6 @@ orderRouter.get(
   }
 );
 
-
 // Route to change order status
 
 orderRouter.put(
@@ -67,9 +66,13 @@ orderRouter.put(
   async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
-   
+
     try {
-      const order = await Orders.findByIdAndUpdate(id, { orderStatus:status }, { new: true });
+      const order = await Orders.findByIdAndUpdate(
+        id,
+        { orderStatus: status },
+        { new: true }
+      );
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
@@ -85,14 +88,23 @@ orderRouter.put(
 
 orderRouter.put(
   "/update/courier/:id",
-  // loginAuth,
-  // roleAuth("Admin"),
+  loginAuth,
+  roleAuth("Admin"),
   async (req, res) => {
     const { id } = req.params;
     const { courier, trackingId } = req.body;
-     
+
     try {
-      const order = await Orders.findOneAndUpdate({_id:id},{$set:{"paymentData.shipping.carrier":courier,"paymentData.shipping.tracking_number":trackingId}},{new:true})
+      const order = await Orders.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            "paymentData.shipping.carrier": courier,
+            "paymentData.shipping.tracking_number": trackingId,
+          },
+        },
+        { new: true }
+      );
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
@@ -104,4 +116,19 @@ orderRouter.put(
   }
 );
 
+// Route to get all Customers data
+orderRouter.get("/get/customers", async (req, res) => {
+  try {
+    const customer = await User.find(
+      { role: "User" },
+      { username: 1, email: 1, image: 1 }
+    )
+      .sort({ _id: -1 }) // Descending order for get latest customer
+      .limit(10); // only need latest 10 customer
+
+    return res.status(200).json({ NewCustomer: customer });
+  } catch (e) {
+    return res.status(500).json({ message: "Server Error", e });
+  }
+});
 module.exports = orderRouter;
