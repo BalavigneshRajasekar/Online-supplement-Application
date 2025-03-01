@@ -100,7 +100,12 @@ function SingleViewOrder() {
     try {
       const response = await axios.put(
         `https://supplement-application.onrender.com/api/O1/update/courier/${id}`,
-        values
+        values,
+        {
+          headers: {
+            Authorization: localStorage.getItem("logToken"),
+          },
+        }
       );
       changeOrderStatus();
       setModel(false);
